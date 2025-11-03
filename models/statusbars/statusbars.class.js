@@ -18,7 +18,4 @@ class StatusBars {
             this.imgCache[path] = img;
         });
     }
-
-    updateStatusBar() {
-    }
 }

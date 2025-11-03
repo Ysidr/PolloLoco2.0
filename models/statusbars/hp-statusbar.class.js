@@ -1,6 +1,6 @@
 class HpStatusBar extends StatusBars {
 
-    width =200;
+    width = 200;
     height = 50;
     y = 0;
     x = 10;
@@ -23,6 +23,6 @@ class HpStatusBar extends StatusBars {
     updateHPStatusBar(hp) {
         let i = Math.floor(hp / 20);
         i = Math.max(0, Math.min(i, this.frames.length - 1));
-        this.img = this.imgCache[this.frames[i]];
+        this.img = (hp > 0 && hp <= 20) ? this.imgCache[this.frames[1]] : this.imgCache[this.frames[i]];
     }
 }

@@ -5,7 +5,7 @@ class World {
     backgroundObjects = level1.backgroundObjects;
     level = level1;
     hpStatusBar = new HpStatusBar();
-    statusBars = [this.hpStatusBar];
+    bottleStatusBar = new BottleStatusBar();
 
 
     canvas;
@@ -55,7 +55,8 @@ class World {
         this.addObjectsToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.ctx.translate(-this.cameraX, 0);
-        this.addObjectsToMap(this.statusBars);
+        this.addToMap(this.hpStatusBar);
+        this.addToMap(this.bottleStatusBar);
         requestAnimationFrame(() => this.draw());
     }
 
