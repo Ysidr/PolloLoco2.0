@@ -1,13 +1,35 @@
-class Chicken extends MovableObject {
+class Chicken extends PcNpc {
     x;
     y;
     width = 80;
     height = 90;
 
+    framesWalk = [
+        'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
+        'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
+        'img/3_enemies_chicken/chicken_normal/1_walk/3_w.png',
+    ]
+
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
+        this.loadImages(this.framesWalk);
+        this.speed = 0.15 + Math.random() * 0.5,
 
         this.x = 200 + Math.random() * 300;
-        this.y = 480 - this.height- 40;
+        this.y = 480 - this.height - 40;
+
+        this.animate();
     }
+    
+
+    animate() {
+        setInterval(() => {
+            let i = this.currentImageIndex % this.framesWalk.length;
+            let path = this.framesWalk[i];
+            this.img = this.imgCache[path];
+            this.currentImageIndex++;
+        }, 10000 / 60);
+        this.moveLeft();
+    }
+
 }

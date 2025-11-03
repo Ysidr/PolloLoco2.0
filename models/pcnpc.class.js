@@ -1,0 +1,3 @@
+class PcNpc extends MovableObject {
+    
+}

@@ -1,8 +1,9 @@
-class Character extends MovableObject {
+class Character extends PcNpc {
 
     width = 150;
     height = 300;
     y;
+    world;
 
     framesIdle = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
@@ -14,7 +15,6 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/idle/I-7.png',
         'img/2_character_pepe/1_idle/idle/I-8.png'
     ];
-    currentImageIndex = 0;
 
     constructor() {
         super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
