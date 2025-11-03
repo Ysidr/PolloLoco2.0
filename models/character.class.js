@@ -4,6 +4,7 @@ class Character extends PcNpc {
     height = 300;
     y;
     world;
+    speed = 25;
 
     framesIdle = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
@@ -16,9 +17,21 @@ class Character extends PcNpc {
         'img/2_character_pepe/1_idle/idle/I-8.png'
     ];
 
+    framesWalk = [
+        'img/2_character_pepe/2_walk/W-21.png',
+        'img/2_character_pepe/2_walk/W-22.png',
+        'img/2_character_pepe/2_walk/W-23.png',
+        'img/2_character_pepe/2_walk/W-24.png',
+        'img/2_character_pepe/2_walk/W-25.png',
+        'img/2_character_pepe/2_walk/W-26.png',
+        
+
+    ]
+
     constructor() {
         super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
         this.loadImages(this.framesIdle);
+        this.loadImages(this.framesWalk);
         this.y = 480 - this.height - 40;
 
         this.animate();
@@ -27,11 +40,24 @@ class Character extends PcNpc {
 
     animate() {
         setInterval(() => {
-            let i = this.currentImageIndex % this.framesIdle.length;
-            let path = this.framesIdle[i];
-            this.img = this.imgCache[path];
+            const isMoving = this.world.inputs.LEFT || this.world.inputs.RIGHT;
+            const frames = isMoving ? this.framesWalk : this.framesIdle;
+            if (this.world.inputs.LEFT) {
+                this.otherDirection = true;
+            } else if (this.world.inputs.RIGHT) {
+                this.otherDirection = false;
+            } 
+            
+            if (isMoving) {
+                const moveSpeed = this.world.inputs.LEFT ? -this.speed : this.speed;
+                this.x += moveSpeed;
+            }
+            
+            const frame = frames[this.currentImageIndex % frames.length];
+            this.img = this.imgCache[frame];
             this.currentImageIndex++;
-        }, 10000 / 60);
+            this.world.cameraX = -this.x + 100;
+        },60);
     }
 
     jump() {
