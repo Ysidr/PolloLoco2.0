@@ -1,5 +1,6 @@
 class PcNpc extends MovableObject {
     hp = 100;
+    lastHit = 0;
 
 
     hurt() {
@@ -7,6 +8,8 @@ class PcNpc extends MovableObject {
         if (this.hp < 0) {
             this.hp = 0;
         }
+        this.lastHit = new Date().getTime();
+
     }
 
     dead() {
@@ -20,8 +23,19 @@ class PcNpc extends MovableObject {
                 IntervalManager.clearAllIntervals();
             }
             // this.world.level.enemies.splice(this.world.level.enemies.indexOf(this), 1);
+        } else {
+            if (this.isHurt()) {
+                this.playAnimation(this.framesHurt);
+                console.log('is hurt');
+            }
         }
     }
 
-    
+    isHurt() {
+        let timeSinceLastHit = new Date().getTime() - this.lastHit;
+        timeSinceLastHit = timeSinceLastHit / 100;
+        return timeSinceLastHit < 5;
+    }
+
+
 }

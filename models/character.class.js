@@ -83,12 +83,11 @@ class Character extends PcNpc {
             const isJumping = this.world.inputs.JUMP;
 
             this.checkHealth();
-            if (!this.dead()) {
+            if (!this.dead() && !this.isHurt()) {
                 this.checkJump(isJumping, isMoving);
-                this.checkDirection();
-                this.checkMovement(isMoving);
-            }
-
+            } 
+            this.checkDirection();
+            this.checkMovement(isMoving);
 
             this.world.cameraX = -this.x + 100;
         }, 60);
