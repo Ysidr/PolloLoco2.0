@@ -47,11 +47,29 @@ class Character extends PcNpc {
         `img/2_character_pepe/3_jump/J-39.png`,
     ]
 
+    framesHurt = [
+        `img/2_character_pepe/4_hurt/H-41.png`,
+        `img/2_character_pepe/4_hurt/H-42.png`,
+        `img/2_character_pepe/4_hurt/H-43.png`
+    ]
+
+    framesDead = [
+        `img/2_character_pepe/5_dead/D-51.png`,
+        `img/2_character_pepe/5_dead/D-52.png`,
+        `img/2_character_pepe/5_dead/D-53.png`,
+        `img/2_character_pepe/5_dead/D-54.png`,
+        `img/2_character_pepe/5_dead/D-55.png`,
+        `img/2_character_pepe/5_dead/D-56.png`,
+        `img/2_character_pepe/5_dead/D-57.png`
+    ]
+
     constructor() {
         super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
         this.loadImages(this.framesIdle);
         this.loadImages(this.framesWalk);
         this.loadImages(this.framesJump);
+        this.loadImages(this.framesHurt);
+        this.loadImages(this.framesDead);
         this.y = 480 - this.height - 40;
         this.applyGravity();
 
@@ -60,18 +78,20 @@ class Character extends PcNpc {
     }
 
     animate() {
-        setInterval(() => {
+        const id = IntervalManager.setInterval(() => {
             const isMoving = this.world.inputs.LEFT || this.world.inputs.RIGHT;
             const isJumping = this.world.inputs.JUMP;
-            
-            this.checkJump(isJumping, isMoving);
-            this.checkDirection();
-            this.checkMovement(isMoving);
-        
-            this.playAnimation(this.frames);
+
+            this.checkHealth();
+            if (!this.dead()) {
+                this.checkJump(isJumping, isMoving);
+                this.checkDirection();
+                this.checkMovement(isMoving);
+            }
+
+
             this.world.cameraX = -this.x + 100;
         }, 60);
     }
-    
 
 }

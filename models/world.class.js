@@ -86,12 +86,13 @@ class World {
     }
 
     checkCollisions() {
-        setInterval(() => {
+        IntervalManager.setInterval(() => {
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
-                    console.log(`Collision detected! character with ${enemy}`);
+                    this.character.hurt();
                 }
             });
-        }, 1000 / 60);
+        }, 200, 'collision-check');
     }
+
 }

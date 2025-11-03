@@ -9,7 +9,7 @@ class MovableObject {
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
-    acceleration = 2.5;
+    acceleration = 1.5;
     frames = [];
     offset = {
         top: 0,
@@ -50,12 +50,13 @@ class MovableObject {
     }
 
     applyGravity() {
-        setInterval(() => {
+        const className = this.constructor.name;
+        IntervalManager.setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
-        }, 1000 / 60);
+        }, 1000 / 60, `${className}-gravity`);
     }
 
     isAboveGround() {
@@ -67,11 +68,9 @@ class MovableObject {
             this.speedY = 25;
         }
         if (this.isAboveGround()) {
-            this.frames = this.framesJump;
             this.playAnimation(this.framesJump);
-
         } else {
-            this.frames = isMoving ? this.framesWalk : this.framesIdle;
+            this.playAnimation(isMoving ? this.framesWalk : this.framesIdle);
         }
     }
 
@@ -95,15 +94,17 @@ class MovableObject {
 
 
     moveRight() {
-        setInterval(() => {
+        const className = this.constructor.name;
+        IntervalManager.setInterval(() => {
             this.x += this.speed;
-        }, 1000 / 60);
+        }, 1000 / 60, `${className}-moveRight`);
     }
 
     moveLeft() {
-        setInterval(() => {
+        const className = this.constructor.name;
+        IntervalManager.setInterval(() => {
             this.x -= this.speed;
-        }, 1000 / 60);
+        }, 1000 / 60, `${className}-moveLeft`);
     }
 
     isColliding(mo) {

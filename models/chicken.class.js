@@ -30,9 +30,9 @@ class Chicken extends PcNpc {
     
 
     animate() {
-        setInterval(() => {
+        IntervalManager.setInterval(() => {
             this.playAnimation(this.framesWalk);
-        }, 10000 / 60);
+        }, 10000 / 60, 'chicken-animate');
         this.moveLeft();
     }
 
