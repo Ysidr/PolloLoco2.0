@@ -27,10 +27,7 @@ class Endboss extends PcNpc {
 
     animate() {
         setInterval(() => {
-            let i = this.currentImageIndex % this.framesAlert.length;
-            let path = this.framesAlert[i];
-            this.img = this.imgCache[path];
-            this.currentImageIndex++;
+            this.playAnimation(this.framesAlert);
         }, 10000 / 60);
     }
 }

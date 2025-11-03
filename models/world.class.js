@@ -19,6 +19,7 @@ class World {
         this.draw();
         this.setWorld();
         this.initializeBackgroundObjects();
+        this.checkCollisions();
     }
 
     setWorld() {
@@ -65,6 +66,7 @@ class World {
         });
 
     }
+
     addToMap(mo) {
         if (mo.otherDirection) {
             this.ctx.save();
@@ -75,5 +77,21 @@ class World {
         } else {
             this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
         }
+
+        // Draw rectangle around movable objects
+        if (mo.drawRectangle && mo instanceof Character || mo instanceof Endboss || mo instanceof Chicken) {
+            mo.drawRectangle(this.ctx);
+            mo.drawCollisionBox(this.ctx);
+        }
     }
-} 
+
+    checkCollisions() {
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy)) {
+                    console.log(`Collision detected! character with ${enemy}`);
+                }
+            });
+        }, 1000 / 60);
+    }
+}

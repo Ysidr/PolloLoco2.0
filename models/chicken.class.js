@@ -4,6 +4,13 @@ class Chicken extends PcNpc {
     width = 80;
     height = 90;
 
+    offset = {
+        top: 10,
+        bottom: 10,
+        left: 10,
+        right: 10
+    }
+
     framesWalk = [
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
@@ -24,10 +31,7 @@ class Chicken extends PcNpc {
 
     animate() {
         setInterval(() => {
-            let i = this.currentImageIndex % this.framesWalk.length;
-            let path = this.framesWalk[i];
-            this.img = this.imgCache[path];
-            this.currentImageIndex++;
+            this.playAnimation(this.framesWalk);
         }, 10000 / 60);
         this.moveLeft();
     }
