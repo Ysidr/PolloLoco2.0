@@ -49,8 +49,11 @@ class Character extends PcNpc {
             } 
             
             if (isMoving) {
-                const moveSpeed = this.world.inputs.LEFT ? -this.speed : this.speed;
-                this.x += moveSpeed;
+                if (this.world.inputs.LEFT && this.x > 120) {
+                    this.x -= this.speed;
+                } else if (this.world.inputs.RIGHT && this.x < this.world.level.levelEndX) {
+                    this.x += this.speed;
+                }
             }
             
             const frame = frames[this.currentImageIndex % frames.length];
