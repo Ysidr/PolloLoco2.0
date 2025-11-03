@@ -1,11 +1,39 @@
 body {
+    height: 100vh;
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    position: relative;
+    background: linear-gradient(180deg, 
+        #87CEEB 0%, 
+        #87CEEB 66.66%, 
+        #FFD700 66.66%, 
+        #FFD700 100%
+    );
 }
+
+body::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0 C150,40 350,0 600,40 C850,80 1050,0 1200,40 L1200,120 L0,120 Z' fill='%23FFD700'/%3E%3C/svg%3E") no-repeat;
+    background-size: 100% 200px;
+    background-position: center 70%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+canvas, h1, .forYourInfo {
+    position: relative;
+    z-index: 2;
+}
+
 canvas {
     background-color: black;
     width: 720px;
