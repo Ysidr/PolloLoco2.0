@@ -29,6 +29,7 @@ class PcNpc extends MovableObject {
                 console.log('is hurt');
             }
         }
+        this.hpStatusBar.updateHPStatusBar(this.hp);
     }
 
     isHurt() {

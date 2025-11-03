@@ -4,6 +4,8 @@ class World {
     clouds = level1.clouds;
     backgroundObjects = level1.backgroundObjects;
     level = level1;
+    hpStatusBar = new HpStatusBar();
+    statusBars = [this.hpStatusBar];
 
 
     canvas;
@@ -24,6 +26,7 @@ class World {
 
     setWorld() {
         this.character.world = this;
+        this.character.hpStatusBar = this.hpStatusBar;
     }
 
     initializeBackgroundObjects() {
@@ -52,6 +55,7 @@ class World {
         this.addObjectsToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.ctx.translate(-this.cameraX, 0);
+        this.addObjectsToMap(this.statusBars);
         requestAnimationFrame(() => this.draw());
     }
 
