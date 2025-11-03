@@ -2,8 +2,8 @@ class HpStatusBar extends StatusBars {
 
     width = 200;
     height = 50;
-    y = 0;
-    x = 10;
+    y = -10;
+    x = 40;
     frames = [
         'img/7_statusbars/1_statusbar/2_statusbar_health/green/0.png',
         'img/7_statusbars/1_statusbar/2_statusbar_health/green/20.png',

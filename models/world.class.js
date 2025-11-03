@@ -6,6 +6,7 @@ class World {
     level = level1;
     hpStatusBar = new HpStatusBar();
     bottleStatusBar = new BottleStatusBar();
+    coinStatusBar = new CoinStatusBar();
 
 
     canvas;
@@ -57,6 +58,7 @@ class World {
         this.ctx.translate(-this.cameraX, 0);
         this.addToMap(this.hpStatusBar);
         this.addToMap(this.bottleStatusBar);
+        this.addToMap(this.coinStatusBar);
         requestAnimationFrame(() => this.draw());
     }
 

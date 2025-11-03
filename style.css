@@ -11,3 +11,8 @@ canvas {
     width: 720px;
     height: 480px;
 }
+
+.forYourInfo {
+    margin-top: 10px;
+    text-align: center;
+}
