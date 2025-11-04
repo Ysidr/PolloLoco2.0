@@ -4,6 +4,8 @@ class HpStatusBar extends StatusBars {
     height = 50;
     y = -10;
     x = 40;
+    offsetX = 10;  // Fixed position from left
+    offsetY = 20;
     frames = [
         'img/7_statusbars/1_statusbar/2_statusbar_health/green/0.png',
         'img/7_statusbars/1_statusbar/2_statusbar_health/green/20.png',

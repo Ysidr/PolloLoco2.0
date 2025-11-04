@@ -26,14 +26,19 @@ class BottleThrowable extends Throwables {
     
     constructor(world) {
         super(world);
-        this.speed = 35;  // Set horizontal speed
-        this.speedY = 23 // Set initial upward speed
-        this.acceleration = 1; // Set gravity
+        this.x = this.world.character.x;
+        this.y = this.world.character.y;
+        this.setSpeeds();
         this.loadImage('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
         this.loadImages(this.framesFlying);
         this.loadImages(this.framesBreak);
         this.animate();
         this.applyGravity();
+    }
+    setSpeeds() {
+        this.speed = 40;  // Set horizontal speed
+        this.speedY = 20 // Set initial upward speed
+        this.acceleration = 1; // Set gravity
     }
 
 }

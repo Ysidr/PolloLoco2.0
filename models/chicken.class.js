@@ -22,7 +22,7 @@ class Chicken extends PcNpc {
         this.loadImages(this.framesWalk);
         this.speed = 0.15 + Math.random() * 0.5,
 
-        this.x = 400 + Math.random() * 300;
+        this.x = 700 + Math.random() * 300;
         this.y = 480 - this.height - 40;
 
         this.animate();

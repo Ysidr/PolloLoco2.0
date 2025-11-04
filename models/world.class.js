@@ -55,16 +55,25 @@ class World {
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        // Draw world objects with camera translation
+        this.ctx.save();
         this.ctx.translate(this.cameraX, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwables);
-        this.addToMap(this.hpStatusBar);
-        this.addToMap(this.bottleStatusBar);
-        this.addToMap(this.coinStatusBar);
-        this.ctx.translate(-this.cameraX, 0);
+        this.ctx.restore();
+        
+        // Draw status bars in screen space (not affected by camera)
+        [this.hpStatusBar, this.bottleStatusBar, this.coinStatusBar].forEach((bar) => {
+            if (bar) {
+                bar.updatePosition(this.cameraX);
+                this.addToMap(bar);
+            }
+        });
+        
         requestAnimationFrame(() => this.draw());
     }
 
@@ -116,20 +125,4 @@ class World {
         }, 200, 'collision-check');
     }
 
-    // checkCollectables() {
-    //     IntervalManager.setInterval(() => {
-    //         if (this.character.throwableCount !== this.collectables.bottles.length) {
-    //             let bottleDifference = this.character.throwableCount - this.collectables.bottles.length;
-    //             if (bottleDifference > 0) {
-    //                 for (let i = 0; i < bottleDifference; i++) {
-    //                     this.collectables.bottles.push(new BottleThrowable(this));
-    //                 }
-    //             } else {
-    //                 for (let i = 0; i < Math.abs(bottleDifference); i++) {
-    //                     this.collectables.bottles.pop();
-    //                 }
-    //             }
-    //         }
-    //     }, 200, 'collectable-check');
-    // }
 }
