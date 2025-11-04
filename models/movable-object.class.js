@@ -84,6 +84,7 @@ class MovableObject {
 
     checkMovement(isMoving) {
         if (isMoving) {
+            this.world.audioManager.playSound('walk');
             if (this.world.inputs.LEFT && this.x > 120) {
                 this.x -= this.speed;
             } else if (this.world.inputs.RIGHT && this.x < this.world.level.levelEndX) {
@@ -96,6 +97,7 @@ class MovableObject {
         if (isThrowing) {
             this.world.throwables.push(new BottleThrowable(this.world));
             this.throwableTimeOut = true;
+            
             setTimeout(() => {
                 this.throwableTimeOut = false;
                 this.world.throwables.pop();

@@ -23,6 +23,7 @@ class Throwables extends MovableObject {
 
     break() {
         this.playAnimation(this.framesBreak);
+        this.world.audioManager.playSound('bottle');
     }
 
     fly() {

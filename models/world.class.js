@@ -14,6 +14,7 @@ class World {
     canvas;
     ctx;
     cameraX = 0;
+    audioManager = new AudioManager();
 
 
     constructor(canvas, inputs) {
@@ -23,6 +24,7 @@ class World {
         
         // Initialize throwables after this is fully constructed
         this.throwables = [];
+        this.loadSounds();
         
         this.draw();
         this.setWorld();
@@ -50,6 +52,14 @@ class World {
             );
             currentBackgroundX += 1440;
         }
+    }
+
+    loadSounds() {
+        this.audioManager.loadSound('walk', 'audio/ES_Feet, Land, Jump, Ground - Epidemic Sound - 0000-0207.wav');
+        this.audioManager.loadSound('bottle', 'audio/ES_Bottle, Hit, Break With Hammer 02 - Epidemic Sound.mp3');
+        this.audioManager.loadSound('hurt', 'audio/ES_Male, Hurt, Low Intensity - Epidemic Sound - 0000-0465.wav');
+        this.audioManager.loadSound('die', 'audio/ES_Asian Game Character, E, Death - Epidemic Sound - 2629-3943.wav');
+        this.audioManager.loadSound('bossDeath', 'audio/ES_Game, Retro Style, Boss, Vocalization - Epidemic Sound - 0000-1815.wav');
     }
 
 
