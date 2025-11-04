@@ -123,6 +123,14 @@ class World {
                     });
                 }
             });
+            if (this.collectables.length > 0) {
+                this.level.collectables.forEach((collectable) => {
+                    if (this.character.isColliding(collectable)) {
+                        this.character.coinCount += collectable.value;
+                        this.level.collectables.splice(this.level.collectables.indexOf(collectable), 1);
+                    }
+                });
+            }
         }, 200, 'collision-check');
     }
 
