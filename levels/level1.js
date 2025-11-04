@@ -21,10 +21,11 @@ const level1 = new Level(
         new CoinCollectable(),
         new CoinCollectable(),
         new CoinCollectable(),
-        new CoinCollectable(),
-        new CoinCollectable(),
-        new CoinCollectable(),
-        new CoinCollectable(),
+        new BottleCollectable(),
+        new BottleCollectable(),
+        new BottleCollectable(),
+        new BottleCollectable(),
+        
     ]
 
 );

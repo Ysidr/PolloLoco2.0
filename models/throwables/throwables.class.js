@@ -18,6 +18,7 @@ class Throwables extends MovableObject {
             }
         }, 3000 / 60, 'throwable-animate');
         this.world.character.throwableCount--;
+        this.world.bottleStatusBar.updateBottleStatusBar(this.world.character.throwableCount);
     }
 
     break() {

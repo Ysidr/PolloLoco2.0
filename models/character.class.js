@@ -7,7 +7,7 @@ class Character extends PcNpc {
     speed = 25;
     throwableTimeOut = false;
 
-    throwableCount = 3;
+    throwableCount = 0;
     coinCount = 0;
 
     offset = {

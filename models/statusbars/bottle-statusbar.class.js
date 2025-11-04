@@ -21,8 +21,11 @@ class BottleStatusBar extends StatusBars {
     }
 
     updateBottleStatusBar(bottle) {
-        let i = Math.floor(bottle / 20);
-        i = Math.max(0, Math.min(i, this.frames.length - 1));
-        this.img = this.imgCache[this.frames[i]];
+        bottle = Math.min(bottle, 6);
+        let frameIndex = Math.min(bottle, 5);
+        if (bottle === 6) {
+            frameIndex = 5;
+        }
+        this.img = this.imgCache[this.frames[frameIndex]];
     }
 }

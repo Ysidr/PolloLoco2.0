@@ -1,6 +1,6 @@
 class CoinStatusBar extends StatusBars {
 
-    width =200;
+    width = 200;
     height = 50;
     y = 30;
     x = 0;
@@ -21,8 +21,11 @@ class CoinStatusBar extends StatusBars {
     }
 
     updateCoinStatusBar(coin) {
-        let i = Math.floor(coin / 20);
-        i = Math.max(0, Math.min(i, this.frames.length - 1));
-        this.img = this.imgCache[this.frames[i]];
+        coin = Math.min(coin, 6);
+        let frameIndex = Math.min(coin, 5);
+        if (coin === 6) {
+            frameIndex = 5;
+        }
+        this.img = this.imgCache[this.frames[frameIndex]];
     }
 }
