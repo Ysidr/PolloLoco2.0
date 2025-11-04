@@ -1,4 +1,5 @@
 class World {
+    
     character = new Character();
     enemies = level1.enemies;
     clouds = level1.clouds;
@@ -7,11 +8,11 @@ class World {
     hpStatusBar = new HpStatusBar();
     bottleStatusBar = new BottleStatusBar();
     coinStatusBar = new CoinStatusBar();
-
-
+    collectables = level1.collectables;
+    throwables = [];
+    inputs;
     canvas;
     ctx;
-    inputs;
     cameraX = 0;
 
 
@@ -19,6 +20,10 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.inputs = inputs;
+        
+        // Initialize throwables after this is fully constructed
+        this.throwables = [];
+        
         this.draw();
         this.setWorld();
         this.initializeBackgroundObjects();
@@ -55,10 +60,11 @@ class World {
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
-        this.ctx.translate(-this.cameraX, 0);
+        this.addObjectsToMap(this.throwables);
         this.addToMap(this.hpStatusBar);
         this.addToMap(this.bottleStatusBar);
         this.addToMap(this.coinStatusBar);
+        this.ctx.translate(-this.cameraX, 0);
         requestAnimationFrame(() => this.draw());
     }
 
@@ -86,7 +92,7 @@ class World {
         }
 
         // Draw rectangle around movable objects
-        if (mo.drawRectangle && mo instanceof Character || mo instanceof Endboss || mo instanceof Chicken) {
+        if (mo.drawRectangle && mo instanceof Character || mo instanceof Endboss || mo instanceof Chicken || mo instanceof Throwables) {
             mo.drawRectangle(this.ctx);
             mo.drawCollisionBox(this.ctx);
         }
@@ -98,8 +104,32 @@ class World {
                 if (this.character.isColliding(enemy)) {
                     this.character.hurt();
                 }
+                if (this.throwables.length > 0) {
+                    this.throwables.forEach((throwable) => {
+                        if (throwable.isColliding(enemy)) {
+                            console.log('Enemy hit by bottle', enemy);
+                            this.enemies.splice(this.enemies.indexOf(enemy), 1);
+                        }
+                    });
+                }
             });
         }, 200, 'collision-check');
     }
 
+    // checkCollectables() {
+    //     IntervalManager.setInterval(() => {
+    //         if (this.character.throwableCount !== this.collectables.bottles.length) {
+    //             let bottleDifference = this.character.throwableCount - this.collectables.bottles.length;
+    //             if (bottleDifference > 0) {
+    //                 for (let i = 0; i < bottleDifference; i++) {
+    //                     this.collectables.bottles.push(new BottleThrowable(this));
+    //                 }
+    //             } else {
+    //                 for (let i = 0; i < Math.abs(bottleDifference); i++) {
+    //                     this.collectables.bottles.pop();
+    //                 }
+    //             }
+    //         }
+    //     }, 200, 'collectable-check');
+    // }
 }

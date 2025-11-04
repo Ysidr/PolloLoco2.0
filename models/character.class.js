@@ -5,6 +5,10 @@ class Character extends PcNpc {
     y;
     world;
     speed = 25;
+    throwableTimeOut = false;
+
+    throwableCount = 3;
+    coinCount = 0;
 
     offset = {
         top: 150,
@@ -81,16 +85,20 @@ class Character extends PcNpc {
         const id = IntervalManager.setInterval(() => {
             const isMoving = this.world.inputs.LEFT || this.world.inputs.RIGHT;
             const isJumping = this.world.inputs.JUMP;
+            const isThrowing = this.world.inputs.THROW && this.throwableCount > 0 && !this.throwableTimeOut;
 
             this.checkHealth();
             if (!this.dead() && !this.isHurt()) {
                 this.checkJump(isJumping, isMoving);
             } 
+            this.checkThrow(isThrowing);
             this.checkDirection();
             this.checkMovement(isMoving);
 
             this.world.cameraX = -this.x + 100;
         }, 60);
     }
+
+    
 
 }

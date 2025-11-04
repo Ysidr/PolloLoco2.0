@@ -92,6 +92,17 @@ class MovableObject {
         }
     }
 
+    checkThrow(isThrowing) {
+        if (isThrowing) {
+            this.world.throwables.push(new BottleThrowable(this.world));
+            this.throwableTimeOut = true;
+            setTimeout(() => {
+                this.throwableTimeOut = false;
+                this.world.throwables.pop();
+            }, 1000);
+        }
+    }
+
 
     moveRight() {
         const className = this.constructor.name;

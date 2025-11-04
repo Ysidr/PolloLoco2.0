@@ -29,6 +29,9 @@ window.addEventListener('keydown', (event) => {
     if (event.keyCode === 32) {
         inputs.JUMP = true;
     }
+    if (event.keyCode === 16) {
+        inputs.THROW = true;
+    }
 
 });
 
@@ -36,5 +39,5 @@ window.addEventListener('keyup', (event) => {
     if (event.keyCode === 65) inputs.LEFT = false;
     if (event.keyCode === 68) inputs.RIGHT = false;
     if (event.keyCode === 32) inputs.JUMP = false;
+    if (event.keyCode === 16) inputs.THROW = false;
 });
-
