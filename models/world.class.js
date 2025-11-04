@@ -64,6 +64,7 @@ class World {
         this.addObjectsToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwables);
+        this.addObjectsToMap(this.level.collectables);
         this.ctx.restore();
         
         // Draw status bars in screen space (not affected by camera)
@@ -101,7 +102,7 @@ class World {
         }
 
         // Draw rectangle around movable objects
-        if (mo.drawRectangle && mo instanceof Character || mo instanceof Endboss || mo instanceof Chicken || mo instanceof Throwables) {
+        if (mo.drawRectangle && mo instanceof Character || mo instanceof Endboss || mo instanceof Chicken || mo instanceof Throwables || mo instanceof CoinCollectable) {
             mo.drawRectangle(this.ctx);
             mo.drawCollisionBox(this.ctx);
         }

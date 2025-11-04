@@ -1,4 +1,4 @@
-# Class Structure Diagram
+# Game Architecture Documentation
 
 ## Inheritance Hierarchy
 
@@ -7,14 +7,15 @@ MovableObject (Base Class)
 ├── BackgroundObject
 ├── Cloud
 ├── Collectable
-│   └── Throwables
-│       └── BottleThrowable
+│   └── CoinCollectable
+├── Throwables
+│   └── BottleThrowable
 └── PcNpc
     ├── Character
     ├── Chicken
     └── Endboss
 
-StatusBars (Standalone)
+StatusBars (UI Base)
 ├── HpStatusbar
 ├── CoinStatusbar
 └── BottleStatusbar
@@ -28,40 +29,55 @@ Utility Classes:
 
 ## Class Descriptions
 
-### Base Classes
-- **MovableObject**: Core functionality for all game objects (position, movement, collision, image handling)
-- **Collectable**: Extends MovableObject, base for all collectable items with world reference
-- **PcNpc**: Extends MovableObject, adds health system and combat mechanics
-- **StatusBars**: Base for UI status displays
+### Core Game Objects
+- **MovableObject**: Base class for all game objects with position, velocity, and rendering
+- **Collectable**: Base for collectable items with world reference and collection logic
+- **PcNpc**: Base for playable and non-playable characters with health and combat systems
+- **StatusBars**: Base class for UI elements with screen-space positioning
 
-### Game Objects
-- **Character**: Player character (extends PcNpc) - manages throwableCount and coinCount inventory
-- **Chicken**: Basic enemy (extends PcNpc)
-- **Endboss**: Boss enemy (extends PcNpc)
-- **Cloud**: Background decoration (extends MovableObject)
-- **BackgroundObject**: Parallax background layers (extends MovableObject)
-- **Collectable**: Base class for collectable items (extends MovableObject)
-- **Throwables**: Base for throwable objects (extends Collectable)
-- **BottleThrowable**: Throwable weapon (extends Throwables) - spawns at character position
+### Game Entities
+- **Character**: Player character with movement, inventory, and throwing mechanics
+- **Chicken**: Basic enemy type
+- **Endboss**: Final boss enemy with unique behaviors
+- **Cloud**: Decorative background elements with parallax movement
+- **BackgroundObject**: Layered background system for parallax effects
+- **BottleThrowable**: Throwable weapon with arc physics and collision detection
+- **CoinCollectable**: Collectible item that increases player's coin count
 
-### UI Elements
-- **HpStatusbar**: Health display
-- **CoinStatusbar**: Coin counter
-- **BottleStatusbar**: Ammo counter
+### UI System
+- **HpStatusbar**: Displays player health with visual feedback
+- **CoinStatusbar**: Shows collected coin count
+- **BottleStatusbar**: Displays available throwable bottles
 
-### System Classes
-- **Inputs**: Handles keyboard input state
-- **IntervalManager**: Manages game loops and animations
-- **Level**: Level configuration and object placement
-- **World**: Main game controller, coordinates all systems
+### Game Systems
+- **Inputs**: Centralized input handling for keyboard controls
+- **IntervalManager**: Manages animation and game loops with cleanup
+- **Level**: Configures and instantiates level layouts
+- **World**: Main game controller and renderer
+
+## Camera System
+
+The game features a camera that follows the player character:
+- Camera is controlled by `World.cameraX`
+- World objects are drawn with `ctx.translate(cameraX, 0)`
+- Status bars are drawn in screen space after restoring the canvas context
+- Camera follows the character with an offset for better visibility
+
+## UI Positioning
+
+Status bars use a screen-space coordinate system:
+- Positioned using `offsetX` and `offsetY` properties
+- Drawn after world rendering to stay fixed on screen
+- Stacked vertically with consistent spacing
+- Not affected by camera movement
 
 ## Key Relationships
 
-- **World** contains and manages all game objects
-- **Character** uses **Inputs** for movement
-- **PcNpc** subclasses use health system for combat
-- **StatusBars** display game state to player
-- **Collectable** hierarchy provides world reference to all collectables
-- **Throwables** used by Character for attacks, spawn at character position
-- **Character** manages inventory (throwableCount, coinCount)
-- **BottleThrowable** accesses character inventory via world.character.throwableCount
+- **World** manages the game loop and rendering pipeline
+- **Character** updates camera position based on its movement
+- **StatusBars** are positioned relative to screen coordinates
+- **All game objects** are positioned in world coordinates
+- **UI elements** are positioned in screen coordinates
+- **Collectable** hierarchy provides base functionality for all collectible items
+- **Throwables** extends **Collectable** for throwable items with physics
+- **CoinCollectable** extends **Collectable** for coin pickups

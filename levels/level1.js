@@ -17,7 +17,14 @@ const level1 = new Level(
     ],
     // Collectables
     [
-
+        new CoinCollectable(),
+        new CoinCollectable(),
+        new CoinCollectable(),
+        new CoinCollectable(),
+        new CoinCollectable(),
+        new CoinCollectable(),
+        new CoinCollectable(),
+        new CoinCollectable(),
     ]
 
 );

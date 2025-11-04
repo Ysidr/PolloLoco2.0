@@ -1,8 +1,9 @@
-class Throwables extends Collectable {
+class Throwables extends MovableObject {
     
 
     constructor(world) {
         super(world);
+        this.world = world;
         console.log('Throwables constructor - world:', world);
         console.log('Character reference:', this.world?.character);
     }
