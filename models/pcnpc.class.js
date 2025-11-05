@@ -2,6 +2,8 @@ class PcNpc extends MovableObject {
     hp = 100;
     lastHit = 0;
 
+    
+
 
     hurt(damage) {
         if (new Date().getTime() - this.lastHit > 500) {
@@ -22,7 +24,6 @@ class PcNpc extends MovableObject {
     checkHealth() {
         if (this.dead()) {
             if (this.framesDead && this.framesDead.length > 0) {
-                this.playAnimation(this.framesDead);
                 if (this instanceof Endboss) {
                     this.world.audioManager.playSound('bossDeath');
                 } else if (this instanceof Chicken) {
@@ -42,7 +43,6 @@ class PcNpc extends MovableObject {
                         break;
                 }
             }
-            // this.world.level.enemies.splice(this.world.level.enemies.indexOf(this), 1);
         } else {
             if (this.isHurt()) {
                 this.playAnimation(this.framesHurt);
