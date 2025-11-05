@@ -30,6 +30,8 @@ const level1 = new Level(
         new BottleCollectable(),
         new BottleCollectable(),
         new BottleCollectable(),   
-    ]
+    ],
+    throwablesDamage = 20,
+    enemyDamage = 5,
 
 );

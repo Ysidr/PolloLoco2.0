@@ -1,5 +1,4 @@
 class Throwables extends MovableObject {
-throwableDamage;
 
     constructor(world) {
         super(world);

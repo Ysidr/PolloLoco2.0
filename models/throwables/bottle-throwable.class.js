@@ -1,5 +1,4 @@
 class BottleThrowable extends Throwables {
-    throwableDamage = 20;
 
 
     framesFlying = [

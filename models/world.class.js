@@ -10,6 +10,8 @@ class World {
     coinStatusBar = new CoinStatusBar();
     collectables = level1.collectables;
     throwables = [];
+    throwablesDamage = level1.throwablesDamage;
+    enemyDamage = level1.enemyDamage;
     inputs;
     canvas;
     ctx;
@@ -127,13 +129,13 @@ class World {
         IntervalManager.setInterval(() => {
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
-                    this.character.hurt();
+                    this.character.hurt(this.enemyDamage);
                     this.audioManager.playSound('hurt', 1.0, false, null, 200);
                 }
                 if (this.throwables.length > 0) {
                     this.throwables.forEach((throwable) => {
                         if (throwable.isColliding(enemy)) {
-                            enemy.hurt(throwable.throwableDamage);
+                            enemy.hurt(this.throwablesDamage);
                             this.throwables.splice(this.throwables.indexOf(throwable), 1);
                             console.log('Enemy hit by bottle', enemy);
                             if (enemy.hp <= 0) {
