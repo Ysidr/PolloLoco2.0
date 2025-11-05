@@ -38,5 +38,6 @@ const level1 = new Level(
     ],
     throwablesDamage = 20,
     enemyDamage = 5,
+    characterJumpDamage = 5,
 
 );

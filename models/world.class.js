@@ -1,5 +1,5 @@
 class World {
-    
+
     character = new Character();
     enemies = level1.enemies;
     clouds = level1.clouds;
@@ -12,6 +12,7 @@ class World {
     throwables = [];
     throwablesDamage = level1.throwablesDamage;
     enemyDamage = level1.enemyDamage;
+    characterJumpDamage = level1.characterJumpDamage;
     inputs;
     canvas;
     ctx;
@@ -23,11 +24,11 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.inputs = inputs;
-        
+
         // Initialize throwables after this is fully constructed
         this.throwables = [];
         this.loadSounds();
-        
+
         this.draw();
         this.setWorld();
         this.initializeBackgroundObjects();
@@ -40,8 +41,8 @@ class World {
     }
 
     initializeBackgroundObjects() {
-        let currentBackgroundX = 0;
-        for (let i = 0; i < 4; i++) {
+        let currentBackgroundX = -720;
+        for (let i = 0; i < 5; i++) {
             this.backgroundObjects.push(
                 new BackgroundObject('img/5_background/layers/air.png', currentBackgroundX),
                 new BackgroundObject('img/5_background/layers/3_third_layer/2.png', currentBackgroundX),
@@ -74,7 +75,7 @@ class World {
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        
+
         // Draw world objects with camera translation
         this.ctx.save();
         this.ctx.translate(this.cameraX, 0);
@@ -85,7 +86,7 @@ class World {
         this.addObjectsToMap(this.throwables);
         this.addObjectsToMap(this.level.collectables);
         this.ctx.restore();
-        
+
         // Draw status bars in screen space (not affected by camera)
         [this.hpStatusBar, this.bottleStatusBar, this.coinStatusBar].forEach((bar) => {
             if (bar) {
@@ -93,7 +94,7 @@ class World {
                 this.addToMap(bar);
             }
         });
-        
+
         requestAnimationFrame(() => this.draw());
     }
 
@@ -140,8 +141,18 @@ class World {
 
     checkAllEnemyCollisions(enemy) {
         if (this.character.isColliding(enemy)) {
-            this.character.hurt(this.enemyDamage);
-            this.audioManager.playSound('hurt', 1.0, false, null, 200);
+            if (this.character.isColliding(enemy, true).bottom) {
+                enemy.hurt(this.characterJumpDamage);
+                this.audioManager.playSound('enemyHurt', 1.0, false, null, 200);
+
+                console.log('Character jumped on enemy!')
+                if (enemy.hp <= 0) {
+                    this.enemies.splice(this.enemies.indexOf(enemy), 1);
+                }
+            } else {
+                this.character.hurt(this.enemyDamage);
+                this.audioManager.playSound('hurt', 1.0, false, null, 200);
+            }
         }
         if (this.throwables.length > 0) {
             this.checkThrowables(enemy);
@@ -186,13 +197,13 @@ class World {
 
     coinRespawn() {
         const coins = this.level.collectables.filter(item => item instanceof CoinCollectable);
-        
+
         if (coins.length < 5) {
             const coinsToAdd = 5 - coins.length;
             const minX = 100;
             const maxX = 3000;
             const groundY = 480 - 90;
-            
+
             for (let i = 0; i < coinsToAdd; i++) {
                 const newCoin = new CoinCollectable();
                 newCoin.x = minX + Math.random() * (maxX - minX);
@@ -201,7 +212,7 @@ class World {
             }
             console.log(`Coins in game: ${this.level.collectables.filter(item => item instanceof CoinCollectable).length}`);
         }
-        
+
         setTimeout(() => this.coinRespawn(), 1000);
     }
 

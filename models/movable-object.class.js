@@ -94,19 +94,19 @@ class MovableObject {
         }
     }
 
-checkTrade(isTrading) {
-    if (isTrading) {
-        if (this.coinCount >= 5) {
-            this.coinCount -= 5;
-            this.throwableCount += 1;
-            this.world.bottleStatusBar.updateBottleStatusBar(this.throwableCount);
-            this.world.coinStatusBar.updateCoinStatusBar(this.coinCount);
-            this.world.audioManager.playSound('tradeSuccess');
-        } else {
-            this.world.audioManager.playSound('tradeFail');
+    checkTrade(isTrading) {
+        if (isTrading) {
+            if (this.coinCount >= 5) {
+                this.coinCount -= 5;
+                this.throwableCount += 1;
+                this.world.bottleStatusBar.updateBottleStatusBar(this.throwableCount);
+                this.world.coinStatusBar.updateCoinStatusBar(this.coinCount);
+                this.world.audioManager.playSound('tradeSuccess');
+            } else {
+                this.world.audioManager.playSound('tradeFail');
+            }
         }
     }
-}
     checkThrow(isThrowing) {
         if (isThrowing) {
             this.world.throwables.push(new BottleThrowable(this.world));
@@ -134,12 +134,22 @@ checkTrade(isTrading) {
         }, 1000 / 60, `${className}-moveLeft`);
     }
 
-    isColliding(mo) {
-        return this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+    isColliding(mo, checkJump = false) {
+        const isColliding = this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
             this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom &&
             this.y + this.height - this.offset.bottom > mo.y + mo.offset.top;
+
+        if (checkJump && isColliding) {
+            return {
+                top: this.y + this.offset.top < mo.y + mo.offset.top,
+                bottom: this.y + this.height - this.offset.bottom > mo.y + mo.height - mo.offset.bottom,
+                left: this.x + this.offset.left < mo.x + mo.offset.left,
+                right: this.x + this.width - this.offset.right > mo.x + mo.width - mo.offset.right
+            };
+        }
+        return isColliding;
+
+
     }
-
-
 }
