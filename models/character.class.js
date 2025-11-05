@@ -82,7 +82,8 @@ class Character extends PcNpc {
     }
 
     animate() {
-        const id = IntervalManager.setInterval(() => {
+        const className = this.constructor.name;
+        IntervalManager.setInterval(() => {
             const isMoving = this.world.inputs.LEFT || this.world.inputs.RIGHT;
             const isJumping = this.world.inputs.JUMP;
             const isThrowing = this.world.inputs.THROW && this.throwableCount > 0 && !this.throwableTimeOut;
@@ -96,8 +97,8 @@ class Character extends PcNpc {
             this.checkMovement(isMoving);
 
             this.world.cameraX = -this.x + 100;
-        }, 60);
-    }
+        }, 60, `${className}character-animate`);
+    }   
 
     
 

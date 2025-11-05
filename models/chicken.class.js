@@ -31,10 +31,11 @@ class Chicken extends PcNpc {
     
 
     animate() {
-        const id = IntervalManager.setInterval(() => {
+        const className = this.constructor.name;
+        IntervalManager.setInterval(() => {
             this.checkHealth();
             this.playAnimation(this.framesWalk);
-        }, 10000 / 60, 'chicken-animate');
+        }, 10000 / 60, `${className}chicken-animate`);
         this.moveLeft();
     }
 

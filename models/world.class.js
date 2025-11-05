@@ -133,9 +133,13 @@ class World {
                 if (this.throwables.length > 0) {
                     this.throwables.forEach((throwable) => {
                         if (throwable.isColliding(enemy)) {
-                            this.enemies[enemy].hurt();
+                            enemy.hurt(throwable.throwableDamage);
+                            this.throwables.splice(this.throwables.indexOf(throwable), 1);
                             console.log('Enemy hit by bottle', enemy);
-                            this.enemies[enemy].hp = 0 ? this.enemies.splice(this.enemies.indexOf(enemy), 1) : console.log(this.enemies[enemy].hp);
+                            if (enemy.hp <= 0) {
+                                this.enemies.splice(this.enemies.indexOf(enemy), 1);
+                                console.log('Enemy HP:', enemy.hp);
+                            }
                             this.audioManager.playSound('enemyHurt');
                         }
                     });

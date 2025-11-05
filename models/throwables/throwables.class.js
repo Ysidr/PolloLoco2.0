@@ -1,18 +1,15 @@
 class Throwables extends MovableObject {
-
+throwableDamage;
 
     constructor(world) {
         super(world);
         this.world = world;
-        console.log('Throwables constructor - world:', world);
-        console.log('Character reference:', this.world?.character);
-        // Play throw sound once when bottle is created
         this.world.audioManager.playSound('bottleThrow', 0.5, false, 1000);
     }
 
     animate() {
         const intervalId = IntervalManager.setInterval(() => {
-            if (this.isAboveGround()) {
+            if (this.isAboveGround() && !this.checkEnemyCollision()) {
                 this.fly();
             } else {
                 this.break();
@@ -36,4 +33,7 @@ class Throwables extends MovableObject {
         this.playAnimation(this.framesFlying);
     }
 
+    checkEnemyCollision() {
+        return this.world.enemies.some(enemy => this.isColliding(enemy));
+    }
 }

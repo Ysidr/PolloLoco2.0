@@ -1,11 +1,6 @@
 class BottleThrowable extends Throwables {
+    throwableDamage = 20;
 
-    offset = {
-        top: 30,
-        bottom: 30,
-        left: 30,
-        right: 30
-    };
 
     framesFlying = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -23,9 +18,15 @@ class BottleThrowable extends Throwables {
         `img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png`
     ];
 
-    
+
     constructor(world) {
         super(world);
+        this.offset = {
+            top: 30,
+            bottom: 30,
+            left: 30,
+            right: 30
+        };
         this.x = this.world.character.x;
         this.y = this.world.character.y;
         this.setSpeeds();
