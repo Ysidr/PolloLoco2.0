@@ -92,18 +92,57 @@ class Character extends PcNpc {
             this.checkHealth();
             if (!this.dead() && !this.isHurt()) {
                 this.checkJump(isJumping, isMoving);
-            } 
+            }
             this.checkTrade(isTrading);
             this.checkThrow(isThrowing);
             this.checkDirection();
             this.checkMovement(isMoving);
-
-            this.world.cameraX = -this.x + 100;
+            this.modifyCamera();
 
             this.updateDisplayedCounts();
 
         }, 60, `${className}character-animate`);
-    }   
+    }
+
+    modifyCamera() {
+        // Define camera offsets for left and right directions
+        const offsetRight = 100;  // Camera offset when facing right
+        const offsetLeft = 350;   // Camera offset when facing left
+
+        // Store the previous direction to detect changes
+        if (this.lastDirection === undefined) {
+            this.lastDirection = this.otherDirection;
+        }
+
+        // Calculate target position based on direction
+        const targetX = -this.x + (this.otherDirection ? offsetLeft : offsetRight);
+
+        // If direction changed, initialize smooth transition
+        if (this.lastDirection !== this.otherDirection) {
+            this.startTransition();
+        }
+
+        // If we're in a transition
+        if (this.cameraTransitionProgress < 1) {
+            this.changeCameraInSmoothSteps(targetX);
+        } else {
+            // When not transitioning, follow directly
+            this.world.cameraX = targetX;
+        }
+    }
+
+    startTransition() {
+        this.cameraStartX = this.world.cameraX;
+        this.cameraTransitionProgress = 0;
+        this.lastDirection = this.otherDirection;
+    }
+
+    changeCameraInSmoothSteps(targetX) {
+        this.cameraTransitionProgress += 0.2;  
+        const t = this.cameraTransitionProgress;
+        const smoothT = t * t * (3 - 2 * t);
+        this.world.cameraX = this.cameraStartX + (targetX - this.cameraStartX) * smoothT;
+    }
 
     updateDisplayedCounts() {
         document.getElementById('coinCount').textContent = this.coinCount;

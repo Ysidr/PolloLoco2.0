@@ -27,7 +27,7 @@ class Throwables extends MovableObject {
     fly() {
         this.speedY -= this.acceleration;
         this.y -= this.speedY;
-        this.x += this.speed;
+        this.world.character.otherDirection ? this.x -= this.speed : this.x += this.speed;
 
         this.playAnimation(this.framesFlying);
     }
