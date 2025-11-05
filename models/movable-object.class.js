@@ -94,6 +94,19 @@ class MovableObject {
         }
     }
 
+checkTrade(isTrading) {
+    if (isTrading) {
+        if (this.coinCount >= 5) {
+            this.coinCount -= 5;
+            this.throwableCount += 1;
+            this.world.bottleStatusBar.updateBottleStatusBar(this.throwableCount);
+            this.world.coinStatusBar.updateCoinStatusBar(this.coinCount);
+            this.world.audioManager.playSound('tradeSuccess');
+        } else {
+            this.world.audioManager.playSound('tradeFail');
+        }
+    }
+}
     checkThrow(isThrowing) {
         if (isThrowing) {
             this.world.throwables.push(new BottleThrowable(this.world));

@@ -87,19 +87,27 @@ class Character extends PcNpc {
             const isMoving = this.world.inputs.LEFT || this.world.inputs.RIGHT;
             const isJumping = this.world.inputs.JUMP;
             const isThrowing = this.world.inputs.THROW && this.throwableCount > 0 && !this.throwableTimeOut;
+            const isTrading = this.world.inputs.TRADE;
 
             this.checkHealth();
             if (!this.dead() && !this.isHurt()) {
                 this.checkJump(isJumping, isMoving);
             } 
+            this.checkTrade(isTrading);
             this.checkThrow(isThrowing);
             this.checkDirection();
             this.checkMovement(isMoving);
 
             this.world.cameraX = -this.x + 100;
+
+            this.updateDisplayedCounts();
+
         }, 60, `${className}character-animate`);
     }   
 
-    
+    updateDisplayedCounts() {
+        document.getElementById('coinCount').textContent = this.coinCount;
+        document.getElementById('bottleCount').textContent = this.throwableCount;
+    }
 
 }

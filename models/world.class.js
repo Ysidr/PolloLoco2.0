@@ -66,6 +66,8 @@ class World {
         this.audioManager.loadSound('collect', 'audio/ES_Retro, Collect Coin Or Treasure - Epidemic Sound.mp3');
         this.audioManager.loadSound('bottleThrow', 'audio/ES_Sploshing, Plastic Bottle - Epidemic Sound - 0000-2966.wav');
         this.audioManager.loadSound('jump', 'audio/ES_Rock, Surface, Jump On - Epidemic Sound - 0692-1226.wav');
+        this.audioManager.loadSound('tradeFail', 'audio/ES_Male Screams No - Epidemic Sound - 0000-2131.wav');
+        this.audioManager.loadSound('tradeSuccess', 'audio/ES_Cash Register, Kaching, Money - Epidemic Sound.mp3');
 
     }
 
@@ -128,41 +130,83 @@ class World {
     checkCollisions() {
         IntervalManager.setInterval(() => {
             this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
-                    this.character.hurt(this.enemyDamage);
-                    this.audioManager.playSound('hurt', 1.0, false, null, 200);
-                }
-                if (this.throwables.length > 0) {
-                    this.throwables.forEach((throwable) => {
-                        if (throwable.isColliding(enemy)) {
-                            enemy.hurt(this.throwablesDamage);
-                            this.throwables.splice(this.throwables.indexOf(throwable), 1);
-                            console.log('Enemy hit by bottle', enemy);
-                            if (enemy.hp <= 0) {
-                                this.enemies.splice(this.enemies.indexOf(enemy), 1);
-                                console.log('Enemy HP:', enemy.hp);
-                            }
-                            this.audioManager.playSound('enemyHurt');
-                        }
-                    });
-                }
-                if (this.collectables.length > 0) {
-                    this.level.collectables.forEach((collectable) => {
-                        if (this.character.isColliding(collectable)) {
-                            this.audioManager.playSound('collect');
-                            if (collectable instanceof CoinCollectable) {
-                                this.character.coinCount += collectable.value;
-                                this.coinStatusBar.updateCoinStatusBar(this.character.coinCount);
-                            } else if (collectable instanceof BottleCollectable) {
-                                this.character.throwableCount += collectable.value;
-                                this.bottleStatusBar.updateBottleStatusBar(this.character.throwableCount);
-                            }
-                            this.level.collectables.splice(this.level.collectables.indexOf(collectable), 1);
-                    }
-                    });
-                }
+                this.checkAllEnemyCollisions(enemy);
             });
+            if (this.collectables.length > 0) {
+                this.checkCollectables();
+            }
         }, 200, 'collision-check');
     }
 
+    checkAllEnemyCollisions(enemy) {
+        if (this.character.isColliding(enemy)) {
+            this.character.hurt(this.enemyDamage);
+            this.audioManager.playSound('hurt', 1.0, false, null, 200);
+        }
+        if (this.throwables.length > 0) {
+            this.checkThrowables(enemy);
+        }
+    }
+
+    checkThrowables(enemy) {
+        this.throwables.forEach((throwable) => {
+            if (throwable.isColliding(enemy)) {
+                enemy.hurt(this.throwablesDamage);
+                this.throwables.splice(this.throwables.indexOf(throwable), 1);
+                console.log('Enemy hit by bottle', enemy);
+                if (enemy.hp <= 0) {
+                    this.enemies.splice(this.enemies.indexOf(enemy), 1);
+                    console.log('Enemy HP:', enemy.hp);
+                }
+                this.audioManager.playSound('enemyHurt');
+            }
+        });
+    }
+
+    checkCollectables() {
+        this.level.collectables.forEach((collectable) => {
+            if (this.character.isColliding(collectable)) {
+                this.audioManager.playSound('collect');
+                if (collectable instanceof CoinCollectable) {
+                    this.updateCoinCollectable(collectable);
+                } else if (collectable instanceof BottleCollectable) {
+                    this.updateBottleCollectable(collectable);
+                }
+                this.level.collectables.splice(this.level.collectables.indexOf(collectable), 1);
+            }
+        });
+    }
+
+    updateCoinCollectable(collectable) {
+        this.character.coinCount += collectable.value;
+        console.log(this.character.coinCount);
+        this.coinStatusBar.updateCoinStatusBar(this.character.coinCount);
+        this.coinRespawn();
+    }
+
+    coinRespawn() {
+        const coins = this.level.collectables.filter(item => item instanceof CoinCollectable);
+        
+        if (coins.length < 5) {
+            const coinsToAdd = 5 - coins.length;
+            const minX = 100;
+            const maxX = 3000;
+            const groundY = 480 - 90;
+            
+            for (let i = 0; i < coinsToAdd; i++) {
+                const newCoin = new CoinCollectable();
+                newCoin.x = minX + Math.random() * (maxX - minX);
+                newCoin.y = groundY - newCoin.height;
+                this.level.collectables.push(newCoin);
+            }
+            console.log(`Coins in game: ${this.level.collectables.filter(item => item instanceof CoinCollectable).length}`);
+        }
+        
+        setTimeout(() => this.coinRespawn(), 1000);
+    }
+
+    updateBottleCollectable(collectable) {
+        this.character.throwableCount += collectable.value;
+        this.bottleStatusBar.updateBottleStatusBar(this.character.throwableCount);
+    }
 }

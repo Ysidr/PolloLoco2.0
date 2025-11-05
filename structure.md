@@ -1,39 +1,91 @@
-# Game Architecture Documentation
+# El Pollo Loco - Game Architecture
+
+## Project Structure
+
+```
+/
+├── audio/                 # Game sound effects
+├── img/                   # Game assets (sprites, backgrounds, etc.)
+│   ├── 1_editables/       # Source design files
+│   ├── 2_character_pepe/  # Player character sprites
+│   ├── 3_enemies_chicken/ # Enemy sprites
+│   └── 4_enemie_boss_chicken/ # Boss enemy sprites
+├── js/                    # Main game scripts
+├── levels/                # Level definitions
+├── models/                # Game object classes
+│   ├── collectables/      # Collectable items
+│   ├── statusbars/        # UI status bars
+│   └── throwables/        # Projectile objects
+├── index.html            # Main HTML file
+├── style.css             # Game styles
+└── structure.md          # This documentation file
+```
 
 ## Inheritance Hierarchy
 
+### Core Game Objects
 ```
 MovableObject (Base Class)
-├── BackgroundObject
-├── Cloud
-├── Collectable
-│   └── CoinCollectable
-├── Throwables
-│   └── BottleThrowable
-└── PcNpc
-    ├── Character
-    ├── Chicken
-    └── Endboss
-
-StatusBars (UI Base)
-├── HpStatusbar
-├── CoinStatusbar
-└── BottleStatusbar
-
-Utility Classes:
-├── Inputs
-├── IntervalManager
-├── Level
-└── World
+├── BackgroundObject      # Background elements
+├── Cloud                 # Cloud objects for parallax
+├── Collectable           # Base for collectable items
+│   ├── CoinCollectable   # Collectible coins
+│   └── BottleCollectable # Collectible bottles
+├── Throwable             # Base for throwable objects
+│   └── BottleThrowable   # Throwable bottles
+└── PcNpc                 # Base for characters
+    ├── Character         # Playable character
+    ├── Chicken           # Regular enemy
+    └── Endboss           # Boss enemy
 ```
 
-## Class Descriptions
+### UI Components
+```
+StatusBars (Base Class)
+├── HpStatusbar      # Health display
+├── CoinStatusbar    # Coin counter
+└── BottleStatusbar  # Bottle counter
+```
 
-### Core Game Objects
-- **MovableObject**: Base class for all game objects with position, velocity, and rendering
-- **Collectable**: Base for collectable items with world reference and collection logic
-- **PcNpc**: Base for playable and non-playable characters with health and combat systems
-- **StatusBars**: Base class for UI elements with screen-space positioning
+### Game Systems
+```
+- AudioManager      # Handles sound effects and music
+- Inputs            # Manages keyboard input
+- IntervalManager   # Controls game loops and timers
+- Level             # Level configuration and state
+- World             # Main game world and loop
+```
+
+## Key Components
+
+### Core Systems
+- **World**: Main game controller, manages game loop and object updates
+- **Level**: Defines level layout, enemies, and collectables
+- **Inputs**: Handles keyboard input and maps it to game actions
+- **AudioManager**: Manages sound effects and background music
+
+### Game Objects
+- **Character**: Player-controlled character with movement and combat abilities
+- **Enemies**: Various enemy types with different behaviors
+- **Collectables**: Items that can be collected by the player
+- **Throwables**: Projectiles that can be used in combat
+
+### UI Elements
+- **StatusBars**: Display player health and resource information
+- **Counters**: Show current coin and bottle counts
+
+## Game Flow
+1. Game initializes and loads assets
+2. World is created with the current level
+3. Game loop starts, processing input and updating game state
+4. Player interacts with the world, collecting items and fighting enemies
+5. Game state is rendered to the canvas
+6. Player either completes the level or loses all health
+
+## Dependencies
+- HTML5 Canvas for rendering
+- Web Audio API for sound
+- Modern JavaScript (ES6+)
 
 ### Game Entities
 - **Character**: Player character with movement, inventory, and throwing mechanics

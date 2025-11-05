@@ -7,6 +7,7 @@ function init() {
 
     canvas = document.querySelector("canvas");
     world = new World(canvas, inputs);
+    
 
     // Set the canvas size to 750x480 and scale for high-DPI displays
     // this.scaleCanvas(750, 480);
@@ -32,6 +33,10 @@ window.addEventListener('keydown', (event) => {
     if (event.keyCode === 16) {
         inputs.THROW = true;
     }
+    if (event.keyCode === 67) {
+        inputs.TRADE = true;
+    }
+
 
 });
 
@@ -40,4 +45,5 @@ window.addEventListener('keyup', (event) => {
     if (event.keyCode === 68) inputs.RIGHT = false;
     if (event.keyCode === 32) inputs.JUMP = false;
     if (event.keyCode === 16) inputs.THROW = false;
+    if (event.keyCode === 67) inputs.TRADE = false;
 });

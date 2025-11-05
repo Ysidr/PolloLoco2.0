@@ -3,4 +3,5 @@ class Inputs {
     RIGHT = false;
     JUMP = false;
     SHOOT = false;
+    TRADE = false;
 }
