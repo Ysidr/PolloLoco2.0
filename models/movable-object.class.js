@@ -66,6 +66,7 @@ class MovableObject {
     checkJump(isJumping, isMoving) {
         if (isJumping && !this.isAboveGround()) {
             this.speedY = 25;
+            this.world.audioManager.playSound('jump');
         }
         if (this.isAboveGround()) {
             this.playAnimation(this.framesJump);
@@ -84,7 +85,7 @@ class MovableObject {
 
     checkMovement(isMoving) {
         if (isMoving) {
-            this.world.audioManager.playSound('walk');
+            this.world.audioManager.playSound('walk', 1.0, false, null, 200);
             if (this.world.inputs.LEFT && this.x > 120) {
                 this.x -= this.speed;
             } else if (this.world.inputs.RIGHT && this.x < this.world.level.levelEndX) {
@@ -97,7 +98,7 @@ class MovableObject {
         if (isThrowing) {
             this.world.throwables.push(new BottleThrowable(this.world));
             this.throwableTimeOut = true;
-            
+
             setTimeout(() => {
                 this.throwableTimeOut = false;
                 this.world.throwables.pop();
@@ -121,11 +122,11 @@ class MovableObject {
     }
 
     isColliding(mo) {
-    return this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
-           this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
-           this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom &&
-           this.y + this.height - this.offset.bottom > mo.y + mo.offset.top;
-}
+        return this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+            this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom &&
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top;
+    }
 
 
 }

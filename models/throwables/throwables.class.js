@@ -1,11 +1,13 @@
 class Throwables extends MovableObject {
-    
+
 
     constructor(world) {
         super(world);
         this.world = world;
         console.log('Throwables constructor - world:', world);
         console.log('Character reference:', this.world?.character);
+        // Play throw sound once when bottle is created
+        this.world.audioManager.playSound('bottleThrow', 0.5, false, 1000);
     }
 
     animate() {
@@ -23,14 +25,14 @@ class Throwables extends MovableObject {
 
     break() {
         this.playAnimation(this.framesBreak);
-        this.world.audioManager.playSound('bottle');
+        this.world.audioManager.playSound('bottleBreak');
     }
 
     fly() {
         this.speedY -= this.acceleration;
         this.y -= this.speedY;
         this.x += this.speed;
-        
+
         this.playAnimation(this.framesFlying);
     }
 

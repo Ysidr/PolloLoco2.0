@@ -3,6 +3,7 @@ class Endboss extends PcNpc {
     x = 5000;
     width = 400;
     height = 400;
+    hp = 100;
     
 
     framesAlert = [
@@ -27,6 +28,7 @@ class Endboss extends PcNpc {
 
     animate() {
         setInterval(() => {
+            this.checkHealth();
             this.playAnimation(this.framesAlert);
         }, 10000 / 60);
     }

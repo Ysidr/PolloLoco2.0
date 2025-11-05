@@ -56,10 +56,15 @@ class World {
 
     loadSounds() {
         this.audioManager.loadSound('walk', 'audio/ES_Feet, Land, Jump, Ground - Epidemic Sound - 0000-0207.wav');
-        this.audioManager.loadSound('bottle', 'audio/ES_Bottle, Hit, Break With Hammer 02 - Epidemic Sound.mp3');
+        this.audioManager.loadSound('bottleBreak', 'audio/ES_Bottle, Hit, Break With Hammer 02 - Epidemic Sound.mp3');
         this.audioManager.loadSound('hurt', 'audio/ES_Male, Hurt, Low Intensity - Epidemic Sound - 0000-0465.wav');
         this.audioManager.loadSound('die', 'audio/ES_Asian Game Character, E, Death - Epidemic Sound - 2629-3943.wav');
         this.audioManager.loadSound('bossDeath', 'audio/ES_Game, Retro Style, Boss, Vocalization - Epidemic Sound - 0000-1815.wav');
+        this.audioManager.loadSound('enemyHurt', 'audio/ES_Bird, Chickens - Epidemic Sound - 0000-1473.wav');
+        this.audioManager.loadSound('collect', 'audio/ES_Retro, Collect Coin Or Treasure - Epidemic Sound.mp3');
+        this.audioManager.loadSound('bottleThrow', 'audio/ES_Sploshing, Plastic Bottle - Epidemic Sound - 0000-2966.wav');
+        this.audioManager.loadSound('jump', 'audio/ES_Rock, Surface, Jump On - Epidemic Sound - 0692-1226.wav');
+
     }
 
 
@@ -123,18 +128,22 @@ class World {
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
                     this.character.hurt();
+                    this.audioManager.playSound('hurt', 1.0, false, null, 200);
                 }
                 if (this.throwables.length > 0) {
                     this.throwables.forEach((throwable) => {
                         if (throwable.isColliding(enemy)) {
+                            this.enemies[enemy].hurt();
                             console.log('Enemy hit by bottle', enemy);
-                            this.enemies.splice(this.enemies.indexOf(enemy), 1);
+                            this.enemies[enemy].hp = 0 ? this.enemies.splice(this.enemies.indexOf(enemy), 1) : console.log(this.enemies[enemy].hp);
+                            this.audioManager.playSound('enemyHurt');
                         }
                     });
                 }
                 if (this.collectables.length > 0) {
                     this.level.collectables.forEach((collectable) => {
                         if (this.character.isColliding(collectable)) {
+                            this.audioManager.playSound('collect');
                             if (collectable instanceof CoinCollectable) {
                                 this.character.coinCount += collectable.value;
                                 this.coinStatusBar.updateCoinStatusBar(this.character.coinCount);

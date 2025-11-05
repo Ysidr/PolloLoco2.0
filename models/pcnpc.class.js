@@ -20,6 +20,21 @@ class PcNpc extends MovableObject {
         if (this.dead()) {
             if (this.framesDead && this.framesDead.length > 0) {
                 this.playAnimation(this.framesDead);
+                if (this instanceof Endboss) {
+                    this.world.audioManager.playSound('bossDeath');
+                } else if (this instanceof Chicken) {
+                    this.world.audioManager.playSound('enemyHurt');
+                } else if (this instanceof Character) {
+                    this.world.audioManager.playSound('die');
+                }
+                switch (this instanceof Endboss) {
+                    case true:
+                        this.world.audioManager.playSound('bossDeath');
+                        break;
+                    default:
+                        this.world.audioManager.playSound('die');
+                        break;
+                }
                 IntervalManager.clearAllIntervals();
             }
             // this.world.level.enemies.splice(this.world.level.enemies.indexOf(this), 1);

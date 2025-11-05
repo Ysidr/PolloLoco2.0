@@ -3,6 +3,7 @@ class Chicken extends PcNpc {
     y;
     width = 80;
     height = 90;
+    hp = 5;
 
     offset = {
         top: 10,
@@ -30,7 +31,8 @@ class Chicken extends PcNpc {
     
 
     animate() {
-        IntervalManager.setInterval(() => {
+        const id = IntervalManager.setInterval(() => {
+            this.checkHealth();
             this.playAnimation(this.framesWalk);
         }, 10000 / 60, 'chicken-animate');
         this.moveLeft();
