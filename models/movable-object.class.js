@@ -95,6 +95,10 @@ class MovableObject {
     }
 
     checkTrade(isTrading) {
+        const now = Date.now();
+        if (now - this.lastTradeTime < this.tradeCooldown){
+            return;
+        }
         if (isTrading) {
             if (this.coinCount >= 5) {
                 this.coinCount -= 5;
@@ -105,6 +109,7 @@ class MovableObject {
             } else {
                 this.world.audioManager.playSound('tradeFail');
             }
+            this.lastTradeTime = Date.now();
         }
     }
     checkThrow(isThrowing) {

@@ -6,6 +6,8 @@ class Character extends PcNpc {
     world;
     speed = 25;
     throwableTimeOut = false;
+    lastTradeTime = 0;
+    tradeCooldown = 2000;
 
     throwableCount = 0;
     coinCount = 0;
@@ -138,7 +140,7 @@ class Character extends PcNpc {
     }
 
     changeCameraInSmoothSteps(targetX) {
-        this.cameraTransitionProgress += 0.2;  
+        this.cameraTransitionProgress += 0.2;
         const t = this.cameraTransitionProgress;
         const smoothT = t * t * (3 - 2 * t);
         this.world.cameraX = this.cameraStartX + (targetX - this.cameraStartX) * smoothT;
@@ -147,6 +149,13 @@ class Character extends PcNpc {
     updateDisplayedCounts() {
         document.getElementById('coinCount').textContent = this.coinCount;
         document.getElementById('bottleCount').textContent = this.throwableCount;
+        const tradeCooldownElement = document.getElementById('tradeCooldown');
+        if (tradeCooldownElement) {
+            const timeLeft = Math.max(0, this.tradeCooldown - (Date.now() - this.lastTradeTime));
+            tradeCooldownElement.textContent = timeLeft > 0 ?
+                `Trade Cooldown: ${(timeLeft / 1000).toFixed(1)}s` :
+                'Trade Ready (C)';
+            tradeCooldownElement.style.color = timeLeft > 0 ? '#ff6b6b' : '#cfa751ff';
+        }
     }
-
 }

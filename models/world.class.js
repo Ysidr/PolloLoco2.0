@@ -144,6 +144,7 @@ class World {
             if (this.character.isColliding(enemy, true).bottom) {
                 enemy.hurt(this.characterJumpDamage);
                 this.audioManager.playSound('enemyHurt', 1.0, false, null, 200);
+                this.character.speedY = 25;
 
                 console.log('Character jumped on enemy!')
                 if (enemy.hp <= 0) {
