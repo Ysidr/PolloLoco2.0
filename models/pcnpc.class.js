@@ -35,8 +35,8 @@ class PcNpc extends MovableObject {
                 if (this instanceof Endboss) {
                     this.world.audioManager.playSound('bossDeath');
                 } else if (this instanceof Chicken || this instanceof MiniChicken) {
-                    this.world.audioManager.playSound('enemyHurt');
                     if (this.isDead && this.world.enemies.includes(this)) {
+                        this.world.audioManager.playSound('enemyHurt');
                         this.world.enemies.splice(this.world.enemies.indexOf(this), 1);
                     }
                 } else if (this instanceof Character) {

@@ -4,6 +4,8 @@ let inputs = new Inputs();
 
 
 function init() {
+    gameStartContainer.classList.add('d-none')
+    document.getElementById("canvas").classList.remove('d-none')
 
     canvas = document.querySelector("canvas");
     world = new World(canvas, inputs);
@@ -11,6 +13,16 @@ function init() {
 
     // Set the canvas size to 750x480 and scale for high-DPI displays
     // this.scaleCanvas(750, 480);
+}
+
+function backToStart() {
+    document.getElementById("gameStartContainer").classList.remove('d-none')
+    document.getElementById("gameControllContainer").classList.add('d-none')
+}
+
+function showControlls() {
+    document.getElementById("gameStartContainer").classList.add('d-none')
+    document.getElementById("gameControllContainer").classList.remove('d-none')
 }
 
 function restartGame() {

@@ -41,14 +41,47 @@
 <script src="./js/game.js"></script>
 </head>
 
-<body onload="init()">
+<body>
     <h1>El Pollo Loco</h1>
     <div class = "counters">
     <div class="coinCount">Coin Count: <span id="coinCount">0</span></div>
     <div class="bottleCount">Bottle Count: <span id="bottleCount">0</span></div>
     <div id="tradeCooldown">Trade Ready (C)</div>
     </div>
-    <canvas width="720" height="480" id="canvas"></canvas>
+    <div id="gameStartContainer" class="gameStartContainer">
+        <button onclick="init()">Start</button>
+        <button onclick="showControlls()">Controlls</button>
+        <button>Exit</button>
+    </div>
+    <div id="gameControllContainer" class="gameControllContainer d-none">
+        <div class="backBtn">
+        <button onclick="backToStart()">Back </button>
+        </div>
+        <div class="controlls">
+        <div class="controll">
+            <div class="controllButton">␣</div>
+            <div class="controllText">JUMP</div>
+        </div>
+        <div class="controll">
+            <div class="controllButton">A</div>
+            <div class="controllText">LEFT</div>
+        </div>
+        <div class="controll">
+            <div class="controllButton">D</div>
+            <div class="controllText">RIGHT</div>
+        </div>
+        <div class="controll">
+            <div class="controllButton">C</div>
+            <div class="controllText">TRADE</div>
+        </div>
+        <div class="controll">
+            <div class="controllButton">⇧</div>
+            <div class="controllText">THROW</div>
+        </div>
+        <p>Trade possible when you have more than 5 coins</p>
+        </div>
+    </div>
+    <canvas width="720" class="d-none" height="480" id="canvas"></canvas>
     <div class="forYourInfo"><p>Nothing for weak nerves, so jumping is disabled when hurt <br> have Fun ;)</p></div>
     <div id="pauseButton" onclick="IntervalManager.pauseAllIntervals()">Pause</div>
     <div id="resumeButton" onclick="IntervalManager.resumeAllIntervals()">Resume</div>
