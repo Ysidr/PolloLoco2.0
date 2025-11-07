@@ -4,6 +4,7 @@ let inputs = new Inputs();
 
 
 function init() {
+    initLevel()
     gameStartContainer.classList.add('d-none')
     document.getElementById("canvas").classList.remove('d-none')
 
@@ -26,6 +27,8 @@ function showControlls() {
 }
 
 function restartGame() {
+    IntervalManager.stopAllIntervals();
+    level1 = null;
     world = null;
     canvas = null;
     init();

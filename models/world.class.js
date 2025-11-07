@@ -140,12 +140,12 @@ class World {
             if (this.collectables.length > 0) {
                 this.checkCollectables();
             }
-        }, 200, 'collision-check');
+        }, 50, 'collision-check');
     }
 
     checkAllEnemyCollisions(enemy) {
         if (this.character.isColliding(enemy)) {
-            if (this.character.isColliding(enemy, true).bottom) {
+            if (this.character.isColliding(enemy, true) && this.character.speedY < 0) {
                 enemy.hurt(this.characterJumpDamage);
                 this.audioManager.playSound('coin', 1.0, false, null, 200);
                 this.character.coinCount += 1;
