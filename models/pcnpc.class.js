@@ -34,6 +34,7 @@ class PcNpc extends MovableObject {
             if (this.framesDead && this.framesDead.length > 0) {
                 if (this instanceof Endboss) {
                     this.world.audioManager.playSound('bossDeath');
+                    IntervalManager.clearAllIntervals();
                 } else if (this instanceof Chicken || this instanceof MiniChicken) {
                     if (this.isDead && this.world.enemies.includes(this)) {
                         this.world.audioManager.playSound('enemyHurt');
@@ -42,15 +43,6 @@ class PcNpc extends MovableObject {
                 } else if (this instanceof Character) {
                     this.world.audioManager.playSound('die');
                     IntervalManager.clearAllIntervals();
-                }
-                switch (this instanceof Endboss) {
-                    case true:
-                        this.world.audioManager.playSound('bossDeath');
-                        IntervalManager.clearAllIntervals();
-                        break;
-                    default:
-                        this.world.audioManager.playSound('die');
-                        break;
                 }
             }
         } else {

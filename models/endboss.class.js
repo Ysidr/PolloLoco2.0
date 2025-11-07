@@ -24,7 +24,7 @@ class Endboss extends PcNpc {
         `img/4_enemie_boss_chicken/1_walk/G3.png`,
         `img/4_enemie_boss_chicken/1_walk/G4.png`,
     ];
-    
+
     framesHurt = [
         `img/4_enemie_boss_chicken/4_hurt/G21.png`,
         `img/4_enemie_boss_chicken/4_hurt/G22.png`,
@@ -32,11 +32,18 @@ class Endboss extends PcNpc {
 
     ];
 
+    framesDead = [
+        `img/4_enemie_boss_chicken/5_dead/G24.png`,
+        `img/4_enemie_boss_chicken/5_dead/G25.png`,
+        `img/4_enemie_boss_chicken/5_dead/G26.png`,
+    ];
+
     constructor() {
         super().loadImage('img/4_enemie_boss_chicken/2_alert/G5.png');
         this.loadImages(this.framesAlert);
         this.loadImages(this.framesHurt);
         this.loadImages(this.framesWalk);
+        this.loadImages(this.framesDead);
         this.y = 480 - this.height - 20;
 
         this.animate();
@@ -55,7 +62,7 @@ class Endboss extends PcNpc {
             }
             if (i < this.framesAlert.length) {
                 this.playAnimation(this.framesAlert);
-            }else{
+            } else {
                 this.playAnimation(this.framesWalk);
             }
             i++;
