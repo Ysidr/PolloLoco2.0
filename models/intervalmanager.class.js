@@ -35,4 +35,12 @@ class IntervalManager {
     static logAllIntervals() {
         console.log(`Active intervals (${this.intervalCount}):`, this.getIntervalList());
     }
+
+    static pauseAllIntervals() {
+        this.intervals.forEach(id => clearInterval(id));
+    }
+
+    static resumeAllIntervals() {
+        this.intervals.forEach(id => setInterval(id));
+    }
 }

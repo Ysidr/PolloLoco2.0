@@ -21,6 +21,7 @@
 <script src="./models/pcnpc.class.js"></script>
 <script src="./models/character.class.js"></script>
 <script src="./models/chicken.class.js"></script>
+<script src="./models/mini-chicken.class.js"></script>
 <script src="./models/endboss.class.js"></script>
 <script src="./models/cloud.class.js"></script>
 <script src="./models/backgroundObject.class.js"></script>
@@ -49,6 +50,9 @@
     </div>
     <canvas width="720" height="480" id="canvas"></canvas>
     <div class="forYourInfo"><p>Nothing for weak nerves, so jumping is disabled when hurt <br> have Fun ;)</p></div>
+    <div id="pauseButton" onclick="IntervalManager.pauseAllIntervals()">Pause</div>
+    <div id="resumeButton" onclick="IntervalManager.resumeAllIntervals()">Resume</div>
+    <div id="restartButton" onclick="restartGame()">Restart</div>
 
     
 </body>

@@ -38,6 +38,9 @@ class World {
     setWorld() {
         this.character.world = this;
         this.character.hpStatusBar = this.hpStatusBar;
+        this.enemies.forEach((enemy) => {
+            enemy.world = this;
+        });
     }
 
     initializeBackgroundObjects() {
@@ -69,6 +72,7 @@ class World {
         this.audioManager.loadSound('jump', 'audio/ES_Rock, Surface, Jump On - Epidemic Sound - 0692-1226.wav');
         this.audioManager.loadSound('tradeFail', 'audio/ES_Male Screams No - Epidemic Sound - 0000-2131.wav');
         this.audioManager.loadSound('tradeSuccess', 'audio/ES_Cash Register, Kaching, Money - Epidemic Sound.mp3');
+        this.audioManager.loadSound('bossAlert', 'audio/ES_Demon, Large Demon Boss Approaching - Epidemic Sound.mp3');
 
     }
 
@@ -149,9 +153,7 @@ class World {
                 this.character.speedY = 25;
 
                 console.log('Character jumped on enemy!')
-                if (enemy.hp <= 0) {
-                    this.enemies.splice(this.enemies.indexOf(enemy), 1);
-                }
+
             } else {
                 this.character.hurt(this.enemyDamage);
                 this.audioManager.playSound('hurt', 1.0, false, null, 200);
@@ -168,10 +170,6 @@ class World {
                 enemy.hurt(this.throwablesDamage);
                 this.throwables.splice(this.throwables.indexOf(throwable), 1);
                 console.log('Enemy hit by bottle', enemy);
-                if (enemy.hp <= 0) {
-                    this.enemies.splice(this.enemies.indexOf(enemy), 1);
-                    console.log('Enemy HP:', enemy.hp);
-                }
                 this.audioManager.playSound('enemyHurt');
             }
         });

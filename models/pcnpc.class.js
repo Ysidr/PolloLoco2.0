@@ -1,8 +1,15 @@
 class PcNpc extends MovableObject {
     hp = 100;
     lastHit = 0;
+    characterX = 0;
+    isDying = false;
+    isDead = false;
 
-    
+
+
+
+
+
 
 
     hurt(damage) {
@@ -23,11 +30,15 @@ class PcNpc extends MovableObject {
 
     checkHealth() {
         if (this.dead()) {
+            this.isDying = true;
             if (this.framesDead && this.framesDead.length > 0) {
                 if (this instanceof Endboss) {
                     this.world.audioManager.playSound('bossDeath');
-                } else if (this instanceof Chicken) {
+                } else if (this instanceof Chicken || this instanceof MiniChicken) {
                     this.world.audioManager.playSound('enemyHurt');
+                    if (this.isDead && this.world.enemies.includes(this)) {
+                        this.world.enemies.splice(this.world.enemies.indexOf(this), 1);
+                    }
                 } else if (this instanceof Character) {
                     this.world.audioManager.playSound('die');
                     IntervalManager.clearAllIntervals();
@@ -39,7 +50,6 @@ class PcNpc extends MovableObject {
                         break;
                     default:
                         this.world.audioManager.playSound('die');
-                        IntervalManager.clearAllIntervals();
                         break;
                 }
             }
@@ -55,7 +65,7 @@ class PcNpc extends MovableObject {
     }
 
     isHurt() {
-        let timeSinceLastHit = new Date().getTime() - this.lastHit  ;
+        let timeSinceLastHit = new Date().getTime() - this.lastHit;
         timeSinceLastHit = timeSinceLastHit / 100;
         return timeSinceLastHit < 5;
     }

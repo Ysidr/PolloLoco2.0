@@ -13,6 +13,12 @@ function init() {
     // this.scaleCanvas(750, 480);
 }
 
+function restartGame() {
+    world = null;
+    canvas = null;
+    init();
+}
+
 // function scaleCanvas(width, height) {
 //     canvas.width = width * window.devicePixelRatio;
 //     canvas.height = height * window.devicePixelRatio;

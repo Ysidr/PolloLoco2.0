@@ -90,7 +90,6 @@ class Character extends PcNpc {
             const isJumping = this.world.inputs.JUMP;
             const isThrowing = this.world.inputs.THROW && this.throwableCount > 0 && !this.throwableTimeOut;
             const isTrading = this.world.inputs.TRADE;
-
             this.checkHealth();
             if (!this.dead() && !this.isHurt()) {
                 this.checkJump(isJumping, isMoving);

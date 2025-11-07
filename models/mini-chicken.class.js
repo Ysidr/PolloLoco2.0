@@ -38,7 +38,16 @@ class MiniChicken extends PcNpc {
         const className = this.constructor.name;
         IntervalManager.setInterval(() => {
             this.checkHealth();
-            this.playAnimation(this.framesWalk);
+            if (this.isDying) {
+                let i = 0;
+                if (i < this.framesDead.length) {
+                    this.playAnimation(this.framesDead);
+                    i++;
+                }
+                this.isDead = true;
+            } else {
+                this.playAnimation(this.framesWalk);
+            }
             this.checkPosition();
         }, 10000 / 60, `${className}chicken-animate`);
         this.moveLeft();
