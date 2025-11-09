@@ -39,12 +39,14 @@ function gameDesingPaused() {
     document.getElementById("pause-btn").classList.add('d-none')
     document.getElementById("play-btn").classList.remove('d-none')
     document.getElementById("restart-btn").classList.remove('d-none')
+    document.getElementById("pause-overlay").classList.remove('d-none')
 }
 
 function gameDesingResumed() {
     document.getElementById("pause-btn").classList.remove('d-none')
     document.getElementById("play-btn").classList.add('d-none')
     document.getElementById("restart-btn").classList.add('d-none')
+    document.getElementById("pause-overlay").classList.add('d-none')
 }
 
 // function scaleCanvas(width, height) {

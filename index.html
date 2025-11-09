@@ -85,6 +85,7 @@
     </div>
     <div class="game-container">
     <canvas width="720" height="480" id="canvas" class="d-none"></canvas>
+        <div id="pause-overlay" class="d-none"></div>
     <div class="gameButtons d-none" id="gameButtons">
         <button class="pause-btn" id="pause-btn" onclick="IntervalManager.pauseAllIntervals(), gameDesingPaused()" aria-label="Pause" title="Pause">
             <span class="bar"></span>
@@ -93,7 +94,7 @@
         <button class="icon-btn play-btn d-none" id="play-btn" onclick="IntervalManager.resumeAllIntervals(), gameDesingResumed()" aria-label="Resume" title="Resume">
             <span class="triangle"></span>
         </button>
-        <button class="icon-btn restart-btn d-none" id="restart-btn" onclick="restartGame()" aria-label="Restart" title="Restart">
+        <button class="icon-btn restart-btn d-none" id="restart-btn" onclick="restartGame(), gameDesingResumed()" aria-label="Restart" title="Restart">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path d="M17.65 6.35A7.95 7.95 0 0 0 12 4a8 8 0 1 0 7.95 9h-2.02A6 6 0 1 1 12 6c1.57 0 3 .61 4.05 1.65L13 11h7V4l-2.35 2.35z"/>
             </svg>
