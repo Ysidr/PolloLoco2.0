@@ -1,6 +1,7 @@
 class IntervalManager {
     static intervals = new Set();
     static intervalCount = 0;
+    static allFunctions = [];
     static addInterval(id, name = 'unnamed') {
         this.intervals.add(id);
         this.intervalCount++;
@@ -23,6 +24,7 @@ class IntervalManager {
         console.log('All intervals cleared');
     }
     static setInterval(callback, delay, name = 'unnamed') {
+        this.allFunctions.push({fn: callback, ms: delay });
         const id = setInterval(callback, delay);
         return this.addInterval(id, name);
     }
@@ -39,8 +41,9 @@ class IntervalManager {
     static pauseAllIntervals() {
         this.intervals.forEach(id => clearInterval(id));
     }
-
     static resumeAllIntervals() {
-        this.intervals.forEach(id => setInterval(id));
+        this.allFunctions.forEach(fn => {
+            setInterval(fn.fn, fn.ms);
+        });
     }
 }
