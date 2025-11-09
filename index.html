@@ -84,23 +84,44 @@
         </div>
     </div>
     <div class="game-container">
-    <canvas width="720" height="480" id="canvas" class="d-none"></canvas>
+        <canvas width="720" height="480" id="canvas" class="d-none"></canvas>
         <div id="pause-overlay" class="d-none"></div>
-    <div class="gameButtons d-none" id="gameButtons">
-        <button class="pause-btn" id="pause-btn" onclick="IntervalManager.pauseAllIntervals(), gameDesingPaused()" aria-label="Pause" title="Pause">
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </button>
-        <button class="icon-btn play-btn d-none" id="play-btn" onclick="IntervalManager.resumeAllIntervals(), gameDesingResumed()" aria-label="Resume" title="Resume">
-            <span class="triangle"></span>
-        </button>
-        <button class="icon-btn restart-btn d-none" id="restart-btn" onclick="restartGame(), gameDesingResumed()" aria-label="Restart" title="Restart">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M17.65 6.35A7.95 7.95 0 0 0 12 4a8 8 0 1 0 7.95 9h-2.02A6 6 0 1 1 12 6c1.57 0 3 .61 4.05 1.65L13 11h7V4l-2.35 2.35z"/>
-            </svg>
-        </button>
+        <div id="rotate-device"
+            style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); color: white; display: flex; justify-content: center; align-items: center; z-index: 9999; flex-direction: column; text-align: center; padding: 20px;">
+            <h2>Please rotate your device</h2>
+            <p>This game is best played in landscape mode</p>
+        </div>
+
+        <div id="mobile-controls" class="mobile-controls">
+            <div class="moveButtons">
+                <button id="btn-left">←</button>
+                <button id="btn-right">→</button>
+            </div>
+            <div class="actionButtons">
+                <button id="btn-jump">↑</button>
+                <button id="btn-throw">✱</button>
+                <button id="btn-trade">C</button>
+            </div>
+        </div>
+        <div class="gameButtons d-none" id="gameButtons">
+            <button class="pause-btn" id="pause-btn" onclick="IntervalManager.pauseAllIntervals(), gameDesingPaused()"
+                aria-label="Pause" title="Pause">
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <button class="icon-btn play-btn d-none" id="play-btn"
+                onclick="IntervalManager.resumeAllIntervals(), gameDesingResumed()" aria-label="Resume" title="Resume">
+                <span class="triangle"></span>
+            </button>
+            <button class="icon-btn restart-btn d-none" id="restart-btn" onclick="restartGame(), gameDesingResumed()"
+                aria-label="Restart" title="Restart">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path
+                        d="M17.65 6.35A7.95 7.95 0 0 0 12 4a8 8 0 1 0 7.95 9h-2.02A6 6 0 1 1 12 6c1.57 0 3 .61 4.05 1.65L13 11h7V4l-2.35 2.35z" />
+                </svg>
+            </button>
+        </div>
     </div>
-</div>
     <div class="forYourInfo">
         <p>Nothing for weak nerves, so jumping is disabled when hurt <br> have Fun ;)</p>
     </div>

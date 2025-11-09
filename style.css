@@ -262,3 +262,42 @@ h1,
     height: 20px;
     fill: currentColor;
 }
+
+/* Mobile Controls */
+#mobile-controls {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: none; /* Hidden by default */
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 1000;
+}
+
+.moveButtons, .actionButtons {
+    display: flex;
+    gap: 15px;
+}
+
+#mobile-controls button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid gold;
+    color: white;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+/* Show only on touch devices in landscape */
+@media (hover: none) and (pointer: coarse) and (orientation: landscape) {
+    #mobile-controls {
+        display: flex;
+    }
+}

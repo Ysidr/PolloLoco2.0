@@ -4,18 +4,27 @@ let inputs = new Inputs();
 
 
 function init() {
-    document.getElementById("gameButtons").classList.remove('d-none')
-    initLevel()
-    gameStartContainer.classList.add('d-none')
-    document.getElementById("canvas").classList.remove('d-none')
+    document.getElementById("gameButtons").classList.remove('d-none');
+    initLevel();
+    gameStartContainer.classList.add('d-none');
+    document.getElementById("canvas").classList.remove('d-none');
 
     canvas = document.querySelector("canvas");
     world = new World(canvas, inputs);
-    
 
-    // Set the canvas size to 750x480 and scale for high-DPI displays
-    // this.scaleCanvas(750, 480);
+    checkOrientation();
 }
+
+function checkOrientation() {
+    if (window.innerWidth > window.innerHeight) {
+        addMobileControl('btn-left', 'LEFT');
+        addMobileControl('btn-right', 'RIGHT');
+        addMobileControl('btn-jump', 'UP');
+        addMobileControl('btn-throw', 'THROW');
+        addMobileControl('btn-trade', 'TRADE');
+    }
+}
+
 
 function backToStart() {
     document.getElementById("gameStartContainer").classList.remove('d-none')
@@ -93,3 +102,29 @@ window.addEventListener('keyup', (event) => {
     if (event.keyCode === 16) inputs.THROW = false;
     if (event.keyCode === 67) inputs.TRADE = false;
 });
+
+function addMobileControl(buttonId, inputKey) {
+    const btn = document.getElementById(buttonId);
+    if (!btn) return;
+
+    const start = (e) => {
+        e.preventDefault();
+        if (window.innerWidth > window.innerHeight)
+            inputs[inputKey] = true; // use the global inputs object
+    };
+
+    const end = (e) => {
+        e.preventDefault();
+        inputs[inputKey] = false;
+    };
+
+    // Desktop
+    btn.addEventListener('mousedown', start);
+    btn.addEventListener('mouseup', end);
+    btn.addEventListener('mouseleave', end);
+
+    // Mobile
+    btn.addEventListener('touchstart', start);
+    btn.addEventListener('touchend', end);
+    btn.addEventListener('touchcancel', end);
+}
