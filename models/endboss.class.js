@@ -6,6 +6,7 @@ class Endboss extends PcNpc {
     hp = 100;
     firstContact = false;
     startedMoving = false;
+    speed = 2;
 
 
     framesAlert = [

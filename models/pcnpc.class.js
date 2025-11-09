@@ -6,12 +6,6 @@ class PcNpc extends MovableObject {
     isDead = false;
 
 
-
-
-
-
-
-
     hurt(damage) {
         if (new Date().getTime() - this.lastHit > 500) {
             this.hp -= damage;
@@ -51,15 +45,16 @@ class PcNpc extends MovableObject {
 
     playDeathAnimationAndRemove() {
         if (this.framesDead && this.framesDead.length > 0) {
-            if (this instanceof Endboss && this.isDead) {
-                this.gameOverWin()
-            }
-
-            else if (this instanceof Character) {
-                this.gameOverLost();
-            }
-            else if (this instanceof Chicken || this instanceof MiniChicken) {
-                this.removeEnemy()
+            switch (true){
+                case this instanceof Endboss && this.isDead:
+                    this.gameOverWin();
+                    break;
+                case this instanceof Character:
+                    this.gameOverLost();
+                    break;
+                case this instanceof Chicken || this instanceof MiniChicken:
+                    this.removeEnemy();
+                    break;
             }
         }
     }
@@ -83,6 +78,4 @@ class PcNpc extends MovableObject {
             this.world.enemies.splice(this.world.enemies.indexOf(this), 1);
         }
     }
-
-
 }

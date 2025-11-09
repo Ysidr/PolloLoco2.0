@@ -87,7 +87,7 @@ class MovableObject {
 
     checkMovement(isMoving) {
         if (isMoving) {
-            this.world.audioManager.playSound('walk', 1.0, false, null, 200);
+            this.world.audioManager.playSound('walk', 1.0, false, null, 300);
             if (this.world.inputs.LEFT && this.x > 120) {
                 this.x -= this.speed;
             } else if (this.world.inputs.RIGHT && this.x < this.world.level.levelEndX) {
@@ -141,20 +141,11 @@ class MovableObject {
         }, 1000 / 60, `${className}-moveLeft`);
     }
 
-    isColliding(mo, checkJump = false) {
+    isColliding(mo) {
         const isColliding = this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
             this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom &&
             this.y + this.height - this.offset.bottom > mo.y + mo.offset.top;
-
-        if (checkJump && isColliding) {
-            return {
-                top: this.y + this.offset.top < mo.y + mo.offset.top,
-                bottom: this.y + this.height - this.offset.bottom > mo.y + mo.height - mo.offset.bottom,
-                left: this.x + this.offset.left < mo.x + mo.offset.left,
-                right: this.x + this.width - this.offset.right > mo.x + mo.width - mo.offset.right
-            };
-        }
         return isColliding;
 
 

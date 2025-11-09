@@ -8,6 +8,7 @@ class Character extends PcNpc {
     throwableTimeOut = false;
     lastTradeTime = 0;
     tradeCooldown = 800;
+    lastBounceTime = 0;
 
     throwableCount = 0;
     coinCount = 0;
@@ -106,28 +107,22 @@ class Character extends PcNpc {
     }
 
     modifyCamera() {
-        // Define camera offsets for left and right directions
-        const offsetRight = 100;  // Camera offset when facing right
-        const offsetLeft = 350;   // Camera offset when facing left
+        const offsetRight = 100;
+        const offsetLeft = 350;
 
-        // Store the previous direction to detect changes
         if (this.lastDirection === undefined) {
             this.lastDirection = this.otherDirection;
         }
 
-        // Calculate target position based on direction
         const targetX = -this.x + (this.otherDirection ? offsetLeft : offsetRight);
 
-        // If direction changed, initialize smooth transition
         if (this.lastDirection !== this.otherDirection) {
             this.startTransition();
         }
 
-        // If we're in a transition
         if (this.cameraTransitionProgress < 1) {
             this.changeCameraInSmoothSteps(targetX);
         } else {
-            // When not transitioning, follow directly
             this.world.cameraX = targetX;
         }
     }

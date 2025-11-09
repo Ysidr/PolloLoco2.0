@@ -14,6 +14,7 @@ class World {
     enemyDamage = level1.enemyDamage;
     bossDamage = level1.bossDamage;
     characterJumpDamage = level1.characterJumpDamage;
+    sounds = level1.sounds;
     inputs;
     canvas;
     ctx;
@@ -62,26 +63,14 @@ class World {
     }
 
     loadSounds() {
-        this.audioManager.loadSound('walk', 'audio/ES_Feet, Land, Jump, Ground - Epidemic Sound - 0000-0207.wav');
-        this.audioManager.loadSound('bottleBreak', 'audio/ES_Bottle, Hit, Break With Hammer 02 - Epidemic Sound.mp3');
-        this.audioManager.loadSound('hurt', 'audio/ES_Male, Hurt, Low Intensity - Epidemic Sound - 0000-0465.wav');
-        this.audioManager.loadSound('die', 'audio/ES_Asian Game Character, E, Death - Epidemic Sound - 2629-3943.wav');
-        this.audioManager.loadSound('bossDeath', 'audio/ES_Game, Retro Style, Boss, Vocalization - Epidemic Sound - 0000-1815.wav');
-        this.audioManager.loadSound('enemyHurt', 'audio/ES_Bird, Chickens - Epidemic Sound - 0000-1473.wav');
-        this.audioManager.loadSound('collect', 'audio/ES_Retro, Collect Coin Or Treasure - Epidemic Sound.mp3');
-        this.audioManager.loadSound('bottleThrow', 'audio/ES_Sploshing, Plastic Bottle - Epidemic Sound - 0000-2966.wav');
-        this.audioManager.loadSound('jump', 'audio/ES_Rock, Surface, Jump On - Epidemic Sound - 0692-1226.wav');
-        this.audioManager.loadSound('tradeFail', 'audio/ES_Male Screams No - Epidemic Sound - 0000-2131.wav');
-        this.audioManager.loadSound('tradeSuccess', 'audio/ES_Cash Register, Kaching, Money - Epidemic Sound.mp3');
-        this.audioManager.loadSound('bossAlert', 'audio/ES_Demon, Large Demon Boss Approaching - Epidemic Sound.mp3');
-
+        Object.entries(this.sounds).forEach(([key, value]) => {
+            this.audioManager.loadSound(key, value);
+        });
     }
-
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        // Draw world objects with camera translation
         this.ctx.save();
         this.ctx.translate(this.cameraX, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
@@ -92,7 +81,6 @@ class World {
         this.addObjectsToMap(this.level.collectables);
         this.ctx.restore();
 
-        // Draw status bars in screen space (not affected by camera)
         [this.hpStatusBar, this.bottleStatusBar, this.coinStatusBar].forEach((bar) => {
             if (bar) {
                 bar.updatePosition(this.cameraX);
@@ -126,7 +114,6 @@ class World {
             this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
         }
 
-        // Draw rectangle around movable objects
         if (mo.drawRectangle && mo instanceof Character || mo instanceof Endboss || mo instanceof Chicken || mo instanceof Throwables || mo instanceof CoinCollectable) {
             mo.drawRectangle(this.ctx);
             mo.drawCollisionBox(this.ctx);
@@ -161,6 +148,7 @@ class World {
 
     jumpOnEnemy(enemy) {
         enemy.hurt(this.characterJumpDamage);
+        this.character.lastBounceTime = new Date().getTime();
         this.audioManager.playSound('coin', 1.0, false, null, 200);
         this.character.coinCount += 1;
         this.character.speedY = 25;
@@ -168,6 +156,10 @@ class World {
     }
 
     damageByEnemy(enemy) {
+        const now = new Date().getTime();
+        if (now - this.character.lastBounceTime < 500) {
+            return;
+        }
         enemy instanceof Endboss ? this.character.hurt(this.bossDamage) : this.character.hurt(this.enemyDamage);
         this.audioManager.playSound('hurt', 1.0, false, null, 200);
     }
@@ -178,7 +170,6 @@ class World {
                 enemy.hurt(this.throwablesDamage);
                 this.throwables.splice(this.throwables.indexOf(throwable), 1);
                 console.log('Enemy hit by bottle', enemy);
-                this.audioManager.playSound('enemyHurt');
             }
         });
     }
