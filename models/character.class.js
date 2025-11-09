@@ -7,7 +7,7 @@ class Character extends PcNpc {
     speed = 25;
     throwableTimeOut = false;
     lastTradeTime = 0;
-    tradeCooldown = 2000;
+    tradeCooldown = 800;
 
     throwableCount = 0;
     coinCount = 0;

@@ -4,6 +4,7 @@ let inputs = new Inputs();
 
 
 function init() {
+    document.getElementById("gameButtons").classList.remove('d-none')
     initLevel()
     gameStartContainer.classList.add('d-none')
     document.getElementById("canvas").classList.remove('d-none')
@@ -27,11 +28,23 @@ function showControlls() {
 }
 
 function restartGame() {
-    IntervalManager.stopAllIntervals();
+    IntervalManager.clearAllIntervals();
     level1 = null;
     world = null;
     canvas = null;
     init();
+}
+
+function gameDesingPaused() {
+    document.getElementById("pause-btn").classList.add('d-none')
+    document.getElementById("play-btn").classList.remove('d-none')
+    document.getElementById("restart-btn").classList.remove('d-none')
+}
+
+function gameDesingResumed() {
+    document.getElementById("pause-btn").classList.remove('d-none')
+    document.getElementById("play-btn").classList.add('d-none')
+    document.getElementById("restart-btn").classList.add('d-none')
 }
 
 // function scaleCanvas(width, height) {

@@ -7,87 +7,105 @@
     <title>El Pollo Loco</title>
     <link rel="stylesheet" href="style.css">
     <!-- Core and base classes -->
-<script src="./models/intervalmanager.class.js"></script>
-<script src="./models/audio-manager.class.js"></script>
-<script src="./models/movable-object.class.js"></script>
-<script src="./models/inputs.class.js"></script>
-<script src="./models/collectables/collectable.class.js"></script>
-<script src="./models/collectables/coin-collectable.class.js"></script>
-<script src="./models/collectables/bottle-collectable.class.js"></script>
-<script src="./models/throwables/throwables.class.js"></script>
-<script src="./models/throwables/bottle-throwable.class.js"></script>
+    <script src="./models/intervalmanager.class.js"></script>
+    <script src="./models/audio-manager.class.js"></script>
+    <script src="./models/movable-object.class.js"></script>
+    <script src="./models/inputs.class.js"></script>
+    <script src="./models/collectables/collectable.class.js"></script>
+    <script src="./models/collectables/coin-collectable.class.js"></script>
+    <script src="./models/collectables/bottle-collectable.class.js"></script>
+    <script src="./models/throwables/throwables.class.js"></script>
+    <script src="./models/throwables/bottle-throwable.class.js"></script>
 
-<!-- Game objects -->
-<script src="./models/pcnpc.class.js"></script>
-<script src="./models/character.class.js"></script>
-<script src="./models/chicken.class.js"></script>
-<script src="./models/mini-chicken.class.js"></script>
-<script src="./models/endboss.class.js"></script>
-<script src="./models/cloud.class.js"></script>
-<script src="./models/backgroundObject.class.js"></script>
+    <!-- Game objects -->
+    <script src="./models/pcnpc.class.js"></script>
+    <script src="./models/character.class.js"></script>
+    <script src="./models/chicken.class.js"></script>
+    <script src="./models/mini-chicken.class.js"></script>
+    <script src="./models/endboss.class.js"></script>
+    <script src="./models/cloud.class.js"></script>
+    <script src="./models/backgroundObject.class.js"></script>
 
-<!-- UI Elements -->
-<script src="./models/statusbars/statusbars.class.js"></script>
-<script src="./models/statusbars/hp-statusbar.class.js"></script>
-<script src="./models/statusbars/bottle-statusbar.class.js"></script>
-<script src="./models/statusbars/coin-statusbar.class.js"></script>
+    <!-- UI Elements -->
+    <script src="./models/statusbars/statusbars.class.js"></script>
+    <script src="./models/statusbars/hp-statusbar.class.js"></script>
+    <script src="./models/statusbars/bottle-statusbar.class.js"></script>
+    <script src="./models/statusbars/coin-statusbar.class.js"></script>
 
-<!-- World and level -->
-<script src="./models/level.class.js"></script>
-<script src="./models/world.class.js"></script>
-<script src="./levels/level1.js"></script>
+    <!-- World and level -->
+    <script src="./models/level.class.js"></script>
+    <script src="./models/world.class.js"></script>
+    <script src="./levels/level1.js"></script>
 
-<!-- Game initialization -->
-<script src="./js/game.js"></script>
+    <!-- Game initialization -->
+    <script src="./js/game.js"></script>
 </head>
 
 <body>
     <h1>El Pollo Loco</h1>
-    <div class = "counters">
-    <div class="coinCount">Coin Count: <span id="coinCount">0</span></div>
-    <div class="bottleCount">Bottle Count: <span id="bottleCount">0</span></div>
-    <div id="tradeCooldown">Trade Ready (C)</div>
+    <div class="counters">
+        <div class="coinCount">Coin Count: <span id="coinCount">0</span></div>
+        <div class="bottleCount">Bottle Count: <span id="bottleCount">0</span></div>
+        <div id="tradeCooldown">Trade Ready (C)</div>
     </div>
     <div id="gameStartContainer" class="gameStartContainer">
-        <button onclick="init()">Start</button>
-        <button onclick="showControlls()">Controlls</button>
-        <button>Exit</button>
+        <div class="startButtons">
+            <button onclick="init()">Start</button>
+            <button onclick="showControlls()">Controlls</button>
+            <button onclick="window.location.href = 'exit.html'">Exit</button>
+        </div>
     </div>
     <div id="gameControllContainer" class="gameControllContainer d-none">
         <div class="backBtn">
-        <button onclick="backToStart()">Back </button>
+            <button onclick="backToStart()">Back </button>
         </div>
         <div class="controlls">
-        <div class="controll">
-            <div class="controllButton">␣</div>
-            <div class="controllText">JUMP</div>
-        </div>
-        <div class="controll">
-            <div class="controllButton">A</div>
-            <div class="controllText">LEFT</div>
-        </div>
-        <div class="controll">
-            <div class="controllButton">D</div>
-            <div class="controllText">RIGHT</div>
-        </div>
-        <div class="controll">
-            <div class="controllButton">C</div>
-            <div class="controllText">TRADE</div>
-        </div>
-        <div class="controll">
-            <div class="controllButton">⇧</div>
-            <div class="controllText">THROW</div>
-        </div>
-        <p>Trade possible when you have more than 5 coins</p>
+            <div class="controll">
+                <div class="controllButton">␣</div>
+                <div class="controllText">JUMP</div>
+            </div>
+            <div class="controll">
+                <div class="controllButton">A</div>
+                <div class="controllText">LEFT</div>
+            </div>
+            <div class="controll">
+                <div class="controllButton">D</div>
+                <div class="controllText">RIGHT</div>
+            </div>
+            <div class="controll">
+                <div class="controllButton">C</div>
+                <div class="controllText">TRADE</div>
+            </div>
+            <div class="controll">
+                <div class="controllButton">⇧</div>
+                <div class="controllText">THROW</div>
+            </div>
+            <p>Trade possible when you have more than 5 coins</p>
         </div>
     </div>
-    <canvas width="720" class="d-none" height="480" id="canvas"></canvas>
-    <div class="forYourInfo"><p>Nothing for weak nerves, so jumping is disabled when hurt <br> have Fun ;)</p></div>
-    <div id="pauseButton" onclick="IntervalManager.pauseAllIntervals()">Pause</div>
-    <div id="resumeButton" onclick="IntervalManager.resumeAllIntervals()">Resume</div>
-    <div id="restartButton" onclick="restartGame()">Restart</div>
+    <div class="game-container">
+    <canvas width="720" height="480" id="canvas" class="d-none"></canvas>
+    <div class="gameButtons d-none" id="gameButtons">
+        <button class="pause-btn" id="pause-btn" onclick="IntervalManager.pauseAllIntervals(), gameDesingPaused()" aria-label="Pause" title="Pause">
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+        <button class="icon-btn play-btn d-none" id="play-btn" onclick="IntervalManager.resumeAllIntervals(), gameDesingResumed()" aria-label="Resume" title="Resume">
+            <span class="triangle"></span>
+        </button>
+        <button class="icon-btn restart-btn d-none" id="restart-btn" onclick="restartGame()" aria-label="Restart" title="Restart">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M17.65 6.35A7.95 7.95 0 0 0 12 4a8 8 0 1 0 7.95 9h-2.02A6 6 0 1 1 12 6c1.57 0 3 .61 4.05 1.65L13 11h7V4l-2.35 2.35z"/>
+            </svg>
+        </button>
+    </div>
+</div>
+    <div class="forYourInfo">
+        <p>Nothing for weak nerves, so jumping is disabled when hurt <br> have Fun ;)</p>
+    </div>
 
-    
+
+
 </body>
 
 </html>

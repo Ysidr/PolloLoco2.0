@@ -18,6 +18,7 @@ button {
     cursor: pointer;
     transition: all 0.3s ease;
 }
+
 button:hover {
     box-shadow: 0px 0px 10px gold;
     transform: scale(1.1);
@@ -26,6 +27,28 @@ button:hover {
 
 .d-none {
     display: none !important;
+}
+
+.gameButtons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+    z-index: 100;
+}
+
+.game-container {
+    position: relative;
+    display: inline-block;
+}
+
+#canvas {
+    display: block;
+    background: #000;
+    background-color: black;
+    width: 720px;
+    height: 480px;
 }
 
 .gameStartContainer {
@@ -38,6 +61,13 @@ button:hover {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.startButtons {
+    margin-top: 24px;
+    margin-left : 24px;
+    display: flex;
+    gap: 20px;
 }
 
 .gameControllContainer {
@@ -65,11 +95,6 @@ h1,
     z-index: 2;
 }
 
-canvas {
-    background-color: black;
-    width: 720px;
-    height: 480px;
-}
 
 .forYourInfo {
     margin-top: 10px;
@@ -138,4 +163,77 @@ canvas {
     align-items: center;
     justify-content: space-between;
 
+}
+
+.pause-btn, .play-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px;
+    border: 0;
+    background: transparent;
+    color: gold;
+    border-radius: 6px;
+    cursor: pointer;
+    outline: none;
+    border: 2px solid gold;
+    border-radius: 50%;
+}
+
+.pause-btn .bar {
+    display: inline-block;
+    width: 6px;
+    height: 20px;
+    background: currentColor;
+    border-radius: 2px;
+}
+
+.pause-btn:hover {
+    transform: translateY(-1px);
+}
+
+.pause-btn:focus {
+    text-shadow: 0 0 0 3px gold;
+}
+
+
+
+.play-btn .triangle {
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-left: 14px solid gold;
+    border-bottom: 8px solid transparent;
+    margin-left: 3px;
+}
+
+.restart-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px;
+    border: 0;
+    background: transparent;
+    color: gold;
+    border-radius: 50%;
+    cursor: pointer;
+    outline: none;
+    border: 2px solid gold;
+}
+
+.restart-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0px 0px 10px gold;
+}
+
+.restart-btn:focus {
+    text-shadow: 0 0 0 3px gold;
+}
+
+.restart-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
 }

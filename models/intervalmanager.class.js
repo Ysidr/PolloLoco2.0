@@ -24,7 +24,9 @@ class IntervalManager {
         console.log('All intervals cleared');
     }
     static setInterval(callback, delay, name = 'unnamed') {
-        this.allFunctions.push({fn: callback, ms: delay });
+        if (!this.allFunctions.some(fn => fn.fn === callback)) {
+            this.allFunctions.push({fn: callback, ms: delay });
+        }
         const id = setInterval(callback, delay);
         return this.addInterval(id, name);
     }
@@ -39,11 +41,11 @@ class IntervalManager {
     }
 
     static pauseAllIntervals() {
-        this.intervals.forEach(id => clearInterval(id));
+        this.clearAllIntervals();
     }
     static resumeAllIntervals() {
         this.allFunctions.forEach(fn => {
-            setInterval(fn.fn, fn.ms);
+            this.setInterval(fn.fn, fn.ms);
         });
     }
 }
