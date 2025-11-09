@@ -16,12 +16,16 @@ function init() {
 }
 
 function checkOrientation() {
+    const rotateMessage = document.getElementById('rotate-device');
     if (window.innerWidth > window.innerHeight) {
         addMobileControl('btn-left', 'LEFT');
         addMobileControl('btn-right', 'RIGHT');
         addMobileControl('btn-jump', 'UP');
         addMobileControl('btn-throw', 'THROW');
         addMobileControl('btn-trade', 'TRADE');
+        rotateMessage.classList.add('d-none');
+    } else {
+        rotateMessage.classList.remove('d-none');
     }
 }
 
