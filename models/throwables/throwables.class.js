@@ -1,4 +1,5 @@
 class Throwables extends MovableObject {
+    isTrowingLeft = false;
 
     constructor(world) {
         super(world);
@@ -7,6 +8,7 @@ class Throwables extends MovableObject {
     }
 
     animate() {
+        this.world.character.otherDirection ? this.isTrowingLeft = true : this.isTrowingLeft = false;
         const intervalId = IntervalManager.setInterval(() => {
             if (this.isAboveGround() && !this.checkEnemyCollision()) {
                 this.fly();
@@ -27,7 +29,7 @@ class Throwables extends MovableObject {
     fly() {
         this.speedY -= this.acceleration;
         this.y -= this.speedY;
-        this.world.character.otherDirection ? this.x -= this.speed : this.x += this.speed;
+        this.isTrowingLeft ? this.x -= this.speed : this.x += this.speed;
 
         this.playAnimation(this.framesFlying);
     }
