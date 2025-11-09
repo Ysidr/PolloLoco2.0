@@ -41,7 +41,8 @@ function initLevel() {
             new BottleCollectable(),
         ],
         throwablesDamage = 20,
-        enemyDamage = 5,
+        enemyDamage = 10,
+        bossDamage = 20,
         characterJumpDamage = 5,
     );
 }

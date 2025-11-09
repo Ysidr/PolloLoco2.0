@@ -31,20 +31,7 @@ class PcNpc extends MovableObject {
     checkHealth() {
         if (this.dead()) {
             this.isDying = true;
-            if (this.framesDead && this.framesDead.length > 0) {
-                if (this instanceof Endboss) {
-                    this.world.audioManager.playSound('bossDeath');
-                    IntervalManager.clearAllIntervals();
-                } else if (this instanceof Chicken || this instanceof MiniChicken) {
-                    if (this.isDead && this.world.enemies.includes(this)) {
-                        this.world.audioManager.playSound('enemyHurt');
-                        this.world.enemies.splice(this.world.enemies.indexOf(this), 1);
-                    }
-                } else if (this instanceof Character) {
-                    this.world.audioManager.playSound('die');
-                    IntervalManager.clearAllIntervals();
-                }
-            }
+            this.playDeathAnimationAndRemove();
         } else {
             if (this.isHurt()) {
                 this.playAnimation(this.framesHurt);
@@ -60,6 +47,41 @@ class PcNpc extends MovableObject {
         let timeSinceLastHit = new Date().getTime() - this.lastHit;
         timeSinceLastHit = timeSinceLastHit / 100;
         return timeSinceLastHit < 5;
+    }
+
+    playDeathAnimationAndRemove() {
+        if (this.framesDead && this.framesDead.length > 0) {
+            if (this instanceof Endboss && this.isDead) {
+                this.gameOverWin()
+            }
+
+            else if (this instanceof Character) {
+                this.gameOverLost();
+            }
+            else if (this instanceof Chicken || this instanceof MiniChicken) {
+                this.removeEnemy()
+            }
+        }
+    }
+
+    gameOverWin() {
+        this.world.audioManager.playSound('bossDeath');
+        IntervalManager.clearAllIntervals();
+        gameOver("win")
+
+    }
+
+    gameOverLost() {
+        this.world.audioManager.playSound('die');
+        IntervalManager.clearAllIntervals();
+        gameOver("lost")
+    }
+
+    removeEnemy() {
+        if (this.isDead && this.world.enemies.includes(this)) {
+            this.world.audioManager.playSound('enemyHurt');
+            this.world.enemies.splice(this.world.enemies.indexOf(this), 1);
+        }
     }
 
 

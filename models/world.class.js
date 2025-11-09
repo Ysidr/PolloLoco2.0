@@ -12,6 +12,7 @@ class World {
     throwables = [];
     throwablesDamage = level1.throwablesDamage;
     enemyDamage = level1.enemyDamage;
+    bossDamage = level1.bossDamage;
     characterJumpDamage = level1.characterJumpDamage;
     inputs;
     canvas;
@@ -146,20 +147,29 @@ class World {
     checkAllEnemyCollisions(enemy) {
         if (this.character.isColliding(enemy)) {
             if (this.character.isColliding(enemy, true) && this.character.speedY < 0) {
-                enemy.hurt(this.characterJumpDamage);
-                this.audioManager.playSound('coin', 1.0, false, null, 200);
-                this.character.coinCount += 1;
-                this.character.speedY = 25;
-                console.log('Character jumped on enemy!')
-
+                this.jumpOnEnemy(enemy);
             } else {
-                this.character.hurt(this.enemyDamage);
-                this.audioManager.playSound('hurt', 1.0, false, null, 200);
+                if (this.character.speedY >= 0) {
+                    this.damageByEnemy(enemy);
+                }
             }
         }
         if (this.throwables.length > 0) {
             this.checkThrowables(enemy);
         }
+    }
+
+    jumpOnEnemy(enemy) {
+        enemy.hurt(this.characterJumpDamage);
+        this.audioManager.playSound('coin', 1.0, false, null, 200);
+        this.character.coinCount += 1;
+        this.character.speedY = 25;
+        console.log('Character jumped on enemy!')
+    }
+
+    damageByEnemy(enemy) {
+        enemy instanceof Endboss ? this.character.hurt(this.bossDamage) : this.character.hurt(this.enemyDamage);
+        this.audioManager.playSound('hurt', 1.0, false, null, 200);
     }
 
     checkThrowables(enemy) {
@@ -176,15 +186,19 @@ class World {
     checkCollectables() {
         this.level.collectables.forEach((collectable) => {
             if (this.character.isColliding(collectable)) {
-                this.audioManager.playSound('collect');
-                if (collectable instanceof CoinCollectable) {
-                    this.updateCoinCollectable(collectable);
-                } else if (collectable instanceof BottleCollectable) {
-                    this.updateBottleCollectable(collectable);
-                }
-                this.level.collectables.splice(this.level.collectables.indexOf(collectable), 1);
+                this.collectableUpdate(collectable);
             }
         });
+    }
+
+    collectableUpdate(collectable) {
+        this.audioManager.playSound('collect');
+        if (collectable instanceof CoinCollectable) {
+            this.updateCoinCollectable(collectable);
+        } else if (collectable instanceof BottleCollectable) {
+            this.updateBottleCollectable(collectable);
+        }
+        this.level.collectables.splice(this.level.collectables.indexOf(collectable), 1);
     }
 
     updateCoinCollectable(collectable) {
@@ -192,6 +206,11 @@ class World {
         console.log(this.character.coinCount);
         this.coinStatusBar.updateCoinStatusBar(this.character.coinCount);
         this.coinRespawn();
+    }
+
+    updateBottleCollectable(collectable) {
+        this.character.throwableCount += collectable.value;
+        this.bottleStatusBar.updateBottleStatusBar(this.character.throwableCount);
     }
 
     coinRespawn() {
@@ -215,8 +234,5 @@ class World {
         setTimeout(() => this.coinRespawn(), 1000);
     }
 
-    updateBottleCollectable(collectable) {
-        this.character.throwableCount += collectable.value;
-        this.bottleStatusBar.updateBottleStatusBar(this.character.throwableCount);
-    }
+
 }

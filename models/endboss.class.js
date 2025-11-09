@@ -5,6 +5,7 @@ class Endboss extends PcNpc {
     height = 400;
     hp = 100;
     firstContact = false;
+    startedMoving = false;
 
 
     framesAlert = [
@@ -38,12 +39,24 @@ class Endboss extends PcNpc {
         `img/4_enemie_boss_chicken/5_dead/G26.png`,
     ];
 
+    framesAttack = [
+        `img/4_enemie_boss_chicken/3_attack/G13.png`,
+        `img/4_enemie_boss_chicken/3_attack/G14.png`,
+        `img/4_enemie_boss_chicken/3_attack/G15.png`,
+        `img/4_enemie_boss_chicken/3_attack/G16.png`,
+        `img/4_enemie_boss_chicken/3_attack/G17.png`,
+        `img/4_enemie_boss_chicken/3_attack/G18.png`,
+        `img/4_enemie_boss_chicken/3_attack/G19.png`,
+        `img/4_enemie_boss_chicken/3_attack/G20.png`,
+    ];
+
     constructor() {
         super().loadImage('img/4_enemie_boss_chicken/2_alert/G5.png');
         this.loadImages(this.framesAlert);
         this.loadImages(this.framesHurt);
         this.loadImages(this.framesWalk);
         this.loadImages(this.framesDead);
+        this.loadImages(this.framesAttack);
         this.y = 480 - this.height - 20;
 
         this.animate();
@@ -54,20 +67,50 @@ class Endboss extends PcNpc {
         let i = 0;
         const className = this.constructor.name;
         IntervalManager.setInterval(() => {
+            if (this.firstContact && !this.startedMoving) {
+                this.moveLeft();
+                this.startedMoving = true;
+            }
             this.checkHealth();
-            if (this.world?.character?.x > 4420 && !this.firstContact) {
-                this.firstContact = true;
-                this.world.audioManager.playSound('bossAlert');
-                i = 0;
-            }
-            if (i < this.framesAlert.length) {
-                this.playAnimation(this.framesAlert);
-            } else {
-                this.playAnimation(this.framesWalk);
-            }
+            this.checkWhatToPlay(i);
             i++;
         }, 10000 / 60, `${className}endboss-animate`);
     }
 
+    checkWhatToPlay(i) {
+        if (this.isFirstContact()) {
+            this.startAlert();
+            i = 0;
+        }
+        if (i < this.framesAlert.length*2) {
+            this.playAnimation(this.framesAlert);
+            i++;
+        } else if (this.isDying) {
+            this.playDeathFrames();
+        } else if (this.x - this.world.character.x < 105) {
+            this.playAnimation(this.framesAttack);
+        }
+        else {
+            this.playAnimation(this.framesWalk);
+        }
+    }
+
+    isFirstContact() {
+        return this.world?.character?.x > 4420 && !this.firstContact;
+    }
+
+    playDeathFrames() {
+        let i = 0;
+        if (i < this.framesDead.length) {
+            this.playAnimation(this.framesDead);
+            i++;
+        }
+        this.isDead = true;
+    }
+
+    startAlert() {
+        this.firstContact = true;
+        this.world.audioManager.playSound('bossAlert');
+    }
 
 }
