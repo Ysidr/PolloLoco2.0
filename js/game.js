@@ -1,6 +1,7 @@
 let canvas;
 let world;
 let inputs = new Inputs();
+let isFullscreen = false;   
 
 
 function init() {
@@ -131,4 +132,39 @@ function addMobileControl(buttonId, inputKey) {
     btn.addEventListener('touchstart', start);
     btn.addEventListener('touchend', end);
     btn.addEventListener('touchcancel', end);
+}
+
+function fullscreen() {
+    const container = document.getElementById("fullscreen");
+    if (isFullscreen) {
+        exitFullscreen(container);
+    } else {
+        enterFullscreen(container);
+    }
+}
+
+function enterFullscreen(element) {
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+    } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+    } else if (element.mozRequestFullscreen) {
+        element.mozRequestFullscreen();
+    }
+    isFullscreen = true;
+}
+
+function exitFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) { // Safari
+        document.webkitExitFullscreen();
+    } else if (document.msRequestFullscreen) { // IE11
+        document.msExitFullscreen();
+    } else if (document.mozCancelFullScreen) { // Firefox
+        document.mozCancelFullScreen();
+    }
+    isFullscreen = false;
 }
