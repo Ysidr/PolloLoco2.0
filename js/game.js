@@ -9,6 +9,7 @@ window.isMobileDevice = false;
 
 
 function init() {
+    document.getElementById("fullscreen").classList.remove('d-none');
     document.getElementById("gameButtons").classList.remove('d-none');
     initLevel();
     gameStartContainer.classList.add('d-none');
@@ -82,6 +83,7 @@ function backToStart() {
     level1 = null;
     world = null;
     canvas = null;
+    document.getElementById("fullscreen").classList.add('d-none');
     document.getElementById("canvas").classList.add('d-none')
     document.getElementById("gameButtons").classList.add('d-none')
     document.getElementById("gameStartContainer").classList.remove('d-none')
@@ -138,6 +140,7 @@ function exitToMenuFromGameOver() {
     level1 = null;
     world = null;
     canvas = null;
+    document.getElementById("fullscreen").classList.add('d-none');
     document.getElementById("canvas").classList.add('d-none')
     document.getElementById("gameButtons").classList.add('d-none')
     document.getElementById("gameStartContainer").classList.remove('d-none')

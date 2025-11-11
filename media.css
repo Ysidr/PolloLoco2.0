@@ -1,32 +1,25 @@
-
-
 @media (max-height: 450px) {
     body {
         min-height: 0px;
     }
-    #canvas {
-        width: 600px;
-        height: 400px;
+
+    #canvas,
+    .gameStartContainer,
+    .gameControllContainer,
+    .game-container {
+        max-width: 600px;
+        width: 100vw;
+        max-height: 400px;
+        height: 66.66vh;
+        /* Maintain 3:2 aspect ratio */
     }
 
     .fullscreen {
-        width: 600;
-        height: 0;
-    }
-
-    .gameStartContainer {
-        width: 600px;
-        height: 400px;
-    }
-
-    .gameControllContainer {
-        width: 600px;
-        height: 400px;
-    }
-
-    .game-container {
-        width: 600px;
-        height: 400px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
     }
 
     button {
@@ -84,40 +77,32 @@
         height: 12px;
         border-width: 1px;
     }
+
     .forYourInfo {
         display: none;
     }
 }
 
 @media (max-height: 400px) {
-
     body {
         min-height: 0px;
     }
 
-    #canvas {
-        width: 450px;
-        height: 300px;
-    }
-
-    .gameStartContainer {
-        width: 450px;
-        height: 300px;
-    }
-
-    .gameControllContainer {
-        width: 450px;
-        height: 300px;
-    }
-
-    .game-container {
-        width: 450px;
-        height: 300px;
+    #canvas,
+    .gameStartContainer,
+    .gameControllContainer,
+    .game-container,
+    .fullscreen {
+        max-width: 450px;
+        width: 100vw;
+        max-height: 300px;
+        height: 66.66vh;
+        /* Maintain 3:2 aspect ratio */
     }
 
     .fullscreen {
-        width: 450;
-        height: 0;
+        width: 100vw;
+        height: 66.66vh;
     }
 
     .gameButtons {
@@ -165,6 +150,7 @@
     .forYourInfo {
         display: none;
     }
+
     .counters {
         font-size: 12px;
         font-weight: normal;
