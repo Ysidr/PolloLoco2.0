@@ -40,7 +40,7 @@ function addAllMobileControls() {
 }
 
 
-function backToStart() {
+function backToStartScreen() {
     document.getElementById("gameStartContainer").classList.remove('d-none')
     document.getElementById("gameControllContainer").classList.add('d-none')
 }
@@ -75,6 +75,8 @@ function backToPause() {
 
 function backToStart() {
     IntervalManager.clearAllIntervals();
+    world.audioManager.stopAllSounds();
+    IntervalManager.allFunctions = [];
     level1 = null;
     world = null;
     canvas = null;
@@ -83,10 +85,8 @@ function backToStart() {
     document.getElementById("gameStartContainer").classList.remove('d-none')
     document.getElementById("mobile-controls").classList.add('d-none')
     document.getElementById("pause-overlay").classList.add('d-none')
-    IntervalManager.allFunctions = [];
     backToPause();
     gameDesingResumed();
-    world.audioManager.stopAllSounds();
     window.gamesHasStarted = false;
 }
 
@@ -103,7 +103,9 @@ function gameDesingResumed() {
     document.getElementById("play-btn").classList.add('d-none')
     document.getElementById("restart-btn").classList.add('d-none')
     document.getElementById("pause-overlay").classList.add('d-none')
-    world.audioManager.changeVolume('backgroundMusic', 2);
+    if (world) {
+        world.audioManager.changeVolume('backgroundMusic', 2);
+    }
 }
 
 function gameOver(result) {
