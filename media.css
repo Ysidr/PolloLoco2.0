@@ -1,6 +1,9 @@
 /* Responsive adjustments */
 
 @media (max-height: 450px) {
+    body {
+        min-height: 0px;
+    }
     #canvas {
         width: 600px;
         height: 400px;
@@ -87,6 +90,10 @@
 }
 
 @media (max-height: 400px) {
+
+    body {
+        min-height: 0px;
+    }
 
     #canvas {
         width: 450px;

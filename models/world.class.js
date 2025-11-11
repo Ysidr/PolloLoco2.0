@@ -8,6 +8,7 @@ class World {
     hpStatusBar = new HpStatusBar();
     bottleStatusBar = new BottleStatusBar();
     coinStatusBar = new CoinStatusBar();
+    bossHpStatusBar;
     collectables = level1.collectables;
     throwables = [];
     throwablesDamage = level1.throwablesDamage;
@@ -43,6 +44,9 @@ class World {
         this.character.hpStatusBar = this.hpStatusBar;
         this.enemies.forEach((enemy) => {
             enemy.world = this;
+            if (enemy instanceof Endboss) {
+                enemy.hpStatusBar = this.bossHpStatusBar;
+            }
         });
     }
 
@@ -82,7 +86,7 @@ class World {
         this.addObjectsToMap(this.level.collectables);
         this.ctx.restore();
 
-        [this.hpStatusBar, this.bottleStatusBar, this.coinStatusBar].forEach((bar) => {
+        [this.hpStatusBar, this.bottleStatusBar, this.coinStatusBar, this.bossHpStatusBar].forEach((bar) => {
             if (bar) {
                 bar.updatePosition(this.cameraX);
                 this.addToMap(bar);

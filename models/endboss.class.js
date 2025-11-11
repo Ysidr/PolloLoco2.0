@@ -7,6 +7,7 @@ class Endboss extends PcNpc {
     firstContact = false;
     startedMoving = false;
     speed = 2;
+    hpStatusBar = new BossHpStatusBar();
 
 
     framesAlert = [
@@ -73,6 +74,12 @@ class Endboss extends PcNpc {
                 this.startedMoving = true;
             }
             this.checkHealth();
+            if (!this.world.bossHpStatusBar && this.firstContact) {
+                this.world.bossHpStatusBar = new BossHpStatusBar();
+            }
+            if(this.world.bossHpStatusBar){
+                this.world.bossHpStatusBar.updateBossHPStatusBar(this.hp);
+            }
             this.checkWhatToPlay(i);
             i++;
         }, 10000 / 60, `${className}endboss-animate`);
