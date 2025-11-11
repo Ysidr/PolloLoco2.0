@@ -13,6 +13,7 @@ function init() {
     initLevel();
     gameStartContainer.classList.add('d-none');
     document.getElementById("canvas").classList.remove('d-none');
+    backToPause()
 
     canvas = document.querySelector("canvas");
     world = new World(canvas, inputs);
@@ -53,6 +54,8 @@ function showControlls() {
 function restartGame() {
 
     IntervalManager.clearAllIntervals();
+    world.audioManager.stopAllSounds();
+    IntervalManager.allFunctions = [];
     level1 = null;
     world = null;
     canvas = null;
@@ -66,7 +69,7 @@ function exitToMenu() {
 function backToPause() {
     document.getElementById("pause-overlay").innerHTML = `
             <div class="volumeContainer">
-                <input type="range" id="volume-slider" class="volume-slider"onchange="world.audioManager.changeAllVolume(this.value); changeVolumeDisplay()" min="0" max="1" step="0.05" value="1">
+                <input type="range" id="volume-slider" class="volume-slider"onchange="world.audioManager.changeAllVolume(this.value)" min="0" max="1" step="0.05" value="1">
                 <label for="volume-slider" id="volume-label"></label>
             </div>
             <button class="exitToMenu" onclick= exitToMenu() >Exit to Menu</button>`;
@@ -113,17 +116,36 @@ function gameOver(result) {
     switch (result) {
         case "win":
             document.getElementById("pause-overlay").classList.remove('d-none')
-            document.getElementById("pause-overlay").innerHTML = `<img src="img/You won, you lost/You win B.png" alt="Endscreen">`;
+            document.getElementById("pause-overlay").innerHTML = `<img src="img/You won, you lost/You win B.png" alt="Endscreen">
+            <button onclick='exitToMenuFromGameOver()'>Exit</button>`;
             document.getElementById("restart-btn").classList.remove('d-none')
             document.getElementById("pause-btn").classList.add('d-none')
             break;
         case "lost":
             document.getElementById("pause-overlay").classList.remove('d-none')
-            document.getElementById("pause-overlay").innerHTML = `<img src="img/You won, you lost/Game Over.png" alt="Endscreen">`;
+            document.getElementById("pause-overlay").innerHTML = `<img src="img/You won, you lost/Game Over.png" alt="Endscreen">
+            <button onclick='exitToMenuFromGameOver()'>Exit</button>`;
             document.getElementById("restart-btn").classList.remove('d-none')
             document.getElementById("pause-btn").classList.add('d-none')
             break;
     }
+}
+
+function exitToMenuFromGameOver() {
+    IntervalManager.clearAllIntervals();
+    world.audioManager.stopAllSounds();
+    IntervalManager.allFunctions = [];
+    level1 = null;
+    world = null;
+    canvas = null;
+    document.getElementById("canvas").classList.add('d-none')
+    document.getElementById("gameButtons").classList.add('d-none')
+    document.getElementById("gameStartContainer").classList.remove('d-none')
+    document.getElementById("mobile-controls").classList.add('d-none')
+    document.getElementById("pause-overlay").classList.add('d-none')
+    backToPause()
+    gameDesingResumed();
+    backToStartScreen();
 }
 
 window.addEventListener('keydown', (event) => {

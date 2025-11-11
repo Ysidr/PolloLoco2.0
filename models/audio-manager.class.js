@@ -88,7 +88,7 @@ class AudioManager {
             const base = sound.baseVolume ?? 1.0;
             sound.volume = base * this.overallVolume;
         });
-
         this.changeVolumeDisplay();
+
     }
 }
