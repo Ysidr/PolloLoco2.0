@@ -35,6 +35,7 @@ class World {
         this.setWorld();
         this.initializeBackgroundObjects();
         this.checkCollisions();
+        this.playBackgroundMusic();
     }
 
     setWorld() {
@@ -91,6 +92,9 @@ class World {
         requestAnimationFrame(() => this.draw());
     }
 
+    playBackgroundMusic() {
+        this.audioManager.playSound('backgroundMusic', 0.2, true);
+    }
 
     addObjectsToMap(objects) {
         if (!Array.isArray(objects)) {

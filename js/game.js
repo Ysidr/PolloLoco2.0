@@ -1,6 +1,7 @@
 let canvas;
 let world;
 let inputs = new Inputs();
+isFullscreen = false;
 window.gamesHasStarted = false;
 window.isHorizontal = false;
 window.isMobileDevice = false;
@@ -25,7 +26,7 @@ function init() {
 
 function checkMobileDevice() {
     window.isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    if (window.isMobileDevice) {
+    if (window.isMobileDevice && window.gamesHasStarted) {
         document.getElementById("mobile-controls").classList.remove('d-none');
     }
 }
@@ -58,11 +59,16 @@ function restartGame() {
 }
 
 function exitToMenu() {
-    document.getElementById("pause-overlay").innerHTML = `<button onclick='backToStart()'>Sure</button><button onclick='backToPause()'>Cancel</button>`;   
+    document.getElementById("pause-overlay").innerHTML = `<button onclick='backToStart()'>Sure</button><button onclick='backToPause()'>Cancel</button>`;
 }
 
 function backToPause() {
-    document.getElementById("pause-overlay").innerHTML = `<button class="exitToMenu" onclick= exitToMenu() >Exit to Menu</button>`;
+    document.getElementById("pause-overlay").innerHTML = `
+            <div class="volumeContainer">
+                <input type="range" id="volume-slider" class="volume-slider"onchange="world.audioManager.changeAllVolume(this.value); changeVolumeDisplay()" min="0" max="1" step="0.05" value="1">
+                <label for="volume-slider" id="volume-label"></label>
+            </div>
+            <button class="exitToMenu" onclick= exitToMenu() >Exit to Menu</button>`;
 }
 
 function backToStart() {
@@ -78,6 +84,7 @@ function backToStart() {
     IntervalManager.allFunctions = [];
     backToPause();
     gameDesingResumed();
+    world.audioManager.stopAllSounds();
     window.gamesHasStarted = false;
 }
 
@@ -86,6 +93,7 @@ function gameDesingPaused() {
     document.getElementById("play-btn").classList.remove('d-none')
     document.getElementById("restart-btn").classList.remove('d-none')
     document.getElementById("pause-overlay").classList.remove('d-none')
+    world.audioManager.changeVolume('backgroundMusic', 0.5);
 }
 
 function gameDesingResumed() {
@@ -93,6 +101,7 @@ function gameDesingResumed() {
     document.getElementById("play-btn").classList.add('d-none')
     document.getElementById("restart-btn").classList.add('d-none')
     document.getElementById("pause-overlay").classList.add('d-none')
+    world.audioManager.changeVolume('backgroundMusic', 2);
 }
 
 function gameOver(result) {

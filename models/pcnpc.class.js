@@ -15,7 +15,6 @@ class PcNpc extends MovableObject {
             this.lastHit = new Date().getTime();
         }
         return;
-
     }
 
     dead() {

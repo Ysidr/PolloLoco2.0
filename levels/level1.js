@@ -56,6 +56,7 @@ function initLevel() {
             lose: 'audio/ES_Retro, Lose, Negative 01 - Epidemic Sound.mp3',
             win: 'audio/ES_Retro, Star, Win, Gain x8 - Epidemic Sound.mp3',
             bossHurt: 'audio/ES_Lion, Calling, Wail, Low, Hurting - Epidemic Sound - 0217-1295.wav',
+            backgroundMusic: 'audio/backgroundMusic.mp3',
         },
 
         throwablesDamage = 20,
