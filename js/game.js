@@ -1,8 +1,9 @@
 let canvas;
 let world;
 let inputs = new Inputs();
-gamesHasStarted = false;
-isHorizontal = false;
+window.gamesHasStarted = false;
+window.isHorizontal = false;
+window.isMobileDevice = false;
 
 
 
@@ -15,49 +16,17 @@ function init() {
     canvas = document.querySelector("canvas");
     world = new World(canvas, inputs);
 
-    if (window.innerWidth > window.innerHeight) {
-        document.getElementById("mobile-controls").classList.remove('d-none');
-    }
+    checkMobileDevice();
 
+    window.gamesHasStarted = true;
     checkOrientation();
-    gamesHasStarted = true;
 }
 
-function checkOrientation() {
-    const rotateMessage = document.getElementById('rotate-device');
-    setInterval(() => {
-        isHorizontal = window.innerWidth > window.innerHeight? true : false;
-        switch (true) {
-            case !gamesHasStarted && isHorizontal:
-                    addAllMobileControls();
-                    rotateMessage.classList.add('d-none');
-                    document.getElementById("gameStartContainer").classList.remove('d-none');
-                    document.getElementById("forYourInfo").classList.remove('d-none');
-                break;
-            case !gamesHasStarted && !isHorizontal:
-                rotateMessage.classList.remove('d-none');
-                document.getElementById("gameStartContainer").classList.add('d-none');
-                document.getElementById("forYourInfo").classList.add('d-none');
-                break;
-            case gamesHasStarted && isHorizontal:
-                addAllMobileControls();
-                rotateMessage.classList.add('d-none');
-                document.getElementById("gameStartContainer").classList.add('d-none');
-                document.getElementById("forYourInfo").classList.remove('d-none');
-                document.getElementById("fullscreen").classList.remove('d-none');
-                break;
-            case gamesHasStarted && !isHorizontal:
-                rotateMessage.classList.remove('d-none');
-                document.getElementById("gameStartContainer").classList.add('d-none');
-                document.getElementById("forYourInfo").classList.add('d-none');
-                document.getElementById("fullscreen").classList.add('d-none');
-                if (IntervalManager.getIntervalCount() > 0) {
-                    IntervalManager.pauseAllIntervals();
-                }
-                gameDesingPaused();
-                break;
-        }
-    }, 1000);
+function checkMobileDevice() {
+    window.isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (window.isMobileDevice) {
+        document.getElementById("mobile-controls").classList.remove('d-none');
+    }
 }
 
 function addAllMobileControls() {
