@@ -1,0 +1,166 @@
+/* Responsive adjustments */
+
+@media (max-height: 450px) {
+    #canvas {
+        width: 600px;
+        height: 400px;
+    }
+
+    .fullscreen {
+        width: 600;
+        height: 0;
+    }
+
+    .gameStartContainer {
+        width: 600px;
+        height: 400px;
+    }
+
+    .gameControllContainer {
+        width: 600px;
+        height: 400px;
+    }
+
+    .game-container {
+        width: 600px;
+        height: 400px;
+    }
+
+    button {
+        font-size: 16px;
+        border-width: 1.5px;
+        border-radius: 6px;
+    }
+
+    .controllButton {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+        line-height: 40px;
+        margin: 6px;
+        border-width: 1.5px;
+    }
+
+    .gameButtons {
+        top: 5px;
+        right: 5px;
+        gap: 6px;
+    }
+
+    .icon-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+        border-width: 1.5px;
+    }
+
+    #mobile-controls button {
+        width: 48px;
+        height: 48px;
+        font-size: 18px;
+        border-width: 1.5px;
+    }
+
+    .startButtons {
+        margin-top: 12px;
+        margin-left: 12px;
+        gap: 12px;
+    }
+
+    .volumeContainer {
+        bottom: 12px;
+    }
+
+    .volume-label,
+    .volumeText {
+        font-size: 16px;
+    }
+
+    .volume-slider {
+        width: 100px;
+        height: 12px;
+        border-width: 1px;
+    }
+    .forYourInfo {
+        display: none;
+    }
+}
+
+@media (max-height: 400px) {
+
+    #canvas {
+        width: 450px;
+        height: 300px;
+    }
+
+    .gameStartContainer {
+        width: 450px;
+        height: 300px;
+    }
+
+    .gameControllContainer {
+        width: 450px;
+        height: 300px;
+    }
+
+    .game-container {
+        width: 450px;
+        height: 300px;
+    }
+
+    .fullscreen {
+        width: 450;
+        height: 0;
+    }
+
+    .gameButtons {
+        top: 5px;
+        right: 5px;
+        gap: 6px;
+    }
+
+    .icon-btn {
+        width: 26px;
+        height: 26px;
+        font-size: 16px;
+        border-width: 1px;
+    }
+
+    #mobile-controls button {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+        border-width: 1px;
+    }
+
+    .startButtons {
+        margin-top: 12px;
+        margin-left: 12px;
+        gap: 12px;
+    }
+
+    .volumeContainer {
+        bottom: 12px;
+    }
+
+    .volume-label,
+    .volumeText {
+        font-size: 12px;
+        font-weight: normal;
+    }
+
+    .volume-slider {
+        width: 100px;
+        height: 12px;
+        border-width: 1px;
+    }
+
+    .forYourInfo {
+        display: none;
+    }
+    .counters {
+        font-size: 12px;
+        font-weight: normal;
+        right: 5px;
+    }
+}

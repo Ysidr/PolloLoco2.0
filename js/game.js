@@ -17,9 +17,9 @@ function init() {
     canvas = document.querySelector("canvas");
     world = new World(canvas, inputs);
 
+    window.gamesHasStarted = true;
     checkMobileDevice();
 
-    window.gamesHasStarted = true;
     checkOrientation();
 }
 
@@ -51,11 +51,13 @@ function showControlls() {
 }
 
 function restartGame() {
-    IntervalManager.clearAllIntervals();
-    level1 = null;
-    world = null;
-    canvas = null;
-    init();
+    if (world.gameIsOver) {
+        IntervalManager.clearAllIntervals();
+        level1 = null;
+        world = null;
+        canvas = null;
+        init();
+    }
 }
 
 function exitToMenu() {

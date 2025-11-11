@@ -7,11 +7,15 @@ class AudioManager {
     constructor() {
         this.sounds = {};
         this.overallVolume = parseFloat(localStorage.getItem('volume')) || 0.5;
-        document.getElementById('volume-slider').value = this.overallVolume;
-        this.changeVolumeDisplay();
+        if(document.getElementById('volume-slider')) {
+            document.getElementById('volume-slider').value = this.overallVolume;
+            this.changeVolumeDisplay();
+        }
     }
     changeVolumeDisplay() {
-        document.getElementById('volume-label').textContent = Math.round(this.overallVolume * 100) + '%';
+        if(document.getElementById('volume-label')) {
+            document.getElementById('volume-label').textContent = Math.round(this.overallVolume * 100) + '%';
+        }
     }
 
     loadSound(name, path) {

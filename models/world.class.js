@@ -20,7 +20,7 @@ class World {
     ctx;
     cameraX = 0;
     audioManager = new AudioManager();
-
+    gameIsOver = false;
 
     constructor(canvas, inputs) {
         this.ctx = canvas.getContext('2d');

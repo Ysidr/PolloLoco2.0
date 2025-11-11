@@ -65,13 +65,14 @@ class PcNpc extends MovableObject {
         this.world.audioManager.playSound('bossDeath');
         IntervalManager.clearAllIntervals();
         gameOver("win")
-
+        this.world.gameIsOver = true;
     }
 
     gameOverLost() {
         this.world.audioManager.playSound('die');
         IntervalManager.clearAllIntervals();
         gameOver("lost")
+        this.world.gameIsOver = true;
     }
 
     removeEnemy() {
