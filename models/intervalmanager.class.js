@@ -2,6 +2,12 @@
  * @class IntervalManager
  * @description Utility for tracking and controlling active setInterval timers across the game.
  */
+
+/**
+ * @typedef {Object} IntervalFunction
+ * @property {Function} fn - Function to execute on each interval tick.
+ * @property {number} ms - Interval delay in milliseconds.
+ */
 class IntervalManager {
     /**
      * @type {Set<number>}
@@ -14,7 +20,7 @@ class IntervalManager {
      */
     static intervalCount = 0;
     /**
-     * @type {{fn: Function, ms: number}[]}
+     * @type {IntervalFunction[]}
      * @description Registry of interval callbacks and their delays for resume support.
      */
     static allFunctions = [];
