@@ -27,7 +27,9 @@ function checkOrientation() {
 function notStartedButHorizontal(rotateMessage) {
     addAllMobileControls();
     rotateMessage.classList.add('d-none');
-    document.getElementById("gameStartContainer").classList.remove('d-none');
+    if (document.getElementById("gameControllContainer").classList.contains('d-none')) {
+        document.getElementById("gameStartContainer").classList.remove('d-none');
+    }
     document.getElementById("forYourInfo").classList.remove('d-none');
 }
 
@@ -35,6 +37,7 @@ function notStartedButVertical(rotateMessage) {
     rotateMessage.classList.remove('d-none');
     document.getElementById("gameStartContainer").classList.add('d-none');
     document.getElementById("forYourInfo").classList.add('d-none');
+    document.getElementById("gameControllContainer").classList.add('d-none');
 }
 
 function startedButHorizontal(rotateMessage) {
@@ -43,6 +46,7 @@ function startedButHorizontal(rotateMessage) {
     document.getElementById("gameStartContainer").classList.add('d-none');
     document.getElementById("forYourInfo").classList.remove('d-none');
     document.getElementById("fullscreen").classList.remove('d-none');
+
 }
 
 function startedButVertical(rotateMessage) {
