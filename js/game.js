@@ -1,7 +1,9 @@
 let canvas;
 let world;
 let inputs = new Inputs();
-let isFullscreen = false;   
+gamesHasStarted = false;
+isHorizontal = false;
+
 
 
 function init() {
@@ -13,21 +15,57 @@ function init() {
     canvas = document.querySelector("canvas");
     world = new World(canvas, inputs);
 
+    if (window.innerWidth > window.innerHeight) {
+        document.getElementById("mobile-controls").classList.remove('d-none');
+    }
+
     checkOrientation();
+    gamesHasStarted = true;
 }
 
 function checkOrientation() {
     const rotateMessage = document.getElementById('rotate-device');
-    if (window.innerWidth > window.innerHeight) {
-        addMobileControl('btn-left', 'LEFT');
-        addMobileControl('btn-right', 'RIGHT');
-        addMobileControl('btn-jump', 'UP');
-        addMobileControl('btn-throw', 'THROW');
-        addMobileControl('btn-trade', 'TRADE');
-        rotateMessage.classList.add('d-none');
-    } else {
-        rotateMessage.classList.remove('d-none');
-    }
+    setInterval(() => {
+        isHorizontal = window.innerWidth > window.innerHeight? true : false;
+        switch (true) {
+            case !gamesHasStarted && isHorizontal:
+                    addAllMobileControls();
+                    rotateMessage.classList.add('d-none');
+                    document.getElementById("gameStartContainer").classList.remove('d-none');
+                    document.getElementById("forYourInfo").classList.remove('d-none');
+                break;
+            case !gamesHasStarted && !isHorizontal:
+                rotateMessage.classList.remove('d-none');
+                document.getElementById("gameStartContainer").classList.add('d-none');
+                document.getElementById("forYourInfo").classList.add('d-none');
+                break;
+            case gamesHasStarted && isHorizontal:
+                addAllMobileControls();
+                rotateMessage.classList.add('d-none');
+                document.getElementById("gameStartContainer").classList.add('d-none');
+                document.getElementById("forYourInfo").classList.remove('d-none');
+                document.getElementById("fullscreen").classList.remove('d-none');
+                break;
+            case gamesHasStarted && !isHorizontal:
+                rotateMessage.classList.remove('d-none');
+                document.getElementById("gameStartContainer").classList.add('d-none');
+                document.getElementById("forYourInfo").classList.add('d-none');
+                document.getElementById("fullscreen").classList.add('d-none');
+                if (IntervalManager.getIntervalCount() > 0) {
+                    IntervalManager.pauseAllIntervals();
+                }
+                gameDesingPaused();
+                break;
+        }
+    }, 1000);
+}
+
+function addAllMobileControls() {
+    addMobileControl('btn-left', 'LEFT');
+    addMobileControl('btn-right', 'RIGHT');
+    addMobileControl('btn-jump', 'JUMP');
+    addMobileControl('btn-throw', 'THROW');
+    addMobileControl('btn-trade', 'TRADE');
 }
 
 
@@ -111,24 +149,19 @@ window.addEventListener('keyup', (event) => {
 function addMobileControl(buttonId, inputKey) {
     const btn = document.getElementById(buttonId);
     if (!btn) return;
-
     const start = (e) => {
         e.preventDefault();
         if (window.innerWidth > window.innerHeight)
-            inputs[inputKey] = true; // use the global inputs object
+            inputs[inputKey] = true;
     };
-
     const end = (e) => {
         e.preventDefault();
         inputs[inputKey] = false;
     };
-
-    // Desktop
     btn.addEventListener('mousedown', start);
     btn.addEventListener('mouseup', end);
     btn.addEventListener('mouseleave', end);
 
-    // Mobile
     btn.addEventListener('touchstart', start);
     btn.addEventListener('touchend', end);
     btn.addEventListener('touchcancel', end);

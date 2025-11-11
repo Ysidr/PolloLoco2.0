@@ -41,7 +41,7 @@
     <script src="./js/game.js"></script>
 </head>
 
-<body>
+<body onload="checkOrientation()">
     <h1>El Pollo Loco</h1>
 
     <div id="gameStartContainer" class="gameStartContainer">
@@ -83,12 +83,7 @@
         <div class="game-container" id="gameContainer">
             <canvas width="720" height="480" id="canvas" class="d-none"></canvas>
             <div id="pause-overlay" class="d-none"></div>
-            <div id="rotate-device" class="d-none">
-                <h2>Please rotate your device</h2>
-                <p>This game is best played in landscape mode</p>
-            </div>
-
-            <div id="mobile-controls" class="mobile-controls">
+            <div id="mobile-controls" class="mobile-controls d-none">
                 <div class="moveButtons">
                     <button id="btn-left">←</button>
                     <button id="btn-right">→</button>
@@ -132,9 +127,14 @@
             </div>
         </div>
     </div>
-    <div class="forYourInfo">
+    <div class="forYourInfo" id="forYourInfo">
         <p>Nothing for weak nerves, so jumping is disabled when hurt <br> have Fun ;)</p>
     </div>
+    <div id="rotate-device" class="d-none">
+        <h2>Please rotate your device</h2>
+        <p>This game is best played in landscape mode</p>
+    </div>
+
 
 
 
