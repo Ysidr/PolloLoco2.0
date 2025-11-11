@@ -51,13 +51,12 @@ function showControlls() {
 }
 
 function restartGame() {
-    if (world.gameIsOver) {
-        IntervalManager.clearAllIntervals();
-        level1 = null;
-        world = null;
-        canvas = null;
-        init();
-    }
+
+    IntervalManager.clearAllIntervals();
+    level1 = null;
+    world = null;
+    canvas = null;
+    init();
 }
 
 function exitToMenu() {
@@ -95,7 +94,9 @@ function gameDesingPaused() {
     document.getElementById("play-btn").classList.remove('d-none')
     document.getElementById("restart-btn").classList.remove('d-none')
     document.getElementById("pause-overlay").classList.remove('d-none')
-    world.audioManager.changeVolume('backgroundMusic', 0.5);
+    if (world && world.audioManager) {
+        world.audioManager.changeVolume('backgroundMusic', 0.5);
+    }
 }
 
 function gameDesingResumed() {
@@ -103,7 +104,7 @@ function gameDesingResumed() {
     document.getElementById("play-btn").classList.add('d-none')
     document.getElementById("restart-btn").classList.add('d-none')
     document.getElementById("pause-overlay").classList.add('d-none')
-    if (world) {
+    if (world && world.audioManager) {
         world.audioManager.changeVolume('backgroundMusic', 2);
     }
 }

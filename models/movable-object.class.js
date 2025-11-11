@@ -55,7 +55,7 @@ class MovableObject {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
-            }else{
+            } else {
                 this.speedY = 0;
             }
         }, 1000 / 60, `${className}-gravity`);
@@ -98,7 +98,7 @@ class MovableObject {
 
     checkTrade(isTrading) {
         const now = Date.now();
-        if (now - this.lastTradeTime < this.tradeCooldown){
+        if (now - this.lastTradeTime < this.tradeCooldown) {
             return;
         }
         if (isTrading) {
@@ -122,6 +122,9 @@ class MovableObject {
             setTimeout(() => {
                 this.throwableTimeOut = false;
                 this.world.throwables.pop();
+                const throwableAnimateId = `throwable-animate-${this.id}`;
+                IntervalManager.removeInterval(throwableAnimateId);
+                IntervalManager.removeInterval(`bottleThrowablegravity-${this.id}`);
             }, 1000);
         }
     }

@@ -4,7 +4,6 @@ class Throwables extends MovableObject {
     constructor(world) {
         super(world);
         this.world = world;
-        this.world.audioManager.playSound('bottleThrow', 0.5, false, 1000);
     }
 
     animate() {
@@ -14,19 +13,28 @@ class Throwables extends MovableObject {
                 this.fly();
             } else {
                 this.break();
-                IntervalManager.removeInterval(intervalId, 'throwable-animate');
+                this.world.throwables.pop();
+                IntervalManager.removeInterval(intervalId);
+                IntervalManager.allFunctions.splice(IntervalManager.allFunctions.findIndex(fn => fn.fn === this.animate), 1);
+                IntervalManager.allFunctions.splice(IntervalManager.allFunctions.findIndex(fn => fn.fn === this.applyGravity), 1);
+
+
             }
-        }, 3000 / 60, 'throwable-animate');
+        }, 3000 / 60, `throwable-animate-${this.id}`);
         this.world.character.throwableCount--;
         this.world.bottleStatusBar.updateBottleStatusBar(this.world.character.throwableCount);
     }
 
     break() {
         this.playAnimation(this.framesBreak);
-        this.world.audioManager.playSound('bottleBreak');
+        this.world.audioManager.playSound('bottleBreak',1.0,false);
     }
 
     fly() {
+        if (!this.throwSoundPlayed) {
+            this.world.audioManager.playSound('bottleThrow', 0.5, false);
+            this.throwSoundPlayed = true;
+        }
         this.speedY -= this.acceleration;
         this.y -= this.speedY;
         this.isTrowingLeft ? this.x -= this.speed : this.x += this.speed;

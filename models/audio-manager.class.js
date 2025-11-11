@@ -1,94 +1,94 @@
 class AudioManager {
     lastPlayed = 0;
     lastPlayedSound = '';
-    activeSounds = new Set();
-    overallVolume = 0;
+    overallVolume = 0.5;
+    playedSounds = [];
 
     constructor() {
         this.sounds = {};
         this.overallVolume = parseFloat(localStorage.getItem('volume')) || 0.5;
-        if(document.getElementById('volume-slider')) {
-            document.getElementById('volume-slider').value = this.overallVolume;
+
+        const slider = document.getElementById('volume-slider');
+        if (slider) {
+            slider.value = this.overallVolume;
             this.changeVolumeDisplay();
         }
     }
+
     changeVolumeDisplay() {
-        if(document.getElementById('volume-label')) {
-            document.getElementById('volume-label').textContent = Math.round(this.overallVolume * 100) + '%';
+        const label = document.getElementById('volume-label');
+        if (label) {
+            label.textContent = Math.round(this.overallVolume * 100) + '%';
         }
     }
 
     loadSound(name, path) {
         this.sounds[name] = new Audio(path);
+        this.sounds[name].dataset.name = name;
     }
 
-    playSound(name, volume = 1.0, loop = false, duration = null, delay = 1000) {
-        if (this.sounds[name] && (Date.now() - this.lastPlayed > delay || this.lastPlayedSound !== name)) {
-            const sound = this.sounds[name].cloneNode();
-            sound.baseVolume = volume;
-            sound.volume = this.overallVolume * sound.baseVolume;
-            sound.loop = loop;
+    playSound(name, baseVolume = 1.0, loop = false, duration = null, cooldown = 100) {
+        const template = this.sounds[name];
+        if (!template) return null;
 
-            this.activeSounds.add(sound);
-
-            sound.onended = () => {
-                this.activeSounds.delete(sound);
-            };
-
-            sound.play().catch(e => console.warn(`Audio play failed: ${e}`));
-
-            if (duration) {
-                setTimeout(() => {
-                    this.stopSound(sound);
-                }, duration);
-            }
-
-            this.lastPlayedSound = name;
-            this.lastPlayed = Date.now();
-            return sound;
+        if (cooldown && this.lastPlayedSound === name && Date.now() - this.lastPlayed < cooldown) {
+            return null;
         }
-        return null;
+
+        const sound = template.cloneNode();
+        sound.dataset.name = name;
+        sound.baseVolume = baseVolume;
+        sound.volume = this.overallVolume * baseVolume;
+        sound.loop = loop;
+
+        this.playedSounds.push(sound);
+
+        sound.onended = () => this.stopSound(sound);
+
+        sound.play().catch(() => {});
+
+        if (duration) {
+            setTimeout(() => this.stopSound(sound), duration);
+        }
+
+        this.lastPlayedSound = name;
+        this.lastPlayed = Date.now();
+        return sound;
     }
 
     stopSound(sound) {
-        if (sound) {
-            sound.pause();
-            sound.currentTime = 0;
-            this.activeSounds.delete(sound);
-        }
+        if (!sound) return;
+        sound.pause();
+        sound.currentTime = 0;
+        this.playedSounds = this.playedSounds.filter(s => s !== sound);
     }
 
     stopAllSounds() {
-        this.activeSounds.forEach(sound => {
+        this.playedSounds.forEach(sound => {
             sound.pause();
             sound.currentTime = 0;
         });
-        this.activeSounds.clear();
+        this.playedSounds = [];
     }
 
-    stopSoundByName(name) {
-        this.activeSounds.forEach(sound => {
-            if (sound.src.includes(name)) {
-                sound.pause();
-                sound.currentTime = 0;
-                this.activeSounds.delete(sound);
+    changeVolume(name, multiplier) {
+        this.playedSounds.forEach(sound => {
+            if (sound.dataset.name === name) {
+                const base = sound.baseVolume ?? 1.0;
+                sound.volume = base * this.overallVolume * multiplier;
             }
         });
     }
-    changeVolume(name, volumeMultiplier) {
-        this.activeSounds.forEach(sound => {
-            if (sound.src.includes(name)) {
-                sound.volume = volumeMultiplier * sound.volume;
-            }
-        });
-    }
+
     changeAllVolume(volume) {
-        this.overallVolume = volume;
-        localStorage.setItem('volume', volume);
+        this.overallVolume = parseFloat(volume);
+        localStorage.setItem('volume', this.overallVolume);
 
-        this.activeSounds.forEach(sound => {
+        this.playedSounds.forEach(sound => {
             const base = sound.baseVolume ?? 1.0;
-            sound.volume = base * volume;
+            sound.volume = base * this.overallVolume;
         });
+
+        this.changeVolumeDisplay();
     }
 }

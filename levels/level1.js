@@ -42,7 +42,7 @@ function initLevel() {
         ],
          {
             walk: 'audio/ES_Feet, Land, Jump, Ground - Epidemic Sound - 0000-0207.wav',
-            bottleBreak: 'audio/ES_Bottle, Hit, Break With Hammer 02 - Epidemic Sound.mp3',
+            bottleBreak: 'audio/bottleBreak.mp3',
             hurt: 'audio/ES_Male, Hurt, Low Intensity - Epidemic Sound - 0000-0465.wav',
             die: 'audio/ES_Asian Game Character, E, Death - Epidemic Sound - 2629-3943.wav',
             bossDeath: 'audio/ES_Game, Retro Style, Boss, Vocalization - Epidemic Sound - 0000-1815.wav',
