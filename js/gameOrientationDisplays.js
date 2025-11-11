@@ -1,6 +1,10 @@
 
 
 
+/**
+ * @function checkOrientation
+ * @description Checks the device orientation and updates the UI accordingly at regular intervals.
+ */
 function checkOrientation() {
     const rotateMessage = document.getElementById('rotate-device');
     setInterval(() => {
@@ -24,6 +28,11 @@ function checkOrientation() {
     }, 1000);
 }
 
+/**
+ * @function notStartedButHorizontal
+ * @param {HTMLElement} rotateMessage - The DOM element displaying the rotate device message.
+ * @description Handles UI changes when the game has not started and the device is in horizontal orientation.
+ */
 function notStartedButHorizontal(rotateMessage) {
     addAllMobileControls();
     rotateMessage.classList.add('d-none');
@@ -33,6 +42,11 @@ function notStartedButHorizontal(rotateMessage) {
     document.getElementById("forYourInfo").classList.remove('d-none');
 }
 
+/**
+ * @function notStartedButVertical
+ * @param {HTMLElement} rotateMessage - The DOM element displaying the rotate device message.
+ * @description Handles UI changes when the game has not started and the device is in vertical orientation.
+ */
 function notStartedButVertical(rotateMessage) {
     rotateMessage.classList.remove('d-none');
     document.getElementById("gameStartContainer").classList.add('d-none');
@@ -40,6 +54,11 @@ function notStartedButVertical(rotateMessage) {
     document.getElementById("gameControllContainer").classList.add('d-none');
 }
 
+/**
+ * @function startedButHorizontal
+ * @param {HTMLElement} rotateMessage - The DOM element displaying the rotate device message.
+ * @description Handles UI changes when the game has started and the device is in horizontal orientation.
+ */
 function startedButHorizontal(rotateMessage) {
     addAllMobileControls();
     rotateMessage.classList.add('d-none');
@@ -49,6 +68,11 @@ function startedButHorizontal(rotateMessage) {
 
 }
 
+/**
+ * @function startedButVertical
+ * @param {HTMLElement} rotateMessage - The DOM element displaying the rotate device message.
+ * @description Handles UI changes when the game has started and the device is in vertical orientation.
+ */
 function startedButVertical(rotateMessage) {
     rotateMessage.classList.remove('d-none');
     document.getElementById("gameStartContainer").classList.add('d-none');

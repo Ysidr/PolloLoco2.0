@@ -1,5 +1,13 @@
+/**
+ * @type {Level}
+ * @description Holds the active level configuration for the game.
+ */
 let level1;
 
+/**
+ * @function initLevel
+ * @description Initializes the first level with enemies, collectables, background elements, audio, and damage values.
+ */
 function initLevel() {
     level1 = new Level(
         [

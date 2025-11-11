@@ -1,15 +1,56 @@
+/**
+ * @class Endboss
+ * @extends PcNpc
+ * @description Final boss enemy featuring multiple animation states and unique combat behavior.
+ */
 class Endboss extends PcNpc {
 
+    /**
+     * @type {number}
+     * @description Initial horizontal position of the boss.
+     */
     x = 5000;
+    /**
+     * @type {number}
+     * @description Width of the boss sprite.
+     */
     width = 400;
+    /**
+     * @type {number}
+     * @description Height of the boss sprite.
+     */
     height = 400;
+    /**
+     * @type {number}
+     * @description Boss health points.
+     */
     hp = 100;
+    /**
+     * @type {boolean}
+     * @description Tracks whether the player has triggered the boss encounter.
+     */
     firstContact = false;
+    /**
+     * @type {boolean}
+     * @description Indicates whether the boss has begun moving toward the player.
+     */
     startedMoving = false;
+    /**
+     * @type {number}
+     * @description Base movement speed of the boss.
+     */
     speed = 2;
+    /**
+     * @type {BossHpStatusBar}
+     * @description Status bar tracking boss health on the HUD.
+     */
     hpStatusBar = new BossHpStatusBar();
 
 
+    /**
+     * @type {string[]}
+     * @description Animation frames used during the alert state.
+     */
     framesAlert = [
         `img/4_enemie_boss_chicken/2_alert/G5.png`,
         `img/4_enemie_boss_chicken/2_alert/G6.png`,
@@ -21,6 +62,10 @@ class Endboss extends PcNpc {
         `img/4_enemie_boss_chicken/2_alert/G12.png`,
     ];
 
+    /**
+     * @type {string[]}
+     * @description Animation frames for the walking state.
+     */
     framesWalk = [
         `img/4_enemie_boss_chicken/1_walk/G1.png`,
         `img/4_enemie_boss_chicken/1_walk/G2.png`,
@@ -28,6 +73,10 @@ class Endboss extends PcNpc {
         `img/4_enemie_boss_chicken/1_walk/G4.png`,
     ];
 
+    /**
+     * @type {string[]}
+     * @description Animation frames displayed when the boss is hurt.
+     */
     framesHurt = [
         `img/4_enemie_boss_chicken/4_hurt/G21.png`,
         `img/4_enemie_boss_chicken/4_hurt/G22.png`,
@@ -35,12 +84,20 @@ class Endboss extends PcNpc {
 
     ];
 
+    /**
+     * @type {string[]}
+     * @description Animation frames for the death sequence.
+     */
     framesDead = [
         `img/4_enemie_boss_chicken/5_dead/G24.png`,
         `img/4_enemie_boss_chicken/5_dead/G25.png`,
         `img/4_enemie_boss_chicken/5_dead/G26.png`,
     ];
 
+    /**
+     * @type {string[]}
+     * @description Animation frames for boss attack motions.
+     */
     framesAttack = [
         `img/4_enemie_boss_chicken/3_attack/G13.png`,
         `img/4_enemie_boss_chicken/3_attack/G14.png`,
@@ -52,6 +109,10 @@ class Endboss extends PcNpc {
         `img/4_enemie_boss_chicken/3_attack/G20.png`,
     ];
 
+    /**
+     * @constructor
+     * @description Preloads all boss animations, positions the boss, and starts animation loop.
+     */
     constructor() {
         super().loadImage('img/4_enemie_boss_chicken/2_alert/G5.png');
         this.loadImages(this.framesAlert);
@@ -65,6 +126,10 @@ class Endboss extends PcNpc {
 
     }
 
+    /**
+     * @function animate
+     * @description Orchestrates boss behavior, including movement, health checks, and animation selection.
+     */
     animate() {
         let i = 0;
         const className = this.constructor.name;
@@ -85,6 +150,11 @@ class Endboss extends PcNpc {
         }, 10000 / 60, `${className}endboss-animate`);
     }
 
+    /**
+     * @function checkWhatToPlay
+     * @param {number} i - Current animation loop index.
+     * @description Determines which animation sequence should play based on boss state.
+     */
     checkWhatToPlay(i) {
         if (this.isFirstContact()) {
             this.startAlert();
@@ -103,10 +173,18 @@ class Endboss extends PcNpc {
         }
     }
 
+    /**
+     * @function isFirstContact
+     * @returns {boolean} True if the player has crossed the trigger point and the boss hasn't engaged yet.
+     */
     isFirstContact() {
         return this.world?.character?.x > 4420 && !this.firstContact;
     }
 
+    /**
+     * @function playDeathFrames
+     * @description Plays the boss death animation and marks the boss as dead.
+     */
     playDeathFrames() {
         let i = 0;
         if (i < this.framesDead.length) {
@@ -116,6 +194,10 @@ class Endboss extends PcNpc {
         this.isDead = true;
     }
 
+    /**
+     * @function startAlert
+     * @description Initiates the boss encounter and plays the alert sound.
+     */
     startAlert() {
         this.firstContact = true;
         this.world.audioManager.playSound('bossAlert');

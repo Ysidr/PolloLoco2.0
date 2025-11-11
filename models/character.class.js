@@ -1,18 +1,71 @@
+/**
+ * @class Character
+ * @extends PcNpc
+ * @description Player-controlled character handling movement, animation, and game interactions.
+ */
 class Character extends PcNpc {
 
+    /**
+     * @type {number}
+     * @description Character sprite width in pixels.
+     */
     width = 150;
+    /**
+     * @type {number}
+     * @description Character sprite height in pixels.
+     */
     height = 300;
+    /**
+     * @type {number}
+     * @description Current vertical position of the character.
+     */
     y;
+    /**
+     * @type {World}
+     * @description Reference to the game world managing this character.
+     */
     world;
+    /**
+     * @type {number}
+     * @description Base horizontal movement speed.
+     */
     speed = 25;
+    /**
+     * @type {boolean}
+     * @description Prevents consecutive throws while a cooldown is active.
+     */
     throwableTimeOut = false;
+    /**
+     * @type {number}
+     * @description Timestamp of the last completed trade interaction.
+     */
     lastTradeTime = 0;
+    /**
+     * @type {number}
+     * @description Minimum cooldown in milliseconds between trades.
+     */
     tradeCooldown = 800;
+    /**
+     * @type {number}
+     * @description Timestamp of the last bounce interaction.
+     */
     lastBounceTime = 0;
 
+    /**
+     * @type {number}
+     * @description Number of throwable items currently available.
+     */
     throwableCount = 0;
+    /**
+     * @type {number}
+     * @description Number of collected coins.
+     */
     coinCount = 0;
 
+    /**
+     * @type {{top:number,bottom:number,left:number,right:number}}
+     * @description Collision box adjustments for the character sprite.
+     */
     offset = {
         top: 150,
         bottom: 25,
@@ -20,6 +73,10 @@ class Character extends PcNpc {
         right: 47
     }
 
+    /**
+     * @type {string[]}
+     * @description Animation frames for the idle state.
+     */
     framesIdle = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
         'img/2_character_pepe/1_idle/idle/I-2.png',
@@ -31,6 +88,10 @@ class Character extends PcNpc {
         'img/2_character_pepe/1_idle/idle/I-8.png'
     ];
 
+    /**
+     * @type {string[]}
+     * @description Animation frames for the walking state.
+     */
     framesWalk = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
@@ -42,6 +103,10 @@ class Character extends PcNpc {
 
     ]
 
+    /**
+     * @type {string[]}
+     * @description Animation frames for the jumping state.
+     */
     framesJump = [
         `img/2_character_pepe/3_jump/J-31.png`,
         `img/2_character_pepe/3_jump/J-32.png`,
@@ -54,12 +119,20 @@ class Character extends PcNpc {
         `img/2_character_pepe/3_jump/J-39.png`,
     ]
 
+    /**
+     * @type {string[]}
+     * @description Animation frames for the hurt state.
+     */
     framesHurt = [
         `img/2_character_pepe/4_hurt/H-41.png`,
         `img/2_character_pepe/4_hurt/H-42.png`,
         `img/2_character_pepe/4_hurt/H-43.png`
     ]
 
+    /**
+     * @type {string[]}
+     * @description Animation frames for the death sequence.
+     */
     framesDead = [
         `img/2_character_pepe/5_dead/D-51.png`,
         `img/2_character_pepe/5_dead/D-52.png`,
@@ -70,6 +143,10 @@ class Character extends PcNpc {
         `img/2_character_pepe/5_dead/D-57.png`
     ]
 
+    /**
+     * @constructor
+     * @description Loads character assets and initializes movement and animation.
+     */
     constructor() {
         super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
         this.loadImages(this.framesIdle);
@@ -84,6 +161,10 @@ class Character extends PcNpc {
 
     }
 
+    /**
+     * @function animate
+     * @description Main character loop handling input, movement, and animations.
+     */
     animate() {
         const className = this.constructor.name;
         IntervalManager.setInterval(() => {
@@ -106,6 +187,10 @@ class Character extends PcNpc {
         }, 60, `${className}character-animate`);
     }
 
+    /**
+     * @function modifyCamera
+     * @description Adjusts the camera position smoothly based on character movement.
+     */
     modifyCamera() {
         const offsetRight = 100;
         const offsetLeft = 350;
@@ -127,12 +212,21 @@ class Character extends PcNpc {
         }
     }
 
+    /**
+     * @function startTransition
+     * @description Initializes a camera transition when changing direction.
+     */
     startTransition() {
         this.cameraStartX = this.world.cameraX;
         this.cameraTransitionProgress = 0;
         this.lastDirection = this.otherDirection;
     }
 
+    /**
+     * @function changeCameraInSmoothSteps
+     * @param {number} targetX - Target camera x position to ease toward.
+     * @description Performs a smooth interpolation for camera movement.
+     */
     changeCameraInSmoothSteps(targetX) {
         this.cameraTransitionProgress += 0.2;
         const t = this.cameraTransitionProgress;
@@ -140,6 +234,10 @@ class Character extends PcNpc {
         this.world.cameraX = this.cameraStartX + (targetX - this.cameraStartX) * smoothT;
     }
 
+    /**
+     * @function updateDisplayedCounts
+     * @description Updates HUD elements with current coin, bottle, and trade cooldown values.
+     */
     updateDisplayedCounts() {
         document.getElementById('coinCount').textContent = this.coinCount;
         document.getElementById('bottleCount').textContent = this.throwableCount;

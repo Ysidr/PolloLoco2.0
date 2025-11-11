@@ -6,8 +6,10 @@ window.gamesHasStarted = false;
 window.isHorizontal = false;
 window.isMobileDevice = false;
 
-
-
+/**
+ * @function init
+ * @description Initializes the game by setting up the level, UI elements, canvas, world, and checking device and orientation.
+ */
 function init() {
     document.getElementById("fullscreen").classList.remove('d-none');
     document.getElementById("gameButtons").classList.remove('d-none');
@@ -25,7 +27,10 @@ function init() {
     checkOrientation();
 }
 
-
+/**
+ * @function checkMobileDevice
+ * @description Detects if the user is on a mobile device and shows mobile controls if the game has started.
+ */
 function checkMobileDevice() {
     window.isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     if (window.isMobileDevice && window.gamesHasStarted) {
@@ -33,6 +38,10 @@ function checkMobileDevice() {
     }
 }
 
+/**
+ * @function addAllMobileControls
+ * @description Adds event listeners to all mobile control buttons for game inputs.
+ */
 function addAllMobileControls() {
     addMobileControl('btn-left', 'LEFT');
     addMobileControl('btn-right', 'RIGHT');
@@ -41,17 +50,28 @@ function addAllMobileControls() {
     addMobileControl('btn-trade', 'TRADE');
 }
 
-
+/**
+ * @function backToStartScreen
+ * @description Switches the UI to show the start screen and hide the game control container.
+ */
 function backToStartScreen() {
     document.getElementById("gameStartContainer").classList.remove('d-none')
     document.getElementById("gameControllContainer").classList.add('d-none')
 }
 
+/**
+ * @function showControlls
+ * @description Switches the UI to show the game control container and hide the start screen.
+ */
 function showControlls() {
     document.getElementById("gameStartContainer").classList.add('d-none')
     document.getElementById("gameControllContainer").classList.remove('d-none')
 }
 
+/**
+ * @function restartGame
+ * @description Restarts the game by clearing intervals, stopping sounds, resetting variables, and initializing again.
+ */
 function restartGame() {
 
     IntervalManager.clearAllIntervals();
@@ -63,10 +83,18 @@ function restartGame() {
     init();
 }
 
+/**
+ * @function exitToMenu
+ * @description Shows confirmation buttons to exit to the menu on the pause overlay.
+ */
 function exitToMenu() {
     document.getElementById("pause-overlay").innerHTML = `<button onclick='backToStart()'>Sure</button><button onclick='backToPause()'>Cancel</button>`;
 }
 
+/**
+ * @function backToPause
+ * @description Displays the pause overlay with volume controls and exit to menu button.
+ */
 function backToPause() {
     document.getElementById("pause-overlay").innerHTML = `
             <div class="volumeContainer">
@@ -76,6 +104,10 @@ function backToPause() {
             <button class="exitToMenu" onclick= exitToMenu() >Exit to Menu</button>`;
 }
 
+/**
+ * @function backToStart
+ * @description Returns the game to the start screen, clears intervals, stops sounds, resets variables, and updates UI.
+ */
 function backToStart() {
     IntervalManager.clearAllIntervals();
     world.audioManager.stopAllSounds();
@@ -94,6 +126,10 @@ function backToStart() {
     window.gamesHasStarted = false;
 }
 
+/**
+ * @function gameDesingPaused
+ * @description Updates the UI and audio settings when the game is paused.
+ */
 function gameDesingPaused() {
     document.getElementById("pause-btn").classList.add('d-none')
     document.getElementById("play-btn").classList.remove('d-none')
@@ -104,6 +140,10 @@ function gameDesingPaused() {
     }
 }
 
+/**
+ * @function gameDesingResumed
+ * @description Updates the UI and audio settings when the game is resumed.
+ */
 function gameDesingResumed() {
     document.getElementById("pause-btn").classList.remove('d-none')
     document.getElementById("play-btn").classList.add('d-none')
@@ -114,6 +154,11 @@ function gameDesingResumed() {
     }
 }
 
+/**
+ * @function gameOver
+ * @param {string} result - The game result, either "win" or "lost".
+ * @description Displays the game over screen with appropriate message and buttons.
+ */
 function gameOver(result) {
     switch (result) {
         case "win":
@@ -133,6 +178,10 @@ function gameOver(result) {
     }
 }
 
+/**
+ * @function exitToMenuFromGameOver
+ * @description Exits to the menu from the game over screen by clearing intervals, stopping sounds, resetting variables, and updating UI.
+ */
 function exitToMenuFromGameOver() {
     IntervalManager.clearAllIntervals();
     world.audioManager.stopAllSounds();
@@ -151,6 +200,11 @@ function exitToMenuFromGameOver() {
     backToStartScreen();
 }
 
+/**
+ * @function
+ * @param {KeyboardEvent} event - The keyboard event.
+ * @description Handles keydown events to set input flags for game controls.
+ */
 window.addEventListener('keydown', (event) => {
     if (event.keyCode === 65) {
         inputs.LEFT = true;
@@ -171,6 +225,11 @@ window.addEventListener('keydown', (event) => {
 
 });
 
+/**
+ * @function
+ * @param {KeyboardEvent} event - The keyboard event.
+ * @description Handles keyup events to unset input flags for game controls.
+ */
 window.addEventListener('keyup', (event) => {
     if (event.keyCode === 65) inputs.LEFT = false;
     if (event.keyCode === 68) inputs.RIGHT = false;
@@ -179,6 +238,12 @@ window.addEventListener('keyup', (event) => {
     if (event.keyCode === 67) inputs.TRADE = false;
 });
 
+/**
+ * @function addMobileControl
+ * @param {string} buttonId - The ID of the mobile control button.
+ * @param {string} inputKey - The input key to toggle on press.
+ * @description Adds event listeners to a mobile control button to set/unset input flags.
+ */
 function addMobileControl(buttonId, inputKey) {
     const btn = document.getElementById(buttonId);
     if (!btn) return;
@@ -200,6 +265,10 @@ function addMobileControl(buttonId, inputKey) {
     btn.addEventListener('touchcancel', end);
 }
 
+/**
+ * @function fullscreen
+ * @description Toggles fullscreen mode on the "fullscreen" container element.
+ */
 function fullscreen() {
     const container = document.getElementById("fullscreen");
     if (isFullscreen) {
@@ -209,6 +278,11 @@ function fullscreen() {
     }
 }
 
+/**
+ * @function enterFullscreen
+ * @param {HTMLElement} element - The element to enter fullscreen.
+ * @description Requests fullscreen mode for the given element.
+ */
 function enterFullscreen(element) {
     if (element.requestFullscreen) {
         element.requestFullscreen();
@@ -222,6 +296,10 @@ function enterFullscreen(element) {
     isFullscreen = true;
 }
 
+/**
+ * @function exitFullscreen
+ * @description Exits fullscreen mode if currently active.
+ */
 function exitFullscreen() {
     if (document.exitFullscreen) {
         document.exitFullscreen();

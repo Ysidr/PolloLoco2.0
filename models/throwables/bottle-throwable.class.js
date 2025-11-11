@@ -1,6 +1,15 @@
+/**
+ * @class BottleThrowable
+ * @extends Throwables
+ * @description Represents a throwable bottle with animation frames for flight and breaking.
+ */
 class BottleThrowable extends Throwables {
 
 
+    /**
+     * @type {string[]}
+     * @description Animation frames for the bottle while it is flying.
+     */
     framesFlying = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
@@ -8,6 +17,10 @@ class BottleThrowable extends Throwables {
         'img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png'
     ];
 
+    /**
+     * @type {string[]}
+     * @description Animation frames for the bottle's break sequence.
+     */
     framesBreak = [
         `img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png`,
         `img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png`,
@@ -18,6 +31,10 @@ class BottleThrowable extends Throwables {
     ];
 
 
+    /**
+     * @constructor
+     * @param {World} world - The game world instance that manages throwable objects.
+     */
     constructor(world) {
         super(world);
         this.offset = {
@@ -35,6 +52,10 @@ class BottleThrowable extends Throwables {
         this.animate();
         this.applyGravity();
     }
+    /**
+     * @function setSpeeds
+     * @description Configures the initial horizontal and vertical speeds along with gravity.
+     */
     setSpeeds() {
         this.speed = 40;  // Set horizontal speed
         this.speedY = 20 // Set initial upward speed

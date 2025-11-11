@@ -1,11 +1,28 @@
+/**
+ * @class Throwables
+ * @extends MovableObject
+ * @description Base class for throwable projectiles that handles shared behaviors like animation and collision checks.
+ */
 class Throwables extends MovableObject {
+    /**
+     * @type {boolean}
+     * @description Indicates whether the throwable should travel to the left.
+     */
     isTrowingLeft = false;
 
+    /**
+     * @constructor
+     * @param {World} world - The active game world managing the throwable instances.
+     */
     constructor(world) {
         super(world);
         this.world = world;
     }
 
+    /**
+     * @function animate
+     * @description Runs the throwable's flight loop until it collides with an enemy or the ground.
+     */
     animate() {
         this.world.character.otherDirection ? this.isTrowingLeft = true : this.isTrowingLeft = false;
         const intervalId = IntervalManager.setInterval(() => {
@@ -25,11 +42,19 @@ class Throwables extends MovableObject {
         this.world.bottleStatusBar.updateBottleStatusBar(this.world.character.throwableCount);
     }
 
+    /**
+     * @function break
+     * @description Triggers the breaking animation and plays the corresponding sound effect.
+     */
     break() {
         this.playAnimation(this.framesBreak);
         this.world.audioManager.playSound('bottleBreak',1.0,false);
     }
 
+    /**
+     * @function fly
+     * @description Updates the projectile's position while in flight and plays the throw animation.
+     */
     fly() {
         if (!this.throwSoundPlayed) {
             this.world.audioManager.playSound('bottleThrow', 0.5, false);
@@ -42,6 +67,11 @@ class Throwables extends MovableObject {
         this.playAnimation(this.framesFlying);
     }
 
+    /**
+     * @function checkEnemyCollision
+     * @returns {boolean} True if the throwable is colliding with any enemy.
+     * @description Detects collisions with enemies to determine whether to trigger the break sequence.
+     */
     checkEnemyCollision() {
         return this.world.enemies.some(enemy => this.isColliding(enemy));
     }
