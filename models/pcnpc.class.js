@@ -29,6 +29,9 @@ class PcNpc extends MovableObject {
         } else {
             if (this.isHurt()) {
                 this.playAnimation(this.framesHurt);
+                if (this instanceof Endboss) {
+                    this.world.audioManager.playSound('bossHurt');
+                }
                 console.log(this.hp);
             }
         }

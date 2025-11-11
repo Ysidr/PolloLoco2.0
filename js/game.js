@@ -22,6 +22,7 @@ function init() {
     checkOrientation();
 }
 
+
 function checkMobileDevice() {
     window.isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     if (window.isMobileDevice) {
@@ -54,6 +55,30 @@ function restartGame() {
     world = null;
     canvas = null;
     init();
+}
+
+function exitToMenu() {
+    document.getElementById("pause-overlay").innerHTML = `<button onclick='backToStart()'>Sure</button><button onclick='backToPause()'>Cancel</button>`;   
+}
+
+function backToPause() {
+    document.getElementById("pause-overlay").innerHTML = `<button class="exitToMenu" onclick= exitToMenu() >Exit to Menu</button>`;
+}
+
+function backToStart() {
+    IntervalManager.clearAllIntervals();
+    level1 = null;
+    world = null;
+    canvas = null;
+    document.getElementById("canvas").classList.add('d-none')
+    document.getElementById("gameButtons").classList.add('d-none')
+    document.getElementById("gameStartContainer").classList.remove('d-none')
+    document.getElementById("mobile-controls").classList.add('d-none')
+    document.getElementById("pause-overlay").classList.add('d-none')
+    IntervalManager.allFunctions = [];
+    backToPause();
+    gameDesingResumed();
+    window.gamesHasStarted = false;
 }
 
 function gameDesingPaused() {

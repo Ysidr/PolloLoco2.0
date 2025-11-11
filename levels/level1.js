@@ -55,6 +55,7 @@ function initLevel() {
             bossAlert: 'audio/ES_Demon, Large Demon Boss Approaching - Epidemic Sound.mp3',
             lose: 'audio/ES_Retro, Lose, Negative 01 - Epidemic Sound.mp3',
             win: 'audio/ES_Retro, Star, Win, Gain x8 - Epidemic Sound.mp3',
+            bossHurt: 'audio/ES_Lion, Calling, Wail, Low, Hurting - Epidemic Sound - 0217-1295.wav',
         },
 
         throwablesDamage = 20,
