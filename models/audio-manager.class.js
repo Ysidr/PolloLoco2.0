@@ -78,28 +78,22 @@ class AudioManager {
         if (cooldown && this.lastPlayedSound === name && Date.now() - this.lastPlayed < cooldown) {
             return null;
         }
-
         const sound = template.cloneNode();
         sound.dataset.name = name;
         sound.baseVolume = baseVolume;
         sound.volume = this.overallVolume * baseVolume;
         sound.loop = loop;
-
         this.playedSounds.push(sound);
-
         sound.onended = () => this.stopSound(sound);
-
         sound.play().catch(() => {});
-
         if (duration) {
             setTimeout(() => this.stopSound(sound), duration);
         }
-
         this.lastPlayedSound = name;
         this.lastPlayed = Date.now();
         return sound;
     }
-
+    
     /**
      * @function stopSound
      * @param {?HTMLAudioElement} sound - The audio element to stop.
@@ -147,12 +141,10 @@ class AudioManager {
     changeAllVolume(volume) {
         this.overallVolume = parseFloat(volume);
         localStorage.setItem('volume', this.overallVolume);
-
         this.playedSounds.forEach(sound => {
             const base = sound.baseVolume ?? 1.0;
             sound.volume = base * this.overallVolume;
         });
         this.changeVolumeDisplay();
-
     }
 }

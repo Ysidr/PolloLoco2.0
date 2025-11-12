@@ -87,19 +87,23 @@ class Chicken extends PcNpc {
         const className = this.constructor.name;
         IntervalManager.setInterval(() => {
             this.checkHealth();
-            if (this.isDying) {
-                let i = 0;
-                if (i < this.framesDead.length) {
-                    this.playAnimation(this.framesDead);
-                    i++;
-                }
-                this.isDead = true;
-            } else {
-                this.playAnimation(this.framesWalk);
-            }
+            this.checkIfDying();
             this.checkPosition();
         }, 10000 / 60, `${className}chicken-animate`);
         this.moveLeft();
+    }
+
+    checkIfDying() {
+        if (this.isDying) {
+            let i = 0;
+            if (i < this.framesDead.length) {
+                this.playAnimation(this.framesDead);
+                i++;
+            }
+            this.isDead = true;
+        } else {
+            this.playAnimation(this.framesWalk);
+        }
     }
 
     /**

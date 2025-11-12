@@ -30,19 +30,21 @@ class Throwables extends MovableObject {
             if (this.isAboveGround() && !this.checkEnemyCollision()) {
                 this.fly();
             } else {
-                this.break();
-                if (this.world.throwables.length > 0) {
-                    this.world.throwables.pop();
-                }
-                IntervalManager.removeInterval(this.id,`${className}-throwable-animate`);
-                IntervalManager.allFunctions.splice(IntervalManager.allFunctions.findIndex(fn => fn.fn === this.animate), 1);
-                IntervalManager.allFunctions.splice(IntervalManager.allFunctions.findIndex(fn => fn.fn === this.applyGravity), 1);
-
-
+               this.bottleHitGround();
             }
         }, 3000 / 60, `${className}-throwable-animate`);
         this.world.character.throwableCount--;
         this.world.bottleStatusBar.updateBottleStatusBar(this.world.character.throwableCount);
+    }
+
+    bottleHitGround() {
+        this.break();
+        if (this.world.throwables.length > 0) {
+            this.world.throwables.pop();
+        }
+        IntervalManager.removeInterval(this.id,`${className}-throwable-animate`);
+        IntervalManager.allFunctions.splice(IntervalManager.allFunctions.findIndex(fn => fn.fn === this.animate), 1);
+        IntervalManager.allFunctions.splice(IntervalManager.allFunctions.findIndex(fn => fn.fn === this.applyGravity), 1);
     }
 
     /**

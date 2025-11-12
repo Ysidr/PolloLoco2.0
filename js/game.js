@@ -17,13 +17,10 @@ function init() {
     gameStartContainer.classList.add('d-none');
     document.getElementById("canvas").classList.remove('d-none');
     backToPause()
-
     canvas = document.querySelector("canvas");
     world = new World(canvas, inputs);
-
     window.gamesHasStarted = true;
     checkMobileDevice();
-
     checkOrientation();
 }
 
@@ -116,15 +113,19 @@ function backToStart() {
     level1 = null;
     world = null;
     canvas = null;
+    resetDivs();
+    backToPause();
+    gameDesingResumed();
+    window.gamesHasStarted = false;
+}
+
+function resetDivs() {
     document.getElementById("fullscreen").classList.add('d-none');
     document.getElementById("canvas").classList.add('d-none')
     document.getElementById("gameButtons").classList.add('d-none')
     document.getElementById("gameStartContainer").classList.remove('d-none')
     document.getElementById("mobile-controls").classList.add('d-none')
     document.getElementById("pause-overlay").classList.add('d-none')
-    backToPause();
-    gameDesingResumed();
-    window.gamesHasStarted = false;
 }
 
 /**
@@ -163,20 +164,27 @@ function gameDesingResumed() {
 function gameOver(result) {
     switch (result) {
         case "win":
-            document.getElementById("pause-overlay").classList.remove('d-none')
-            document.getElementById("pause-overlay").innerHTML = `<img src="img/You won, you lost/You win B.png" alt="Endscreen">
-            <button onclick='exitToMenuFromGameOver()'>Exit to Menu</button>`;
-            document.getElementById("restart-btn").classList.remove('d-none')
-            document.getElementById("pause-btn").classList.add('d-none')
+            caseWin();
             break;
         case "lost":
-            document.getElementById("pause-overlay").classList.remove('d-none')
-            document.getElementById("pause-overlay").innerHTML = `<img src="img/You won, you lost/Game Over.png" alt="Endscreen">
-            <button onclick='exitToMenuFromGameOver()'>Exit to Menu</button>`;
-            document.getElementById("restart-btn").classList.remove('d-none')
-            document.getElementById("pause-btn").classList.add('d-none')
+                caseLost();
             break;
     }
+}
+function caseWin() {
+    document.getElementById("pause-overlay").classList.remove('d-none')
+    document.getElementById("pause-overlay").innerHTML = `<img src="img/You won, you lost/You win B.png" alt="Endscreen">
+    <button onclick='exitToMenuFromGameOver()'>Exit to Menu</button>`;
+    document.getElementById("restart-btn").classList.remove('d-none')
+    document.getElementById("pause-btn").classList.add('d-none')
+}
+
+function caseLost() {
+    document.getElementById("pause-overlay").classList.remove('d-none')
+    document.getElementById("pause-overlay").innerHTML = `<img src="img/You won, you lost/Game Over.png" alt="Endscreen">
+    <button onclick='exitToMenuFromGameOver()'>Exit to Menu</button>`;
+    document.getElementById("restart-btn").classList.remove('d-none')
+    document.getElementById("pause-btn").classList.add('d-none')
 }
 
 /**

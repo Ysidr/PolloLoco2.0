@@ -78,7 +78,6 @@ class MiniChicken extends PcNpc {
         this.animate();
     }
 
-
     /**
      * @function animate
      * @description Handles walking and death animations while moving the mini chicken.
@@ -87,7 +86,14 @@ class MiniChicken extends PcNpc {
         const className = this.constructor.name;
         IntervalManager.setInterval(() => {
             this.checkHealth();
-            if (this.isDying) {
+            this.checkIfDying();
+            this.checkPosition();
+        }, 10000 / 60, `${className}chicken-animate`);
+        this.moveLeft();
+    }
+
+    checkIfDying() {
+        if (this.isDying) {
                 let i = 0;
                 if (i < this.framesDead.length) {
                     this.playAnimation(this.framesDead);
@@ -97,9 +103,6 @@ class MiniChicken extends PcNpc {
             } else {
                 this.playAnimation(this.framesWalk);
             }
-            this.checkPosition();
-        }, 10000 / 60, `${className}chicken-animate`);
-        this.moveLeft();
     }
 
     /**

@@ -125,11 +125,8 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.inputs = inputs;
-
-        // Initialize throwables after this is fully constructed
         this.throwables = [];
         this.loadSounds();
-
         this.draw();
         this.setWorld();
         this.initializeBackgroundObjects();
@@ -189,25 +186,26 @@ class World {
      */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
         this.ctx.save();
         this.ctx.translate(this.cameraX, 0);
-        this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.level.clouds);
-        this.addObjectsToMap(this.character);
-        this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.throwables);
-        this.addObjectsToMap(this.level.collectables);
+        this.addAllObjectsToMap();
         this.ctx.restore();
-
         [this.hpStatusBar, this.bottleStatusBar, this.coinStatusBar, this.bossHpStatusBar].forEach((bar) => {
             if (bar) {
                 bar.updatePosition(this.cameraX);
                 this.addToMap(bar);
             }
         });
-
         requestAnimationFrame(() => this.draw());
+    }
+
+    addAllObjectsToMap() {
+        this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.clouds);
+        this.addObjectsToMap(this.character);
+        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.throwables);
+        this.addObjectsToMap(this.level.collectables);
     }
 
     /**
@@ -249,11 +247,6 @@ class World {
         } else {
             this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
         }
-
-        // if (mo.drawRectangle && mo instanceof Character || mo instanceof Endboss || mo instanceof Chicken || mo instanceof Throwables || mo instanceof CoinCollectable) {
-        //     mo.drawRectangle(this.ctx);
-        //     mo.drawCollisionBox(this.ctx);
-        // }
     }
 
     /**
@@ -302,7 +295,6 @@ class World {
         this.audioManager.playSound('coin', 1.0, false, null, 200);
         this.character.coinCount += 1;
         this.character.speedY = 25;
-        // console.log('Character jumped on enemy!')
     }
 
     /**
@@ -329,7 +321,6 @@ class World {
             if (throwable.isColliding(enemy)) {
                 enemy.hurt(this.throwablesDamage);
                 this.throwables.splice(this.throwables.indexOf(throwable), 1);
-                // console.log('Enemy hit by bottle', enemy);
             }
         });
     }
@@ -368,7 +359,6 @@ class World {
      */
     updateCoinCollectable(collectable) {
         this.character.coinCount += collectable.value;
-        // console.log(this.character.coinCount);
         this.coinStatusBar.updateCoinStatusBar(this.character.coinCount);
         this.coinRespawn();
     }
@@ -389,24 +379,18 @@ class World {
      */
     coinRespawn() {
         const coins = this.level.collectables.filter(item => item instanceof CoinCollectable);
-
         if (coins.length < 5) {
             const coinsToAdd = 5 - coins.length;
             const minX = 100;
             const maxX = 3000;
             const groundY = 480 - 90;
-
             for (let i = 0; i < coinsToAdd; i++) {
                 const newCoin = new CoinCollectable();
                 newCoin.x = minX + Math.random() * (maxX - minX);
                 newCoin.y = groundY - newCoin.height;
                 this.level.collectables.push(newCoin);
             }
-            // console.log(`Coins in game: ${this.level.collectables.filter(item => item instanceof CoinCollectable).length}`);
         }
-
         setTimeout(() => this.coinRespawn(), 1000);
     }
-
-
 }

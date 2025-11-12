@@ -172,19 +172,22 @@ class Character extends PcNpc {
             const isJumping = this.world.inputs.JUMP;
             const isThrowing = this.world.inputs.THROW && this.throwableCount > 0 && !this.throwableTimeOut;
             const isTrading = this.world.inputs.TRADE;
-            this.checkHealth();
-            if (!this.dead() && !this.isHurt()) {
-                this.checkJump(isJumping, isMoving);
-            }
-            this.checkTrade(isTrading);
-            this.checkThrow(isThrowing);
-            this.checkDirection();
-            this.checkMovement(isMoving);
+            this.checkAllActions(isMoving, isJumping, isThrowing, isTrading);
             this.modifyCamera();
-
             this.updateDisplayedCounts();
 
         }, 60, `${className}character-animate`);
+    }
+
+    checkAllActions(isMoving, isJumping, isThrowing, isTrading) {
+        this.checkHealth();
+        if (!this.dead() && !this.isHurt()) {
+            this.checkJump(isJumping, isMoving);
+        }
+        this.checkTrade(isTrading);
+        this.checkThrow(isThrowing);
+        this.checkDirection();
+        this.checkMovement(isMoving);
     }
 
     /**
@@ -194,17 +197,13 @@ class Character extends PcNpc {
     modifyCamera() {
         const offsetRight = 100;
         const offsetLeft = 350;
-
         if (this.lastDirection === undefined) {
             this.lastDirection = this.otherDirection;
         }
-
         const targetX = -this.x + (this.otherDirection ? offsetLeft : offsetRight);
-
         if (this.lastDirection !== this.otherDirection) {
             this.startTransition();
         }
-
         if (this.cameraTransitionProgress < 1) {
             this.changeCameraInSmoothSteps(targetX);
         } else {

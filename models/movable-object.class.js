@@ -211,18 +211,22 @@ class MovableObject {
             return;
         }
         if (isTrading) {
-            if (this.coinCount >= 5) {
-                this.coinCount -= 5;
-                this.throwableCount += 1;
-                this.world.bottleStatusBar.updateBottleStatusBar(this.throwableCount);
-                this.world.coinStatusBar.updateCoinStatusBar(this.coinCount);
-                this.world.audioManager.playSound('tradeSuccess');
-            } else {
-                this.world.audioManager.playSound('tradeFail');
-            }
-            this.lastTradeTime = Date.now();
+            this.doTrade();
         }
     }
+    doTrade() {
+        if (this.coinCount >= 5) {
+            this.coinCount -= 5;
+            this.throwableCount += 1;
+            this.world.bottleStatusBar.updateBottleStatusBar(this.throwableCount);
+            this.world.coinStatusBar.updateCoinStatusBar(this.coinCount);
+            this.world.audioManager.playSound('tradeSuccess');
+        } else {
+            this.world.audioManager.playSound('tradeFail');
+        }
+        this.lastTradeTime = Date.now();
+    }
+
     /**
      * @function checkThrow
      * @param {boolean} isThrowing - Indicates whether a throwable should be launched.

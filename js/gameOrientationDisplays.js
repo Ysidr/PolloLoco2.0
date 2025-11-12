@@ -10,22 +10,26 @@ function checkOrientation() {
     setInterval(() => {
         window.isHorizontal = window.innerWidth > window.innerHeight ? true : false;
         if (window.isMobileDevice) {
-            switch (true) {
-                case !window.gamesHasStarted && window.isHorizontal:
-                    notStartedButHorizontal(rotateMessage);
-                    break;
-                case !window.gamesHasStarted && !window.isHorizontal:
-                    notStartedButVertical(rotateMessage);
-                    break;
-                case window.gamesHasStarted && window.isHorizontal:
-                    startedButHorizontal(rotateMessage);
-                    break;
-                case window.gamesHasStarted && !window.isHorizontal:
-                    startedButVertical(rotateMessage);
-                    break;
-            }
+            switchMobileDevice(rotateMessage);
         }
     }, 1000);
+}
+
+function switchMobileDevice(rotateMessage) {
+    switch (true) {
+        case !window.gamesHasStarted && window.isHorizontal:
+            notStartedButHorizontal(rotateMessage);
+            break;
+        case !window.gamesHasStarted && !window.isHorizontal:
+            notStartedButVertical(rotateMessage);
+            break;
+        case window.gamesHasStarted && window.isHorizontal:
+            startedButHorizontal(rotateMessage);
+            break;
+        case window.gamesHasStarted && !window.isHorizontal:
+            startedButVertical(rotateMessage);
+            break;
+    }
 }
 
 /**
