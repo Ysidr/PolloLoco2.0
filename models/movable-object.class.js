@@ -230,7 +230,15 @@ class MovableObject {
      */
     checkThrow(isThrowing) {
         if (isThrowing) {
-            this.world.throwables.push(new BottleThrowable(this.world));
+            if (!this.throwableTimeOut) {
+                this.world.throwables.push(new BottleThrowable(this.world));
+                this.throwableTimeOut = true;
+                setTimeout(() => {
+                    this.throwableTimeOut = false;
+                }, 1000);
+            }
+
+
         }
     }
 
