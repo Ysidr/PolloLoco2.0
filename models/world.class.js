@@ -250,10 +250,10 @@ class World {
             this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
         }
 
-        if (mo.drawRectangle && mo instanceof Character || mo instanceof Endboss || mo instanceof Chicken || mo instanceof Throwables || mo instanceof CoinCollectable) {
-            mo.drawRectangle(this.ctx);
-            mo.drawCollisionBox(this.ctx);
-        }
+        // if (mo.drawRectangle && mo instanceof Character || mo instanceof Endboss || mo instanceof Chicken || mo instanceof Throwables || mo instanceof CoinCollectable) {
+        //     mo.drawRectangle(this.ctx);
+        //     mo.drawCollisionBox(this.ctx);
+        // }
     }
 
     /**
@@ -302,7 +302,7 @@ class World {
         this.audioManager.playSound('coin', 1.0, false, null, 200);
         this.character.coinCount += 1;
         this.character.speedY = 25;
-        console.log('Character jumped on enemy!')
+        // console.log('Character jumped on enemy!')
     }
 
     /**
@@ -329,7 +329,7 @@ class World {
             if (throwable.isColliding(enemy)) {
                 enemy.hurt(this.throwablesDamage);
                 this.throwables.splice(this.throwables.indexOf(throwable), 1);
-                console.log('Enemy hit by bottle', enemy);
+                // console.log('Enemy hit by bottle', enemy);
             }
         });
     }
@@ -368,7 +368,7 @@ class World {
      */
     updateCoinCollectable(collectable) {
         this.character.coinCount += collectable.value;
-        console.log(this.character.coinCount);
+        // console.log(this.character.coinCount);
         this.coinStatusBar.updateCoinStatusBar(this.character.coinCount);
         this.coinRespawn();
     }
@@ -402,7 +402,7 @@ class World {
                 newCoin.y = groundY - newCoin.height;
                 this.level.collectables.push(newCoin);
             }
-            console.log(`Coins in game: ${this.level.collectables.filter(item => item instanceof CoinCollectable).length}`);
+            // console.log(`Coins in game: ${this.level.collectables.filter(item => item instanceof CoinCollectable).length}`);
         }
 
         setTimeout(() => this.coinRespawn(), 1000);
