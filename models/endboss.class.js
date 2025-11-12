@@ -219,16 +219,12 @@ class Endboss extends PcNpc {
         const now = new Date().getTime();
         if (now > this.lastDashTime + this.dashCooldown) {
             this.lastDashTime = now;
-            this.speed = 10;  // Initial dash speed
-
-            // Reset to normal speed after 2 seconds
+            this.speed = 10;
             setTimeout(() => {
-                this.speed = -10;  // Reverse dash
+                this.speed = -10;
             }, 500);
-
-            // Return to normal speed after 4 seconds
             setTimeout(() => {
-                this.speed = 2;  // Original speed (adjust this value to your normal speed)
+                this.speed = 2;
             }, 1000);
         }
     }
