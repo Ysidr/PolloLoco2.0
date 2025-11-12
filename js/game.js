@@ -33,6 +33,7 @@ function init() {
  */
 function checkMobileDevice() {
     window.isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    isMobileDevice? document.getElementById("controllsBtn").classList.add('d-none') : document.getElementById("controllsBtn").classList.remove('d-none');
     if (window.isMobileDevice && window.gamesHasStarted) {
         document.getElementById("mobile-controls").classList.remove('d-none');
     }
