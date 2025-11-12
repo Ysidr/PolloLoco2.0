@@ -165,14 +165,14 @@ function gameOver(result) {
         case "win":
             document.getElementById("pause-overlay").classList.remove('d-none')
             document.getElementById("pause-overlay").innerHTML = `<img src="img/You won, you lost/You win B.png" alt="Endscreen">
-            <button onclick='exitToMenuFromGameOver()'>Exit</button>`;
+            <button onclick='exitToMenuFromGameOver()'>Exit to Menu</button>`;
             document.getElementById("restart-btn").classList.remove('d-none')
             document.getElementById("pause-btn").classList.add('d-none')
             break;
         case "lost":
             document.getElementById("pause-overlay").classList.remove('d-none')
             document.getElementById("pause-overlay").innerHTML = `<img src="img/You won, you lost/Game Over.png" alt="Endscreen">
-            <button onclick='exitToMenuFromGameOver()'>Exit</button>`;
+            <button onclick='exitToMenuFromGameOver()'>Exit to Menu</button>`;
             document.getElementById("restart-btn").classList.remove('d-none')
             document.getElementById("pause-btn").classList.add('d-none')
             break;

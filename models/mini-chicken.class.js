@@ -18,12 +18,12 @@ class MiniChicken extends PcNpc {
      * @type {number}
      * @description Width of the mini chicken sprite.
      */
-    width = 80;
+    width = 60;
     /**
      * @type {number}
      * @description Height of the mini chicken sprite.
      */
-    height = 90;
+    height = 60;
     /**
      * @type {number}
      * @description Health points before the mini chicken is defeated.

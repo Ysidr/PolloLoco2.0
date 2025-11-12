@@ -164,12 +164,12 @@ class World {
                 new BackgroundObject('img/5_background/layers/3_third_layer/2.png', currentBackgroundX),
                 new BackgroundObject('img/5_background/layers/2_second_layer/2.png', currentBackgroundX),
                 new BackgroundObject('img/5_background/layers/1_first_layer/2.png', currentBackgroundX),
-                new BackgroundObject('img/5_background/layers/air.png', currentBackgroundX + 720),
-                new BackgroundObject('img/5_background/layers/3_third_layer/1.png', currentBackgroundX + 720),
-                new BackgroundObject('img/5_background/layers/2_second_layer/1.png', currentBackgroundX + 720),
-                new BackgroundObject('img/5_background/layers/1_first_layer/1.png', currentBackgroundX + 720)
+                new BackgroundObject('img/5_background/layers/air.png', currentBackgroundX + 716),
+                new BackgroundObject('img/5_background/layers/3_third_layer/1.png', currentBackgroundX + 716),
+                new BackgroundObject('img/5_background/layers/2_second_layer/1.png', currentBackgroundX + 716),
+                new BackgroundObject('img/5_background/layers/1_first_layer/1.png', currentBackgroundX + 716)
             );
-            currentBackgroundX += 1440;
+            currentBackgroundX += 1432;
         }
     }
 

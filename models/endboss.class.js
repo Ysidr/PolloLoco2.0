@@ -46,6 +46,9 @@ class Endboss extends PcNpc {
      */
     hpStatusBar = new BossHpStatusBar();
 
+    lastDashTime = 0;
+    dashCooldown = 5000;
+
 
     /**
      * @type {string[]}
@@ -135,14 +138,14 @@ class Endboss extends PcNpc {
         const className = this.constructor.name;
         IntervalManager.setInterval(() => {
             if (this.firstContact && !this.startedMoving) {
-                this.moveLeft();
+                this.moveLeftBoss();
                 this.startedMoving = true;
             }
             this.checkHealth();
             if (!this.world.bossHpStatusBar && this.firstContact) {
                 this.world.bossHpStatusBar = new BossHpStatusBar();
             }
-            if(this.world.bossHpStatusBar){
+            if (this.world.bossHpStatusBar) {
                 this.world.bossHpStatusBar.updateBossHPStatusBar(this.hp);
             }
             this.checkWhatToPlay(i);
@@ -160,7 +163,7 @@ class Endboss extends PcNpc {
             this.startAlert();
             i = 0;
         }
-        if (i < this.framesAlert.length*2) {
+        if (i < this.framesAlert.length * 2) {
             this.playAnimation(this.framesAlert);
             i++;
         } else if (this.isDying) {
@@ -202,5 +205,33 @@ class Endboss extends PcNpc {
         this.firstContact = true;
         this.world.audioManager.playSound('bossAlert');
     }
+
+    moveLeftBoss() {
+        const className = this.constructor.name;
+        this.lastDashTime = new Date().getTime();
+        IntervalManager.setInterval(() => {
+            this.x -= this.speed;
+            this.dash();
+        }, 1000 / 60, `${className}-moveLeftBoss`);
+    }
+
+    dash() {
+        const now = new Date().getTime();
+        if (now > this.lastDashTime + this.dashCooldown) {
+            this.lastDashTime = now;
+            this.speed = 10;  // Initial dash speed
+
+            // Reset to normal speed after 2 seconds
+            setTimeout(() => {
+                this.speed = -10;  // Reverse dash
+            }, 500);
+
+            // Return to normal speed after 4 seconds
+            setTimeout(() => {
+                this.speed = 2;  // Original speed (adjust this value to your normal speed)
+            }, 1000);
+        }
+    }
+
 
 }
