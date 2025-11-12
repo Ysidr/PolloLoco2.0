@@ -231,15 +231,6 @@ class MovableObject {
     checkThrow(isThrowing) {
         if (isThrowing) {
             this.world.throwables.push(new BottleThrowable(this.world));
-            this.throwableTimeOut = true;
-
-            setTimeout(() => {
-                this.throwableTimeOut = false;
-                this.world.throwables.pop();
-                const throwableAnimateId = `throwable-animate-${this.id}`;
-                IntervalManager.removeInterval(throwableAnimateId);
-                IntervalManager.removeInterval(`bottleThrowablegravity-${this.id}`);
-            }, 1000);
         }
     }
 

@@ -13,7 +13,7 @@ class IntervalManager {
      * @type {Set<number>}
      * @description Collection of active interval IDs.
      */
-    static intervals = new Set();
+    static intervals  = [];
     /**
      * @type {number}
      * @description Total count of active intervals.
@@ -32,7 +32,7 @@ class IntervalManager {
      * @description Stores an interval reference and increments the active count.
      */
     static addInterval(id, name = 'unnamed') {
-        this.intervals.add(id);
+        this.intervals.push({id, name});
         this.intervalCount++;
         console.log(`Interval added: ${name} (ID: ${id}) - Total: ${this.intervalCount}`);
         return id;
@@ -44,12 +44,14 @@ class IntervalManager {
      * @description Clears and removes an interval from the managed set.
      */
     static removeInterval(id, name = 'unnamed') {
-        if (this.intervals.has(id)) {
-            clearInterval(id);
-            this.intervals.delete(id);
-            this.intervalCount--;
-            console.log(`Interval removed: ${name} (ID: ${id}) - Total: ${this.intervalCount}`);
-        }
+        this.intervals.forEach(element => {
+            if ((element.name === name &&name!='unnamed') || element.id === id) {
+                clearInterval(element.id);
+                this.intervals.splice(this.intervals.indexOf(element), 1);
+                this.intervalCount--;
+                console.log(`Interval removed: ${name} (ID: ${id}) - Total: ${this.intervalCount}`);
+            }
+        });
     }
     /**
      * @function clearAllIntervals
@@ -57,8 +59,8 @@ class IntervalManager {
      */
     static clearAllIntervals() {
         console.log(`Clearing all ${this.intervalCount} intervals...`);
-        this.intervals.forEach(id => clearInterval(id));
-        this.intervals.clear();
+        this.intervals.forEach(element => clearInterval(element.id));
+        this.intervals = [];
         this.intervalCount = 0;
         console.log('All intervals cleared');
     }
@@ -72,7 +74,7 @@ class IntervalManager {
      */
     static setInterval(callback, delay, name = 'unnamed') {
         if (!this.allFunctions.some(fn => fn.fn === callback)) {
-            this.allFunctions.push({fn: callback, ms: delay });
+            this.allFunctions.push({fn: callback, ms: delay, name: name });
         }
         const id = setInterval(callback, delay);
         return this.addInterval(id, name);
@@ -82,7 +84,7 @@ class IntervalManager {
      * @returns {number[]} Array of active interval IDs.
      */
     static getIntervalList() {
-        return Array.from(this.intervals);
+        return this.intervals;
     }
     /**
      * @function getIntervalCount
@@ -112,7 +114,7 @@ class IntervalManager {
      */
     static resumeAllIntervals() {
         this.allFunctions.forEach(fn => {
-            this.setInterval(fn.fn, fn.ms);
+            this.setInterval(fn.fn, fn.ms, fn.name);
         });
     }
 }

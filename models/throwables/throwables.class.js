@@ -25,19 +25,22 @@ class Throwables extends MovableObject {
      */
     animate() {
         this.world.character.otherDirection ? this.isTrowingLeft = true : this.isTrowingLeft = false;
-        const intervalId = IntervalManager.setInterval(() => {
+        const className = this.constructor.name;
+        IntervalManager.setInterval(() => {
             if (this.isAboveGround() && !this.checkEnemyCollision()) {
                 this.fly();
             } else {
                 this.break();
-                this.world.throwables.pop();
-                IntervalManager.removeInterval(intervalId);
+                if (this.world.throwables.length > 0) {
+                    this.world.throwables.pop();
+                }
+                IntervalManager.removeInterval(this.id,`${className}-throwable-animate`);
                 IntervalManager.allFunctions.splice(IntervalManager.allFunctions.findIndex(fn => fn.fn === this.animate), 1);
                 IntervalManager.allFunctions.splice(IntervalManager.allFunctions.findIndex(fn => fn.fn === this.applyGravity), 1);
 
 
             }
-        }, 3000 / 60, `throwable-animate-${this.id}`);
+        }, 3000 / 60, `${className}-throwable-animate`);
         this.world.character.throwableCount--;
         this.world.bottleStatusBar.updateBottleStatusBar(this.world.character.throwableCount);
     }
