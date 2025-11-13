@@ -261,7 +261,7 @@ class World {
             if (this.collectables.length > 0) {
                 this.checkCollectables();
             }
-        }, 50, 'collision-check');
+        }, 20, 'collision-check');
     }
 
     /**

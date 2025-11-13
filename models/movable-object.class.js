@@ -167,8 +167,13 @@ class MovableObject {
         }
         if (this.isAboveGround()) {
             this.playAnimation(this.framesJump);
+            this.lastMoveTime = new Date().getTime();
         } else {
-            this.playAnimation(isMoving ? this.framesWalk : this.framesIdle);
+            if (this.isSleeping) {
+                this.playAnimation(this.framesSleep);
+            } else {
+                this.playAnimation(isMoving ? this.framesWalk : this.framesIdle);
+            }
         }
     }
 

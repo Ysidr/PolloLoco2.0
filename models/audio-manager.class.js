@@ -62,6 +62,51 @@ class AudioManager {
     }
 
     /**
+     * @function isSoundInCooldown
+     * @param {string} name - Name of the sound to check.
+     * @param {number} cooldown - Cooldown period in milliseconds.
+     * @returns {boolean} True if the sound is in cooldown, false otherwise.
+     * @private
+     */
+    isSoundInCooldown(name, cooldown) {
+        return cooldown && this.lastPlayedSound === name && Date.now() - this.lastPlayed < cooldown;
+    }
+
+    /**
+     * @function createSoundInstance
+     * @param {HTMLAudioElement} template - The audio element to clone.
+     * @param {string} name - Identifier for the sound.
+     * @param {number} baseVolume - Base volume multiplier.
+     * @returns {HTMLAudioElement} A configured audio element instance.
+     * @private
+     */
+    createSoundInstance(template, name, baseVolume) {
+        const sound = template.cloneNode();
+        sound.dataset.name = name;
+        sound.baseVolume = baseVolume;
+        sound.volume = this.overallVolume * baseVolume;
+        sound.onended = () => this.stopSound(sound);
+        return sound;
+    }
+
+    /**
+     * @function setupSoundPlayback
+     * @param {HTMLAudioElement} sound - The sound to play.
+     * @param {boolean} loop - Whether to loop the sound.
+     * @param {?number} duration - Optional duration after which to stop the sound.
+     * @private
+     */
+    setupSoundPlayback(sound, loop, duration) {
+        sound.loop = loop;
+        this.playedSounds.push(sound);
+        sound.play().catch(() => {});
+        
+        if (duration) {
+            setTimeout(() => this.stopSound(sound), duration);
+        }
+    }
+
+    /**
      * @function playSound
      * @param {string} name - Identifier of the sound to play.
      * @param {number} [baseVolume=1.0] - Base volume multiplier before applying the master volume.
@@ -73,22 +118,13 @@ class AudioManager {
      */
     playSound(name, baseVolume = 1.0, loop = false, duration = null, cooldown = 100) {
         const template = this.sounds[name];
-        if (!template) return null;
-
-        if (cooldown && this.lastPlayedSound === name && Date.now() - this.lastPlayed < cooldown) {
+        if (!template || this.isSoundInCooldown(name, cooldown)) {
             return null;
         }
-        const sound = template.cloneNode();
-        sound.dataset.name = name;
-        sound.baseVolume = baseVolume;
-        sound.volume = this.overallVolume * baseVolume;
-        sound.loop = loop;
-        this.playedSounds.push(sound);
-        sound.onended = () => this.stopSound(sound);
-        sound.play().catch(() => {});
-        if (duration) {
-            setTimeout(() => this.stopSound(sound), duration);
-        }
+
+        const sound = this.createSoundInstance(template, name, baseVolume);
+        this.setupSoundPlayback(sound, loop, duration);
+        
         this.lastPlayedSound = name;
         this.lastPlayed = Date.now();
         return sound;

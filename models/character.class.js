@@ -51,6 +51,12 @@ class Character extends PcNpc {
      */
     lastBounceTime = 0;
 
+    isSleeping = false;
+
+    lastPosition = {x: 0, y: 0}
+
+    lastMoveTime
+
     /**
      * @type {number}
      * @description Number of throwable items currently available.
@@ -87,6 +93,19 @@ class Character extends PcNpc {
         'img/2_character_pepe/1_idle/idle/I-7.png',
         'img/2_character_pepe/1_idle/idle/I-8.png'
     ];
+
+    framesSleep = [
+        `img/2_character_pepe/1_idle/long_idle/I-11.png`,
+        `img/2_character_pepe/1_idle/long_idle/I-12.png`,
+        `img/2_character_pepe/1_idle/long_idle/I-13.png`,
+        `img/2_character_pepe/1_idle/long_idle/I-14.png`,
+        `img/2_character_pepe/1_idle/long_idle/I-15.png`,
+        `img/2_character_pepe/1_idle/long_idle/I-16.png`,
+        `img/2_character_pepe/1_idle/long_idle/I-17.png`,
+        `img/2_character_pepe/1_idle/long_idle/I-18.png`,
+        `img/2_character_pepe/1_idle/long_idle/I-19.png`,
+        `img/2_character_pepe/1_idle/long_idle/I-20.png`];
+
 
     /**
      * @type {string[]}
@@ -154,8 +173,11 @@ class Character extends PcNpc {
         this.loadImages(this.framesJump);
         this.loadImages(this.framesHurt);
         this.loadImages(this.framesDead);
+        this.loadImages(this.framesSleep);
         this.y = 480 - this.height - 40;
         this.applyGravity();
+        this.lastPosition = { x: this.x, y: this.y };
+        this.lastMoveTime = new Date().getTime();
 
         this.animate();
 
@@ -172,11 +194,19 @@ class Character extends PcNpc {
             const isJumping = this.world.inputs.JUMP;
             const isThrowing = this.world.inputs.THROW && this.throwableCount > 0 && !this.throwableTimeOut;
             const isTrading = this.world.inputs.TRADE;
+            this.checkIsSleeping();
             this.checkAllActions(isMoving, isJumping, isThrowing, isTrading);
             this.modifyCamera();
             this.updateDisplayedCounts();
+            this.fixY();
 
         }, 60, `${className}character-animate`);
+    }
+
+    fixY() {
+        if (this.y > 480 - this.height - 40) {
+            this.y = 480 - this.height - 40;
+        }
     }
 
     checkAllActions(isMoving, isJumping, isThrowing, isTrading) {
@@ -189,6 +219,23 @@ class Character extends PcNpc {
         this.checkDirection();
         this.checkMovement(isMoving);
     }
+    checkIsSleeping() {
+        const now = new Date().getTime();
+        if (this.lastPosition.x !== this.x || this.lastPosition.y !== this.y) {
+            this.lastMoveTime = now;
+        }
+        this.lastPosition.x = this.x;
+        this.lastPosition.y = this.y;
+        if (now - this.lastMoveTime > 5000) {
+            this.isSleeping = true;
+        } else {
+            this.isSleeping = false;
+        }
+    }
+
+    
+
+    
 
     /**
      * @function modifyCamera

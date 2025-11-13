@@ -30,14 +30,14 @@ class Throwables extends MovableObject {
             if (this.isAboveGround() && !this.checkEnemyCollision()) {
                 this.fly();
             } else {
-               this.bottleHitGround();
+               this.bottleHitGround( className);
             }
         }, 3000 / 60, `${className}-throwable-animate`);
         this.world.character.throwableCount--;
         this.world.bottleStatusBar.updateBottleStatusBar(this.world.character.throwableCount);
     }
 
-    bottleHitGround() {
+    bottleHitGround(className) {
         this.break();
         if (this.world.throwables.length > 0) {
             this.world.throwables.pop();
@@ -62,7 +62,7 @@ class Throwables extends MovableObject {
      */
     fly() {
         if (!this.throwSoundPlayed) {
-            this.world.audioManager.playSound('bottleThrow', 0.5, false);
+            this.world.audioManager.playSound('bottleThrow', 0.5, false, 400);
             this.throwSoundPlayed = true;
         }
         this.speedY -= this.acceleration;
