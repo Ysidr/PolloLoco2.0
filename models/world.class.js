@@ -199,6 +199,10 @@ class World {
         requestAnimationFrame(() => this.draw());
     }
 
+    /**
+     * @function addAllObjectsToMap
+     * @description Renders background, character, enemies, projectiles, and collectables in order.
+     */
     addAllObjectsToMap() {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);

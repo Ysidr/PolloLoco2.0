@@ -93,6 +93,10 @@ class Chicken extends PcNpc {
         this.moveLeft();
     }
 
+    /**
+     * @function checkIfDying
+     * @description Plays the appropriate animation depending on whether the chicken is dying.
+     */
     checkIfDying() {
         if (this.isDying) {
             let i = 0;

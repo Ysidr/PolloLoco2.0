@@ -119,6 +119,10 @@ function backToStart() {
     window.gamesHasStarted = false;
 }
 
+/**
+ * @function resetDivs
+ * @description Resets core UI containers to their default hidden or visible states when leaving the game view.
+ */
 function resetDivs() {
     document.getElementById("fullscreen").classList.add('d-none');
     document.getElementById("canvas").classList.add('d-none')
@@ -171,6 +175,11 @@ function gameOver(result) {
             break;
     }
 }
+
+/**
+ * @function caseWin
+ * @description Renders the victory end screen and adjusts control visibility after the player wins.
+ */
 function caseWin() {
     document.getElementById("pause-overlay").classList.remove('d-none')
     document.getElementById("pause-overlay").innerHTML = `<img src="img/You won, you lost/You win B.png" alt="Endscreen">
@@ -179,6 +188,10 @@ function caseWin() {
     document.getElementById("pause-btn").classList.add('d-none')
 }
 
+/**
+ * @function caseLost
+ * @description Renders the defeat end screen and adjusts control visibility after the player loses.
+ */
 function caseLost() {
     document.getElementById("pause-overlay").classList.remove('d-none')
     document.getElementById("pause-overlay").innerHTML = `<img src="img/You won, you lost/Game Over.png" alt="Endscreen">

@@ -203,12 +203,24 @@ class Character extends PcNpc {
         }, 60, `${className}character-animate`);
     }
 
+    /**
+     * @function fixY
+     * @description Clamps the character's vertical position to ground level when gravity settles.
+     */
     fixY() {
         if (this.y > 480 - this.height - 40) {
             this.y = 480 - this.height - 40;
         }
     }
 
+    /**
+     * @function checkAllActions
+     * @param {boolean} isMoving - Indicates whether horizontal input is active.
+     * @param {boolean} isJumping - Indicates whether the jump input is active.
+     * @param {boolean} isThrowing - Indicates whether a throwable should be launched.
+     * @param {boolean} isTrading - Indicates whether the trade input is active.
+     * @description Processes movement, combat, and interaction logic for the current frame.
+     */
     checkAllActions(isMoving, isJumping, isThrowing, isTrading) {
         this.checkHealth();
         if (!this.dead() && !this.isHurt()) {
@@ -219,6 +231,11 @@ class Character extends PcNpc {
         this.checkDirection();
         this.checkMovement(isMoving);
     }
+
+    /**
+     * @function checkIsSleeping
+     * @description Determines whether the character should enter the sleeping animation based on inactivity.
+     */
     checkIsSleeping() {
         const now = new Date().getTime();
         if (this.lastPosition.x !== this.x || this.lastPosition.y !== this.y) {
@@ -232,10 +249,6 @@ class Character extends PcNpc {
             this.isSleeping = false;
         }
     }
-
-    
-
-    
 
     /**
      * @function modifyCamera

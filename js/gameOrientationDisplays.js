@@ -15,6 +15,11 @@ function checkOrientation() {
     }, 1000);
 }
 
+/**
+ * @function switchMobileDevice
+ * @param {HTMLElement} rotateMessage - The element used to display rotate-device guidance.
+ * @description Routes orientation handling based on game state and device orientation.
+ */
 function switchMobileDevice(rotateMessage) {
     switch (true) {
         case !window.gamesHasStarted && window.isHorizontal:

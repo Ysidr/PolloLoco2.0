@@ -37,6 +37,11 @@ class Throwables extends MovableObject {
         this.world.bottleStatusBar.updateBottleStatusBar(this.world.character.throwableCount);
     }
 
+    /**
+     * @function bottleHitGround
+     * @param {string} className - The class name used for interval identification.
+     * @description Handles cleanup and state updates after the throwable impacts the ground or an enemy.
+     */
     bottleHitGround(className) {
         this.break();
         if (this.world.throwables.length > 0) {

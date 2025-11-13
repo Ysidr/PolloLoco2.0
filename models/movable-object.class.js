@@ -219,6 +219,10 @@ class MovableObject {
             this.doTrade();
         }
     }
+    /**
+     * @function doTrade
+     * @description Exchanges coins for throwable items and updates related HUD elements and cooldown.
+     */
     doTrade() {
         if (this.coinCount >= 5) {
             this.coinCount -= 5;
