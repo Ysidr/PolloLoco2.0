@@ -1,0 +1,156 @@
+body.impressum {
+    min-height: 100vh;
+    margin: 0;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-image: url("./img/desert-5058612_1280.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.impressum-page {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    justify-content: center;
+}
+
+.impressum-card {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    border: 1px solid gold;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+    padding: 24px 28px 28px;
+    color: #f5f5f5;
+    box-sizing: border-box;
+}
+
+.impressum-header {
+    border-bottom: 1px solid rgba(255, 215, 0, 0.35);
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+}
+
+.impressum-header h1 {
+    margin: 0;
+    font-size: 32px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px gold;
+}
+
+.impressum-subtitle {
+    margin: 8px 0 0;
+    font-size: 16px;
+    color: #f5f5f5;
+}
+
+.impressum-section {
+    margin-bottom: 20px;
+}
+
+.impressum-section h2 {
+    font-size: 20px;
+    margin: 0 0 8px;
+    color: gold;
+}
+
+.impressum-section p,
+.impressum-section address {
+    margin: 0 0 8px;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.impressum-section address {
+    font-style: normal;
+}
+
+.impressum-section strong {
+    font-weight: 600;
+}
+
+.impressum-section a {
+    color: #ffec8b;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 236, 139, 0.6);
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.impressum-section a:hover,
+.impressum-section a:focus {
+    color: gold;
+    border-color: gold;
+}
+
+.impressum-footer {
+    border-top: 1px solid rgba(255, 215, 0, 0.35);
+    padding-top: 12px;
+    margin-top: 8px;
+    font-size: 13px;
+    color: #d0d0d0;
+}
+
+.impressum-updated {
+    margin: 0 0 4px;
+}
+
+.impressum-disclaimer {
+    margin: 0;
+}
+
+.impressum-back {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    padding: 6px 14px;
+    font-size: 14px;
+    color: transparent;
+    -webkit-text-stroke: 0.8px gold;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px solid gold;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.impressum-back:hover,
+.impressum-back:focus {
+    box-shadow: 0 0 10px gold;
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    body.impressum {
+        align-items: stretch;
+        padding: 70px 12px 24px;
+    }
+
+    .impressum-card {
+        padding: 20px 16px 22px;
+        border-radius: 10px;
+    }
+
+    .impressum-header h1 {
+        font-size: 26px;
+    }
+
+    .impressum-section h2 {
+        font-size: 18px;
+    }
+
+    .impressum-back {
+        top: 10px;
+        left: 10px;
+        font-size: 13px;
+        padding: 5px 10px;
+    }
+}
