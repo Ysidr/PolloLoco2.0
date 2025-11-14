@@ -154,3 +154,81 @@ body.impressum {
         padding: 5px 10px;
     }
 }
+
+@media (max-height: 450px) {
+    body.impressum {
+        min-height: 0;
+        padding: 50px 10px 20px;
+    }
+
+    .impressum-card {
+        max-width: 700px;
+        padding: 16px 14px 18px;
+    }
+
+    .impressum-header h1 {
+        font-size: 22px;
+        letter-spacing: 0.06em;
+        -webkit-text-stroke: 0.8px gold;
+    }
+
+    .impressum-subtitle {
+        font-size: 14px;
+    }
+
+    .impressum-section h2 {
+        font-size: 16px;
+    }
+
+    .impressum-section p,
+    .impressum-section address {
+        font-size: 13px;
+    }
+
+    .impressum-back {
+        top: 8px;
+        left: 8px;
+        font-size: 12px;
+        padding: 4px 8px;
+        border-width: 1.5px;
+    }
+}
+
+@media (max-height: 400px) {
+    body.impressum {
+        min-height: 0;
+        padding: 40px 8px 16px;
+    }
+
+    .impressum-card {
+        max-width: 550px;
+        padding: 14px 12px 16px;
+        border-radius: 8px;
+    }
+
+    .impressum-header h1 {
+        font-size: 20px;
+        -webkit-text-stroke: 0.6px gold;
+    }
+
+    .impressum-subtitle {
+        font-size: 13px;
+    }
+
+    .impressum-section h2 {
+        font-size: 15px;
+    }
+
+    .impressum-section p,
+    .impressum-section address {
+        font-size: 12px;
+        line-height: 1.4;
+    }
+
+    .impressum-back {
+        top: 6px;
+        left: 6px;
+        font-size: 11px;
+        padding: 3px 7px;
+    }
+}
