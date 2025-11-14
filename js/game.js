@@ -288,6 +288,18 @@ function addMobileControl(buttonId, inputKey) {
         e.preventDefault();
         inputs[inputKey] = false;
     };
+
+    addEventListeners(btn, start, end)   
+}
+
+/**
+ * @function addEventListeners
+ * @param {HTMLElement} btn - The button element to add event listeners to.
+ * @param {Function} start - The function to call when the button is pressed.
+ * @param {Function} end - The function to call when the button is released.
+ * @description Adds event listeners to a button element to handle both mouse and touch events.
+ */
+function addEventListeners(btn, start, end) {
     btn.addEventListener('mousedown', start);
     btn.addEventListener('mouseup', end);
     btn.addEventListener('mouseleave', end);

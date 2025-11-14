@@ -3,116 +3,27 @@
  * @description Central game controller handling rendering, entities, interactions, and audio.
  */
 class World {
-
-    /**
-     * @type {Character}
-     * @description Player-controlled character instance.
-     */
     character = new Character();
-    /**
-     * @type {PcNpc[]}
-     * @description List of enemies present in the current level.
-     */
     enemies = level1.enemies;
-    /**
-     * @type {Cloud[]}
-     * @description Background cloud objects for parallax effect.
-     */
     clouds = level1.clouds;
-    /**
-     * @type {BackgroundObject[]}
-     * @description Layered scenery elements composing the environment.
-     */
     backgroundObjects = level1.backgroundObjects;
-    /**
-     * @type {Level}
-     * @description Current level configuration.
-     */
     level = level1;
-    /**
-     * @type {HpStatusBar}
-     * @description HUD element reflecting the character's health.
-     */
     hpStatusBar = new HpStatusBar();
-    /**
-     * @type {BottleStatusBar}
-     * @description HUD element showing available throwable bottles.
-     */
     bottleStatusBar = new BottleStatusBar();
-    /**
-     * @type {CoinStatusBar}
-     * @description HUD element displaying collected coins.
-     */
     coinStatusBar = new CoinStatusBar();
-    /**
-     * @type {?BossHpStatusBar}
-     * @description HUD element for the boss health, instantiated on encounter.
-     */
     bossHpStatusBar;
-    /**
-     * @type {Collectable[]}
-     * @description Collectible items available in the level.
-     */
     collectables = level1.collectables;
-    /**
-     * @type {Throwables[]}
-     * @description Active throwable projectiles in flight.
-     */
     throwables = [];
-    /**
-     * @type {number}
-     * @description Damage dealt by throwable projectiles.
-     */
     throwablesDamage = level1.throwablesDamage;
-    /**
-     * @type {number}
-     * @description Damage taken from standard enemies.
-     */
     enemyDamage = level1.enemyDamage;
-    /**
-     * @type {number}
-     * @description Damage inflicted by the end boss.
-     */
     bossDamage = level1.bossDamage;
-    /**
-     * @type {number}
-     * @description Damage applied when the character jumps on an enemy.
-     */
     characterJumpDamage = level1.characterJumpDamage;
-    /**
-     * @type {Object.<string, string>}
-     * @description Mapping of sound identifiers to audio asset paths.
-     */
     sounds = level1.sounds;
-    /**
-     * @type {Inputs}
-     * @description Input state manager shared with the player character.
-     */
     inputs;
-    /**
-     * @type {HTMLCanvasElement}
-     * @description Canvas element used for rendering.
-     */
     canvas;
-    /**
-     * @type {CanvasRenderingContext2D}
-     * @description 2D rendering context for the canvas.
-     */
     ctx;
-    /**
-     * @type {number}
-     * @description Horizontal camera offset applied during rendering.
-     */
     cameraX = 0;
-    /**
-     * @type {AudioManager}
-     * @description Handles playback of in-game audio.
-     */
     audioManager = new AudioManager();
-    /**
-     * @type {boolean}
-     * @description Indicates whether the game has reached a terminal state.
-     */
     gameIsOver = false;
 
     /**

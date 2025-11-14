@@ -4,31 +4,10 @@
  * @description HUD element tracking collected coins.
  */
 class CoinStatusBar extends StatusBars {
-
-    /**
-     * @type {number}
-     * @description Width of the coin status bar in pixels.
-     */
     width = 200;
-    /**
-     * @type {number}
-     * @description Height of the coin status bar in pixels.
-     */
     height = 50;
-    /**
-     * @type {number}
-     * @description Vertical position of the status bar.
-     */
     y = 30;
-    /**
-     * @type {number}
-     * @description Horizontal position of the status bar.
-     */
     x = 0;
-    /**
-     * @type {string[]}
-     * @description Image frames representing coin collection levels.
-     */
     frames = [
         'img/7_statusbars/1_statusbar/1_statusbar_coin/green/0.png',
         'img/7_statusbars/1_statusbar/1_statusbar_coin/green/20.png',

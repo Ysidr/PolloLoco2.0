@@ -4,20 +4,8 @@
  * @description Collectible salsa bottle that grants additional throwable items.
  */
 class BottleCollectable extends Collectable {
-    /**
-     * @type {number}
-     * @description Width of the bottle sprite.
-     */
     width = 100;
-    /**
-     * @type {number}
-     * @description Height of the bottle sprite.
-     */
     height = 120;
-    /**
-     * @type {{top:number,bottom:number,left:number,right:number}}
-     * @description Collision box adjustments for the bottle sprite.
-     */
     offset = {
         top: 20,
         bottom: 20,

@@ -3,70 +3,18 @@
  * @description Base class for all moving entities, providing rendering, animation, and physics helpers.
  */
 class MovableObject {
-    /**
-     * @type {number}
-     * @description Horizontal position of the object relative to the world.
-     */
     x = 120;
-    /**
-     * @type {number}
-     * @description Vertical position of the object relative to the world.
-     */
     y = 250;
-    /**
-     * @type {number}
-     * @description Width in pixels used for rendering and collision detection.
-     */
     width = 100;
-    /**
-     * @type {number}
-     * @description Height in pixels used for rendering and collision detection.
-     */
     height = 100;
-    /**
-     * @type {?HTMLImageElement}
-     * @description Currently displayed image for the object.
-     */
     img;
-    /**
-     * @type {Object.<string, HTMLImageElement>}
-     * @description Cache of preloaded animation frames keyed by path.
-     */
     imgCache = {};
-    /**
-     * @type {number}
-     * @description Index used to cycle through animation frames.
-     */
     currentImageIndex = 0;
-    /**
-     * @type {number}
-     * @description Horizontal movement speed in pixels per frame.
-     */
     speed = 0.15;
-    /**
-     * @type {boolean}
-     * @description Indicates whether the sprite is facing left.
-     */
     otherDirection = false;
-    /**
-     * @type {number}
-     * @description Current vertical velocity.
-     */
     speedY = 0;
-    /**
-     * @type {number}
-     * @description Downward acceleration applied each frame (gravity).
-     */
     acceleration = 1.5;
-    /**
-     * @type {string[]}
-     * @description Generic set of animation frames assigned to the object.
-     */
     frames = [];
-    /**
-     * @type {{top:number,bottom:number,left:number,right:number}}
-     * @description Insets applied to the collision box relative to the sprite's bounds.
-     */
     offset = {
         top: 0,
         bottom: 0,

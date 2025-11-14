@@ -5,40 +5,14 @@
  */
 class BossHpStatusBar extends StatusBars {
 
-    /**
-     * @type {number}
-     * @description Width of the boss health bar in pixels.
-     */
+    
     width = 300;
-    /**
-     * @type {number}
-     * @description Height of the boss health bar in pixels.
-     */
     height = 80;
-    /**
-     * @type {number}
-     * @description Vertical position of the boss health bar.
-     */
     y = 60;
-    /**
-     * @type {number}
-     * @description Horizontal position of the boss health bar.
-     */
     x = 400;
-    /**
-     * @type {number}
-     * @description Horizontal offset applied when drawing the bar.
-     */
-    offsetX = 10;  // Fixed position from left
-    /**
-     * @type {number}
-     * @description Vertical offset applied when drawing the bar.
-     */
+    offsetX = 10;
+    offsetX = 10;
     offsetY = 20;
-    /**
-     * @type {string[]}
-     * @description Image frames representing different boss health levels.
-     */
     frames = [
         'img/7_statusbars/2_statusbar_endboss/orange/orange0.png',
         'img/7_statusbars/2_statusbar_endboss/orange/orange20.png',

@@ -4,24 +4,13 @@
  * @description Represents a throwable bottle with animation frames for flight and breaking.
  */
 class BottleThrowable extends Throwables {
-
-
-    /**
-     * @type {string[]}
-     * @description Animation frames for the bottle while it is flying.
-     */
-    framesFlying = [
+framesFlying = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/3_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png'
     ];
-
-    /**
-     * @type {string[]}
-     * @description Animation frames for the bottle's break sequence.
-     */
-    framesBreak = [
+framesBreak = [
         `img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png`,
         `img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png`,
         `img/6_salsa_bottle/bottle_rotation/bottle_splash/3_bottle_splash.png`,

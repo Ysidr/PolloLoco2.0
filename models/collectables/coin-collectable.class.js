@@ -4,20 +4,8 @@
  * @description Collectible coin that increases the player's coin count.
  */
 class CoinCollectable extends Collectable {
-    /**
-     * @type {number}
-     * @description Width of the coin sprite.
-     */
     width = 150;
-    /**
-     * @type {number}
-     * @description Height of the coin sprite.
-     */
     height = 150;
-    /**
-     * @type {{top:number,bottom:number,left:number,right:number}}
-     * @description Collision box adjustments for the coin sprite.
-     */
     offset = {
         top: 50,
         bottom: 50,

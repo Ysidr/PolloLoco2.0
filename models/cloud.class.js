@@ -4,15 +4,7 @@
  * @description Floating cloud background element that slowly drifts left.
  */
 class Cloud extends MovableObject {
-    /**
-     * @type {number}
-     * @description Width of the cloud sprite.
-     */
     width = 250;
-    /**
-     * @type {number}
-     * @description Height of the cloud sprite.
-     */
     height = 150;
 
     /**

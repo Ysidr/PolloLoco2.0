@@ -1,6 +1,3 @@
-
-
-
 /**
  * @function checkOrientation
  * @description Checks the device orientation and updates the UI accordingly at regular intervals.

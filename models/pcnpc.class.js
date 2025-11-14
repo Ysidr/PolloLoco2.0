@@ -4,30 +4,10 @@
  * @description Base class for player characters and NPCs, handling shared health and death logic.
  */
 class PcNpc extends MovableObject {
-    /**
-     * @type {number}
-     * @description Current health points of the entity.
-     */
     hp = 100;
-    /**
-     * @type {number}
-     * @description Timestamp of the last successful hit.
-     */
     lastHit = 0;
-    /**
-     * @type {number}
-     * @description Reference x-position for comparing against other characters.
-     */
     characterX = 0;
-    /**
-     * @type {boolean}
-     * @description Indicates whether the entity is currently playing its death animation.
-     */
     isDying = false;
-    /**
-     * @type {boolean}
-     * @description Indicates whether the entity's death sequence has completed.
-     */
     isDead = false;
 
 
@@ -73,7 +53,6 @@ class PcNpc extends MovableObject {
         }
     }
 
-
     /**
      * @function isJustHurt
      * @description Plays the hurt animation and handles sound playback for different entity types.
@@ -87,9 +66,6 @@ class PcNpc extends MovableObject {
             this.lastMoveTime = new Date().getTime();
         }
     }
-
-
-
 
     /**
      * @function isHurt

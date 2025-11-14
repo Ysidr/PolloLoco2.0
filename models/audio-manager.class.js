@@ -3,25 +3,9 @@
  * @description Handles loading, playback, and volume control for game audio assets.
  */
 class AudioManager {
-    /**
-     * @type {number}
-     * @description Timestamp of the last sound that was played.
-     */
     lastPlayed = 0;
-    /**
-     * @type {string}
-     * @description Name of the most recently played sound effect.
-     */
     lastPlayedSound = '';
-    /**
-     * @type {number}
-     * @description Master volume multiplier applied to all sounds.
-     */
     overallVolume = 0.5;
-    /**
-     * @type {HTMLAudioElement[]}
-     * @description Active audio elements currently playing.
-     */
     playedSounds = [];
 
     /**

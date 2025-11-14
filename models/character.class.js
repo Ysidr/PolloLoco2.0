@@ -4,85 +4,23 @@
  * @description Player-controlled character handling movement, animation, and game interactions.
  */
 class Character extends PcNpc {
-
-    /**
-     * @type {number}
-     * @description Character sprite width in pixels.
-     */
     width = 150;
-    /**
-     * @type {number}
-     * @description Character sprite height in pixels.
-     */
     height = 300;
-    /**
-     * @type {number}
-     * @description Current vertical position of the character.
-     */
     y;
-    /**
-     * @type {World}
-     * @description Reference to the game world managing this character.
-     */
     world;
-    /**
-     * @type {number}
-     * @description Base horizontal movement speed.
-     */
     speed = 25;
-    /**
-     * @type {boolean}
-     * @description Prevents consecutive throws while a cooldown is active.
-     */
     throwableTimeOut = false;
-    /**
-     * @type {number}
-     * @description Timestamp of the last completed trade interaction.
-     */
-    lastTradeTime = 0;
-    /**
-     * @type {number}
-     * @description Minimum cooldown in milliseconds between trades.
-     */
-    tradeCooldown = 800;
-    /**
-     * @type {number}
-     * @description Timestamp of the last bounce interaction.
-     */
     lastBounceTime = 0;
-
     isSleeping = false;
-
-    lastPosition = {x: 0, y: 0}
-
+    lastPosition = { x: 0, y: 0 }
     lastMoveTime
-
-    /**
-     * @type {number}
-     * @description Number of throwable items currently available.
-     */
     throwableCount = 0;
-    /**
-     * @type {number}
-     * @description Number of collected coins.
-     */
-    coinCount = 0;
-
-    /**
-     * @type {{top:number,bottom:number,left:number,right:number}}
-     * @description Collision box adjustments for the character sprite.
-     */
     offset = {
         top: 150,
         bottom: 25,
         left: 30,
         right: 47
     }
-
-    /**
-     * @type {string[]}
-     * @description Animation frames for the idle state.
-     */
     framesIdle = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
         'img/2_character_pepe/1_idle/idle/I-2.png',
@@ -104,13 +42,9 @@ class Character extends PcNpc {
         `img/2_character_pepe/1_idle/long_idle/I-17.png`,
         `img/2_character_pepe/1_idle/long_idle/I-18.png`,
         `img/2_character_pepe/1_idle/long_idle/I-19.png`,
-        `img/2_character_pepe/1_idle/long_idle/I-20.png`];
+        `img/2_character_pepe/1_idle/long_idle/I-20.png`
+    ];
 
-
-    /**
-     * @type {string[]}
-     * @description Animation frames for the walking state.
-     */
     framesWalk = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
@@ -118,14 +52,8 @@ class Character extends PcNpc {
         'img/2_character_pepe/2_walk/W-24.png',
         'img/2_character_pepe/2_walk/W-25.png',
         'img/2_character_pepe/2_walk/W-26.png',
-
-
     ]
 
-    /**
-     * @type {string[]}
-     * @description Animation frames for the jumping state.
-     */
     framesJump = [
         `img/2_character_pepe/3_jump/J-31.png`,
         `img/2_character_pepe/3_jump/J-32.png`,
@@ -138,20 +66,12 @@ class Character extends PcNpc {
         `img/2_character_pepe/3_jump/J-39.png`,
     ]
 
-    /**
-     * @type {string[]}
-     * @description Animation frames for the hurt state.
-     */
     framesHurt = [
         `img/2_character_pepe/4_hurt/H-41.png`,
         `img/2_character_pepe/4_hurt/H-42.png`,
         `img/2_character_pepe/4_hurt/H-43.png`
     ]
 
-    /**
-     * @type {string[]}
-     * @description Animation frames for the death sequence.
-     */
     framesDead = [
         `img/2_character_pepe/5_dead/D-51.png`,
         `img/2_character_pepe/5_dead/D-52.png`,

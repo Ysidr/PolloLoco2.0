@@ -6,7 +6,7 @@
     #canvas,
     .gameStartContainer,
     .gameControllContainer,
-    .game-container {
+    startControlls .game-container {
         max-width: 600px;
         width: 100vw;
         max-height: 400px;
@@ -22,13 +22,23 @@
         height: 100%;
     }
 
+    .startButtons button,
+    .volumeContainerStart {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 24px;
+    }
+
     button {
         font-size: 16px;
         border-width: 1.5px;
         border-radius: 6px;
-        color: gold;
+        color: black;
         -webkit-text-stroke: 0;
     }
+
+
 
     .controllButton {
         width: 40px;
@@ -38,6 +48,7 @@
         margin: 6px;
         border-width: 1.5px;
     }
+
 
     .gameButtons {
         top: 5px;
@@ -65,9 +76,28 @@
         gap: 12px;
     }
 
-    .volumeContainer {
-        bottom: 12px;
+    .volumeContainerStart {
+        font-size: 16px;
+        border-width: 1.5px;
+        border-radius: 6px;
+        color: black;
+        -webkit-text-stroke: 0;
+        padding: 0 4px;
+        margin-right: 12px;
     }
+
+    .volumeContainerStart input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        border-width: 1.5px;
+        margin-right: 4px;
+    }
+
+    .volumeContainerStart label {
+        font-size: 14px;
+    }
+
+
 
     .volume-label,
     .volumeText {
@@ -83,6 +113,7 @@
     .forYourInfo {
         display: none;
     }
+
     .controlls {
         flex: 1;
         display: flex;
@@ -124,7 +155,7 @@
     }
 
     button {
-        color: gold;
+        color: black;
         -webkit-text-stroke: 0;
     }
 
@@ -138,6 +169,29 @@
         max-height: 300px;
         height: 66.66vh;
         /* Maintain 3:2 aspect ratio */
+    }
+
+    .volumeContainerStart {
+        font-size: 12px;
+        border-width: 1px;
+        border-radius: 6px;
+        color: black;
+        -webkit-text-stroke: 0;
+        padding: 0 3px;
+        margin-right: 8px;
+    }
+
+    .volumeContainerStart input[type="checkbox"] {
+        width: 10px;
+        height: 10px;
+        border-width: 1px;
+        margin-right: 3px;
+    }
+
+    .volumeContainerStart label {
+        font-size: 12px;
+        color: black;
+        -webkit-text-stroke: 0;
     }
 
     .fullscreen {
@@ -201,7 +255,7 @@
         max-width: 450px;
         max-height: 300px;
     }
-    
 
-    
+
+
 }

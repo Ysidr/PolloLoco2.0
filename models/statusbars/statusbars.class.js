@@ -4,36 +4,12 @@
  * @description Base class for HUD status bars that render tracked game metrics.
  */
 class StatusBars extends MovableObject {
-    /**
-     * @type {number}
-     * @description Width of the status bar in pixels.
-     */
     width = 200;
-    /**
-     * @type {number}
-     * @description Height of the status bar in pixels.
-     */
     height = 50;
-    /**
-     * @type {?HTMLImageElement}
-     * @description Currently displayed status bar image.
-     */
     img;
-    /**
-     * @type {Object.<string, HTMLImageElement>}
-     * @description Cache of preloaded status bar frames.
-     */
     imgCache = {};
-    /**
-     * @type {number}
-     * @description Horizontal offset applied when drawing the bar.
-     */
-    offsetX = 10;  
-    /**
-     * @type {number}
-     * @description Vertical offset applied when drawing the bar.
-     */
-    offsetY = 20;   
+    offsetX = 10;
+    offsetY = 20;
 
     /**
      * @constructor

@@ -4,10 +4,6 @@
  * @description Base class for throwable projectiles that handles shared behaviors like animation and collision checks.
  */
 class Throwables extends MovableObject {
-    /**
-     * @type {boolean}
-     * @description Indicates whether the throwable should travel to the left.
-     */
     isTrowingLeft = false;
 
     /**
@@ -30,7 +26,7 @@ class Throwables extends MovableObject {
             if (this.isAboveGround() && !this.checkEnemyCollision()) {
                 this.fly();
             } else {
-               this.bottleHitGround( className);
+                this.bottleHitGround(className);
             }
         }, 3000 / 60, `${className}-throwable-animate`);
         this.world.character.throwableCount--;
@@ -47,7 +43,7 @@ class Throwables extends MovableObject {
         if (this.world.throwables.length > 0) {
             this.world.throwables.pop();
         }
-        IntervalManager.removeInterval(this.id,`${className}-throwable-animate`);
+        IntervalManager.removeInterval(this.id, `${className}-throwable-animate`);
         IntervalManager.allFunctions.splice(IntervalManager.allFunctions.findIndex(fn => fn.fn === this.animate), 1);
         IntervalManager.allFunctions.splice(IntervalManager.allFunctions.findIndex(fn => fn.fn === this.applyGravity), 1);
     }
@@ -58,7 +54,7 @@ class Throwables extends MovableObject {
      */
     break() {
         this.playAnimation(this.framesBreak);
-        this.world.audioManager.playSound('bottleBreak',1.0,false);
+        this.world.audioManager.playSound('bottleBreak', 1.0, false);
     }
 
     /**
