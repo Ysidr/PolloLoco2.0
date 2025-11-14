@@ -34,7 +34,6 @@ class IntervalManager {
     static addInterval(id, name = 'unnamed') {
         this.intervals.push({id, name});
         this.intervalCount++;
-        // console.log(`Interval added: ${name} (ID: ${id}) - Total: ${this.intervalCount}`);
         return id;
     }
     /**
@@ -49,7 +48,6 @@ class IntervalManager {
                 clearInterval(element.id);
                 this.intervals.splice(this.intervals.indexOf(element), 1);
                 this.intervalCount--;
-                // console.log(`Interval removed: ${name} (ID: ${id}) - Total: ${this.intervalCount}`);
             }
         });
     }
@@ -58,11 +56,9 @@ class IntervalManager {
      * @description Stops every tracked interval and resets the manager state.
      */
     static clearAllIntervals() {
-        // console.log(`Clearing all ${this.intervalCount} intervals...`);
         this.intervals.forEach(element => clearInterval(element.id));
         this.intervals = [];
         this.intervalCount = 0;
-        // console.log('All intervals cleared');
     }
     /**
      * @function setInterval
