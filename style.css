@@ -76,6 +76,43 @@ button:hover {
     padding: 0 8px 0 8px;
 }
 
+.volumeContainerStart input[type="checkbox"] {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid gold;
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    margin-right: 8px;
+    transition: all 0.3s ease;
+}
+
+.volumeContainerStart input[type="checkbox"]:hover {
+    box-shadow: 0 0 10px gold;
+    transform: scale(1.1);
+}
+
+.volumeContainerStart input[type="checkbox"]:checked {
+    background: gold;
+}
+
+.volumeContainerStart input[type="checkbox"]:checked::after {
+    content: "✓";
+    position: absolute;
+    top: -1px;
+    left: 0px;
+    color: black;
+    font-weight: bold;
+}
+
+.volumeContainerStart label {
+    font-size: 24px;
+    color: transparent;
+    -webkit-text-stroke: 1px gold;
+    cursor: pointer;
+}
 
 .controlls {
     flex: 1;
