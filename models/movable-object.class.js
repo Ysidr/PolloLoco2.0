@@ -250,8 +250,7 @@ class MovableObject {
                     this.throwableTimeOut = false;
                 }, 1000);
             }
-
-
+            this.lastMoveTime = Date.now();
         }
     }
 

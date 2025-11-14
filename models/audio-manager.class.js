@@ -30,7 +30,11 @@ class AudioManager {
      */
     constructor() {
         this.sounds = {};
-        this.overallVolume = parseFloat(localStorage.getItem('volume')) || 0.5;
+        if (localStorage.getItem('volume')) {
+            this.overallVolume = parseFloat(localStorage.getItem('volume'));
+        } else {
+            this.overallVolume = 0.5;
+        }
 
         const slider = document.getElementById('volume-slider');
         if (slider) {

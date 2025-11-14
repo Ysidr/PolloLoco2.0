@@ -117,6 +117,7 @@ function backToStart() {
     backToPause();
     gameDesingResumed();
     window.gamesHasStarted = false;
+    checkMute();
 }
 
 /**
@@ -211,15 +212,20 @@ function exitToMenuFromGameOver() {
     level1 = null;
     world = null;
     canvas = null;
+    manageDivsFromGameOver();
+    backToPause()
+    gameDesingResumed();
+    backToStartScreen();
+    checkMute();
+}
+
+function manageDivsFromGameOver() {
     document.getElementById("fullscreen").classList.add('d-none');
     document.getElementById("canvas").classList.add('d-none')
     document.getElementById("gameButtons").classList.add('d-none')
     document.getElementById("gameStartContainer").classList.remove('d-none')
     document.getElementById("mobile-controls").classList.add('d-none')
     document.getElementById("pause-overlay").classList.add('d-none')
-    backToPause()
-    gameDesingResumed();
-    backToStartScreen();
 }
 
 /**
@@ -334,3 +340,20 @@ function exitFullscreen() {
     }
     isFullscreen = false;
 }
+
+function checkMute() {
+    if (localStorage.getItem('volume') === '0') {
+        document.getElementById('volumeCheckbox').checked = true;
+    } else {
+        document.getElementById('volumeCheckbox').checked = false;
+    }
+}
+
+function Mute() {
+        if (localStorage.getItem('volume') === '0') {
+            localStorage.setItem('volume', 0.5);
+        } else {
+            localStorage.setItem('volume', 0);
+        }
+    }
+

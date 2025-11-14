@@ -30,7 +30,6 @@ class BottleThrowable extends Throwables {
         `img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png`
     ];
 
-
     /**
      * @constructor
      * @param {World} world - The game world instance that manages throwable objects.
@@ -52,6 +51,7 @@ class BottleThrowable extends Throwables {
         this.animate();
         this.applyGravity();
     }
+
     /**
      * @function setSpeeds
      * @description Configures the initial horizontal and vertical speeds along with gravity.

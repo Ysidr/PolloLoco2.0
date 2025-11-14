@@ -46,13 +46,19 @@
     <script src="./js/gameOrientationDisplays.js"></script>
 </head>
 
-<body onload="checkMobileDevice(), checkOrientation()">
+<body onload="checkMobileDevice(), checkOrientation(), checkMute()">
     <h1>El Pollo Loco</h1>
 
     <div id="gameStartContainer" class="gameStartContainer">
+        <div id="startControlls" class="startControlls">
         <div class="startButtons">
             <button onclick="init()">Start</button>
             <button onclick="showControlls()" id="controllsBtn">Controlls</button>
+        </div>
+        <div class="volumeContainerStart">
+            <input type="checkbox" onchange="Mute()" id="volumeCheckbox">
+            <label for="volumeCheckbox">Mute</label>
+        </div>
         </div>
     </div>
     <div id="gameControllContainer" class="gameControllContainer d-none">
