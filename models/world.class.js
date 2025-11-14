@@ -154,16 +154,21 @@ class World {
      * @description Draws an object with support for mirrored orientation and debug boxes.
      */
     addToMap(mo) {
-        if (mo.otherDirection) {
-            this.ctx.save();
-            this.ctx.translate(mo.x + mo.width, 0);
-            this.ctx.scale(-1, 1);
-            this.ctx.drawImage(mo.img, 0, mo.y, mo.width, mo.height);
-            this.ctx.restore();
-        } else {
-            this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
-        }
+    if (!mo || !mo.img) {
+        console.log('Problemobjekt in addToMap:', mo);
+        return; // temporär
     }
+
+    if (mo.otherDirection) {
+        this.ctx.save();
+        this.ctx.translate(mo.x + mo.width, 0);
+        this.ctx.scale(-1, 1);
+        this.ctx.drawImage(mo.img, 0, mo.y, mo.width, mo.height);
+        this.ctx.restore();
+    } else {
+        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+    }
+}
 
     /**
      * @function checkCollisions

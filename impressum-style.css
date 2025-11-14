@@ -232,3 +232,9 @@ body.impressum {
         padding: 3px 7px;
     }
 }
+
+@media (max-width: 1270px) {
+    .impressum-page {
+        padding-top: 64px;
+    }
+}
