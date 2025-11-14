@@ -65,16 +65,31 @@ class PcNpc extends MovableObject {
             this.playDeathAnimationAndRemove();
         } else {
             if (this.isHurt()) {
-                this.playAnimation(this.framesHurt);
-                if (this instanceof Endboss) {
-                    this.world.audioManager.playSound('bossHurt');
-                }
+                this.isJustHurt();
             }
         }
         if (this instanceof Character) {
             this.hpStatusBar.updateHPStatusBar(this.hp);
         }
     }
+
+
+    /**
+     * @function isJustHurt
+     * @description Plays the hurt animation and handles sound playback for different entity types.
+     */
+    isJustHurt() {
+        this.playAnimation(this.framesHurt);
+        if (this instanceof Endboss) {
+            this.world.audioManager.playSound('bossHurt');
+        }
+        if (this instanceof Character) {
+            this.lastMoveTime = new Date().getTime();
+        }
+    }
+
+
+
 
     /**
      * @function isHurt
@@ -92,7 +107,7 @@ class PcNpc extends MovableObject {
      */
     playDeathAnimationAndRemove() {
         if (this.framesDead && this.framesDead.length > 0) {
-            switch (true){
+            switch (true) {
                 case this instanceof Endboss && this.isDead:
                     this.gameOverWin();
                     break;

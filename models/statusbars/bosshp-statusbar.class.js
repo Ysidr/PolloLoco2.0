@@ -9,22 +9,22 @@ class BossHpStatusBar extends StatusBars {
      * @type {number}
      * @description Width of the boss health bar in pixels.
      */
-    width = 400;
+    width = 300;
     /**
      * @type {number}
      * @description Height of the boss health bar in pixels.
      */
-    height = 100;
+    height = 80;
     /**
      * @type {number}
      * @description Vertical position of the boss health bar.
      */
-    y = 40;
+    y = 60;
     /**
      * @type {number}
      * @description Horizontal position of the boss health bar.
      */
-    x = 300;
+    x = 400;
     /**
      * @type {number}
      * @description Horizontal offset applied when drawing the bar.

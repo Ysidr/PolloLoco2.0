@@ -299,7 +299,6 @@ class Character extends PcNpc {
      */
     updateDisplayedCounts() {
         document.getElementById('coinCount').textContent = this.coinCount;
-        document.getElementById('bottleCount').textContent = this.throwableCount;
         const tradeCooldownElement = document.getElementById('tradeCooldown');
         if (tradeCooldownElement) {
             const timeLeft = Math.max(0, this.tradeCooldown - (Date.now() - this.lastTradeTime));
