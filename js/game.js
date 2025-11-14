@@ -219,6 +219,10 @@ function exitToMenuFromGameOver() {
     checkMute();
 }
 
+/**
+ * @function manageDivsFromGameOver
+ * @description Resets the main UI containers after a game over to return to the start screen layout.
+ */
 function manageDivsFromGameOver() {
     document.getElementById("fullscreen").classList.add('d-none');
     document.getElementById("canvas").classList.add('d-none')
@@ -341,6 +345,10 @@ function exitFullscreen() {
     isFullscreen = false;
 }
 
+/**
+ * @function checkMute
+ * @description Syncs the mute checkbox state with the volume value stored in localStorage.
+ */
 function checkMute() {
     if (localStorage.getItem('volume') === '0') {
         document.getElementById('volumeCheckbox').checked = true;
@@ -349,6 +357,10 @@ function checkMute() {
     }
 }
 
+/**
+ * @function Mute
+ * @description Toggles the stored volume value between muted and a default level and keeps it in localStorage.
+ */
 function Mute() {
         if (localStorage.getItem('volume') === '0') {
             localStorage.setItem('volume', 0.5);

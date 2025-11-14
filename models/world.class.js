@@ -151,7 +151,7 @@ class World {
 
     /**
      * @function initializeBackgroundObjects
-     * @description Creates repeated background layers to fill the scrolling level.
+     * @description Creates repeated 720px-wide background layers in 1440px steps to fill the scrolling level seamlessly.
      */
     initializeBackgroundObjects() {
         let currentBackgroundX = -720;
@@ -161,12 +161,12 @@ class World {
                 new BackgroundObject('img/5_background/layers/3_third_layer/2.png', currentBackgroundX),
                 new BackgroundObject('img/5_background/layers/2_second_layer/2.png', currentBackgroundX),
                 new BackgroundObject('img/5_background/layers/1_first_layer/2.png', currentBackgroundX),
-                new BackgroundObject('img/5_background/layers/air.png', currentBackgroundX + 716),
-                new BackgroundObject('img/5_background/layers/3_third_layer/1.png', currentBackgroundX + 716),
-                new BackgroundObject('img/5_background/layers/2_second_layer/1.png', currentBackgroundX + 716),
-                new BackgroundObject('img/5_background/layers/1_first_layer/1.png', currentBackgroundX + 716)
+                new BackgroundObject('img/5_background/layers/air.png', currentBackgroundX + 720),
+                new BackgroundObject('img/5_background/layers/3_third_layer/1.png', currentBackgroundX + 720),
+                new BackgroundObject('img/5_background/layers/2_second_layer/1.png', currentBackgroundX + 720),
+                new BackgroundObject('img/5_background/layers/1_first_layer/1.png', currentBackgroundX + 720)
             );
-            currentBackgroundX += 1432;
+            currentBackgroundX += 1440;
         }
     }
 
@@ -182,12 +182,13 @@ class World {
 
     /**
      * @function draw
-     * @description Renders the game scene and schedules the next frame.
+     * @description Renders the game scene using an integer-snapped horizontal camera translation to avoid seams between background tiles, then schedules the next frame.
      */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.save();
-        this.ctx.translate(this.cameraX, 0);
+        const snappedCameraX = Math.round(this.cameraX);
+        this.ctx.translate(snappedCameraX, 0);
         this.addAllObjectsToMap();
         this.ctx.restore();
         [this.hpStatusBar, this.bottleStatusBar, this.coinStatusBar, this.bossHpStatusBar].forEach((bar) => {
